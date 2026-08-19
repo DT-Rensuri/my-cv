@@ -14,7 +14,7 @@ export function useCvData() {
             class: p.class,
             hp: 100,
             mp: 100,
-            level: 99,
+            level: 25,
             phone: '0362547882',
             email: 'dothanhcao2502@gmail.com',
             github: 'github.com/dtrensuri',

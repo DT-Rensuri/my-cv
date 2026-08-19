@@ -3,7 +3,7 @@ import { ChatOllama } from '@langchain/ollama';
 import { ChatOpenAI } from '@langchain/openai';
 import { braveSearchTool } from './tools/braveSearchTool';
 import { customThemeColorTool } from './tools/customThemeColorTool';
-import { avatarTools } from './tools/avatarToolsIndex';
+import { chatBotTools } from './tools/chatBotToolsIndex';
 import type { BaseChatModel } from '@langchain/core/language_models/chat_models';
 import { MemorySaver } from '@langchain/langgraph';
 
@@ -39,7 +39,7 @@ function resolveModel(): BaseChatModel {
 
 const agent = createAgent({
     model: resolveModel(),
-    tools: [braveSearchTool, customThemeColorTool, ...avatarTools],
+    tools: [braveSearchTool, customThemeColorTool, ...chatBotTools],
     checkpointer,
 });
 

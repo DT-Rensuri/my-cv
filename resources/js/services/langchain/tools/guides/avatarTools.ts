@@ -2,57 +2,6 @@ import { tool } from '@langchain/core/tools';
 import * as z from 'zod';
 import { useAvatarStore } from '@/stores/avatar';
 import { EMOTES, EMOTE_GIFS } from '@/stores/avatarEmotes';
-import { resolveSectionId, SECTION_LABELS } from './dom';
-
-/**
- * Shows the floating guide avatar and moves it to a position on the page
- * (either a named section or explicit x/y coordinates).
- */
-export const moveAvatarTool = tool(
-  async ({ section, x, y }) => {
-    const store = useAvatarStore();
-    let tx = x;
-    let ty = y;
-
-    if (section) {
-      const id = resolveSectionId(section);
-      if (!id) {
-        return {
-          success: false,
-          message: `Không tìm thấy mục "${section}".`,
-        };
-      }
-      const el = document.getElementById(id);
-      if (!el) {
-        return { success: false, message: `Không tìm thấy phần tử #${id}.` };
-      }
-      const rect = el.getBoundingClientRect();
-      tx = rect.left + rect.width / 2 - 32;
-      ty = rect.top + 40;
-    }
-
-    store.moveTo(tx ?? 0, ty ?? 0);
-    return {
-      success: true,
-      message: section
-        ? `Đã di chuyển avatar đến mục "${SECTION_LABELS[resolveSectionId(section)!]}".`
-        : `Đã di chuyển avatar đến (${tx}, ${ty}).`,
-    };
-  },
-  {
-    name: 'move_avatar',
-    description:
-      'Shows and moves the floating guide avatar to a CV section or to explicit x/y coordinates on the page. Use this to make the guide walk around the portfolio.',
-    schema: z.object({
-      section: z
-        .string()
-        .optional()
-        .describe('Tên mục để avatar di chuyển đến (top, about, education, experience, skills, contact).'),
-      x: z.number().optional().describe('Tọa độ x (px) nếu không dùng section.'),
-      y: z.number().optional().describe('Tọa độ y (px) nếu không dùng section.'),
-    }),
-  },
-);
 
 /**
  * Changes the avatar's expression/emote. Pick the emote that best matches the
@@ -66,7 +15,7 @@ export const avatarEmoteTool = tool(
     }
     // Change the avatar face AND insert the matching GIF into the chat.
     store.setEmoteWithGif(emote, EMOTE_GIFS[emote]);
-    return { success: true, message: `Avatar đã thể hiện cảm xúc: ${emote}.` };
+    return { success: true, message: `Ok` };
   },
   {
     name: 'avatar_emote',

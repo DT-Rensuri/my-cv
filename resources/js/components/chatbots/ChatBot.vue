@@ -7,7 +7,6 @@ import { useAvatarStore } from '@/stores/avatar';
 import { EMOTE_GIFS } from '@/stores/avatarEmotes';
 import ChatHeader from './ChatHeader.vue';
 import ChatMessages from './ChatMessages.vue';
-import ChatSuggestions from './ChatSuggestions.vue';
 import ChatInput from './ChatInput.vue';
 import type { ChatMessage } from '@/types/chat';
 import { renderMarkdown } from '@/lib/markdown';
@@ -107,8 +106,19 @@ const messages = ref<ChatMessage[]>([
 ]);
 
 const suggestions = computed<string[]>(() => {
-    const raw = tm('chatbot.suggestions') as unknown as string[];
-    return raw.map((s) => s.replaceAll('{name}', profile.value.name));
+    const raw =
+        messages.value.length <= 1
+            ? tm('chatbot.suggestions')
+            : agentStore.suggestions;
+
+    if (!Array.isArray(raw)) {
+        console.warn('Invalid suggestions:', raw);
+        return [];
+    }
+
+    return raw.map((s) =>
+        s.replaceAll('{name}', profile.value.name),
+    );
 });
 
 // Reset the greeting when the language changes.
@@ -233,8 +243,7 @@ onUnmounted(() => window.removeEventListener('keydown', onKey));
         <div v-if="open"
             class="fixed bottom-5 right-5 z-[60] w-[calc(100vw-2.5rem)] sm:w-130 max-h-[60vh] flex flex-col bg-panel pixel-border">
             <ChatHeader @close="toggle" />
-            <ChatMessages :messages="messages" />
-            <ChatSuggestions v-if="messages.length <= 1" :suggestions="suggestions" @select="send" />
+            <ChatMessages :messages="messages" :suggestions="agentStore.enableSuggestions ? suggestions : []" @select="send" />
             <ChatInput @send="send" />
         </div>
     </Transition>

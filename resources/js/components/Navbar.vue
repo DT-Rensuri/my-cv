@@ -1,11 +1,21 @@
 <script setup lang="ts">
-import { Menu, Moon, Sun, X, Gamepad2, Languages } from 'lucide-vue-next';
+import { Menu, Moon, Sun, X, Gamepad2, Languages, Palette } from 'lucide-vue-next';
 import { ref, onMounted, onUnmounted } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useCvData } from '@/composables/useCvData';
 import { useThemeStore } from '@/stores/theme';
 import { useActiveSectionStore } from '@/stores/activeSection';
 import { SUPPORTED_LOCALES, saveLocale, type Locale } from '@/i18n';
+import { Link } from '@inertiajs/vue3';
+
+const props = withDefaults(
+    defineProps<{
+        showTagProfile?: boolean;
+    }>(),
+    {
+        showTagProfile: true,
+    }
+);
 
 const { t, locale } = useI18n();
 const { profile, navLinks } = useCvData();
@@ -44,11 +54,6 @@ onUnmounted(() => {
   window.removeEventListener('scroll', onScroll);
   activeSectionStore.cleanup();
 });
-
-const initials = profile.value.name
-  .split(' ')
-  .map((p) => p[0])
-  .join('');
 </script>
 
 <template>
@@ -57,24 +62,24 @@ const initials = profile.value.name
     scrolled ? 'bg-background/95 border-b-4 border-line' : 'bg-transparent border-b-4 border-transparent',
   ]">
     <nav class="mx-auto max-w-6xl px-4 sm:px-6 h-16 flex items-center justify-between">
-      <a href="#top" class="flex items-center gap-2.5">
+      <Link href="/#top" class="flex items-center gap-2.5">
         <span class="grid place-items-center h-10 w-10 bg-accent text-background pixel-border-sm">
           <Gamepad2 class="h-5 w-5" />
         </span>
         <span class="font-pixel text-px-18 sm:text-xs text-ink">
-          {{ initials }}<span class="text-success">.dev</span>
+          DT_RENSURI<span class="text-success">.dev</span>
         </span>
-      </a>
+      </Link>
 
-      <div class="hidden md:flex items-center gap-1">
-        <a v-for="link in navLinks" :key="link.href" :href="link.href" :class="[
+      <div class="hidden md:flex items-center gap-1" v-if="props.showTagProfile">
+        <Link v-for="link in navLinks" :key="link.href" :href="link.href" :class="[
           'px-3 py-2 font-pixel text-px-18 transition-colors',
           activeSectionStore.active === link.href.slice(1)
             ? 'text-success glow-green'
             : 'text-ink-muted hover:text-ink',
         ]">
           <span v-if="activeSectionStore.active === link.href.slice(1)">&gt; </span>{{ link.label }}
-        </a>
+        </Link>
       </div>
 
       <div class="flex items-center gap-2">
@@ -99,13 +104,15 @@ const initials = profile.value.name
 
         <button @click="themeStore.toggle" :aria-label="t('nav.language')"
           class="grid place-items-center h-10 w-10 bg-panel pixel-border-sm text-ink hover:text-warning pixel-press">
-          <Sun v-if="themeStore.theme === 'dark'" class="h-5 w-5" />
+          <Sun v-if="themeStore.theme === 'custom'" class="h-5 w-5" />
+          <Palette v-else-if="themeStore.theme === 'dark'" class="h-5 w-5" />
           <Moon v-else class="h-5 w-5" />
         </button>
-        <a href="#contact"
+        <Link href="/projects"
+          v-if="props.showTagProfile"
           class="hidden sm:inline-flex items-center px-4 py-2.5 font-pixel text-px-18 bg-success text-background pixel-border-sm pixel-press hover:bg-accent">
-          {{ t('nav.contactCta') }}
-        </a>
+          {{ t('nav.projectsCta') }}
+        </Link>
         <button @click="open = !open" aria-label="Mở menu"
           class="md:hidden grid place-items-center h-10 w-10 bg-panel pixel-border-sm text-ink">
           <X v-if="open" class="h-5 w-5" />

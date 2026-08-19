@@ -9,6 +9,9 @@ export type AgentMessage = { role: string; content: string };
 export const useAgentStore = defineStore('agent', () => {
     const response = ref<string | null>(null);
     const loading = ref(false);
+    const enableSuggestions = ref(true);
+    const suggestions = ref<string[]>([]);
+    const selectedAgent = ref('default');
 
     const streamOutput = ref<string>('');
     const thinkingOutput = ref<string>('');
@@ -27,13 +30,25 @@ export const useAgentStore = defineStore('agent', () => {
         thinkingOutput.value = '';
         isStreaming.value = false;
         isThinking.value = false;
+        enableSuggestions.value = false;
+        suggestions.value = [];
+    }
+
+    function getAgentInstance() {
+        switch (selectedAgent.value) {
+            case 'default':
+                return agent;
+            default:
+                return agent;
+        }
     }
 
     async function invokeAgent(message: AgentMessage): Promise<string | null> {
         loading.value = true;
         response.value = null;
+        const agentInstance = getAgentInstance();
         try {
-            const result = await agent.invoke(
+            const result = await agentInstance.invoke(
                 { messages: [message] },
                 { configurable: { thread_id: 'default' } },
             );
@@ -66,7 +81,8 @@ export const useAgentStore = defineStore('agent', () => {
         try {
             resetStream();
             loading.value = true;
-            const stream = await agent.streamEvents(
+            const agentInstance = getAgentInstance();
+            const stream = await agentInstance.streamEvents(
                 { messages: [message] },
                 { configurable: { thread_id: 'default' } },
             );
@@ -99,6 +115,9 @@ export const useAgentStore = defineStore('agent', () => {
                     loading.value = false;
                     isStreaming.value = false;
                     isThinking.value = false;
+                    if (suggestions.value.length > 0) {
+                        enableSuggestions.value = true;
+                    }
                 }
             }
         } catch (error) {
@@ -146,6 +165,8 @@ export const useAgentStore = defineStore('agent', () => {
         agentTechnicalLevel,
         agentProactivity,
         agentPersonality,
+        enableSuggestions,
+        suggestions,
         invokeAgent,
         streamAgent,
     };

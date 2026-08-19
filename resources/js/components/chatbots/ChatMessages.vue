@@ -19,6 +19,11 @@ const botFace = computed(() => EMOTE_GIFS[avatarStore.emote] ?? EMOTE_GIFS.idle)
 
 const props = defineProps<{
   messages: ChatMessage[];
+  suggestions?: string[];
+}>();
+
+const emit = defineEmits<{
+  (e: 'select', suggestion: string): void;
 }>();
 
 const el = ref<HTMLElement | null>(null);
@@ -69,11 +74,11 @@ watch(
       </span>
       <div
         class="min-w-0 max-w-[75%] px-3 py-2 bg-panel pixel-border-sm font-retro text-base leading-relaxed text-ink-dim break-words">
-        <div class="markdown-body" v-html="thinkingHtml"></div>
-        <!-- <span class="blink">{{ t('chatbot.thinking') }}</span>
+        <!-- <div class="markdown-body" v-html="thinkingHtml"></div> -->
+        <span class="blink">{{ t('chatbot.thinking') }}</span>
         <span class="blink" style="animation-delay: 0.2s">.</span>
         <span class="blink" style="animation-delay: 0.4s">.</span>
-        <span class="blink" style="animation-delay: 0.6s">.</span> -->
+        <span class="blink" style="animation-delay: 0.6s">.</span>
       </div>
     </div>
 
@@ -99,6 +104,23 @@ watch(
         <span class="blink">.</span>
         <span class="blink" style="animation-delay: 0.2s">.</span>
         <span class="blink" style="animation-delay: 0.4s">.</span>
+      </div>
+    </div>
+
+    <!-- Suggestion chips rendered like a bot message, inside the scrollable area -->
+    <div v-if="props.suggestions?.length" class="flex gap-2">
+      <span class="shrink-0 grid place-items-center h-7 w-7 bg-primary text-background pixel-border-sm overflow-hidden">
+        <img :src="botFace" alt="avatar" class="h-full w-full object-cover" draggable="false" />
+      </span>
+      <div class="min-w-0 max-w-[75%] flex flex-wrap gap-1.5">
+        <button
+          v-for="s in props.suggestions"
+          :key="s"
+          @click="emit('select', s)"
+          class="px-3 py-2 bg-panel text-ink font-retro text-base leading-relaxed pixel-border-sm break-words text-left hover:text-success hover:border-success transition-colors"
+        >
+          {{ s }}
+        </button>
       </div>
     </div>
   </div>
