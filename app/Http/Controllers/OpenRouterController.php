@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\OpenRouter\ChatRequest;
-use MoeMizrak\LaravelOpenrouter\DTO\ChatData;
-use MoeMizrak\LaravelOpenrouter\DTO\ErrorData;
-use MoeMizrak\LaravelOpenrouter\DTO\FunctionData;
-use MoeMizrak\LaravelOpenrouter\DTO\MessageData;
-use MoeMizrak\LaravelOpenrouter\DTO\ToolCallData;
-use MoeMizrak\LaravelOpenrouter\OpenRouterRequest;
-use MoeMizrak\LaravelOpenrouter\Types\RoleType;
+use DtRensuri\LaravelOpenrouter\DTO\ChatData;
+use DtRensuri\LaravelOpenrouter\DTO\ErrorData;
+use DtRensuri\LaravelOpenrouter\DTO\FunctionData;
+use DtRensuri\LaravelOpenrouter\DTO\MessageData;
+use DtRensuri\LaravelOpenrouter\DTO\ToolCallData;
+use DtRensuri\LaravelOpenrouter\OpenRouterRequest;
+use DtRensuri\LaravelOpenrouter\Types\RoleType;
 use Illuminate\Support\Facades\File;
 
 class OpenRouterController extends Controller

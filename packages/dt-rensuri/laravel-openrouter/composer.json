@@ -1,0 +1,57 @@
+{
+    "name": "dt-rensuri/laravel-openrouter",
+    "description": "Laravel package for OpenRouter (A unified interface for LLMs)",
+    "keywords": [
+        "laravel",
+        "laravel-openrouter",
+        "OpenRouter",
+        "LLMs",
+        "ai"
+    ],
+    "type": "package",
+    "homepage": "https://github.com/dt-rensuri/laravel-openrouter",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "DT Rensuri"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "ext-json": "*",
+        "spatie/laravel-data": "^4.13",
+        "guzzlehttp/guzzle": "^7.9",
+        "caseyamcl/guzzle_retry_middleware": "^2.12"
+    },
+    "require-dev": {
+        "mockery/mockery": "^1.6",
+        "orchestra/testbench": "^9.9",
+        "phpunit/phpunit": "^11.5",
+        "laravel/pint": "^1.29"
+    },
+    "autoload": {
+        "psr-4": {
+            "DtRensuri\\LaravelOpenrouter\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "DtRensuri\\LaravelOpenrouter\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "DtRensuri\\LaravelOpenrouter\\OpenRouterServiceProvider"
+            ],
+            "aliases": {
+                "LaravelOpenrouter": "DtRensuri\\LaravelOpenrouter\\Facades\\LaravelOpenRouter"
+            }
+        }
+    },
+    "scripts": {
+        "test": "phpunit"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

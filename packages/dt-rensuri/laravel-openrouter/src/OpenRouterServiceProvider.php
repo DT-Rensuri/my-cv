@@ -1,0 +1,120 @@
+<?php
+
+declare(strict_types=1);
+
+namespace DtRensuri\LaravelOpenrouter;
+
+use GuzzleHttp\Client;
+use GuzzleHttp\ClientInterface;
+use GuzzleHttp\HandlerStack;
+use GuzzleRetry\GuzzleRetryMiddleware;
+use Illuminate\Foundation\AliasLoader;
+use Illuminate\Support\ServiceProvider;
+use DtRensuri\LaravelOpenrouter\Facades\LaravelOpenRouter;
+use DtRensuri\LaravelOpenrouter\Helpers\OpenRouterHelper;
+
+final class OpenRouterServiceProvider extends ServiceProvider
+{
+    /**
+     * The default timeout for the Guzzle client.
+     */
+    const DEFAULT_TIMEOUT = 20;
+
+    /**
+     * Bootstrap any application services.
+     */
+    public function boot(): void
+    {
+        $this->registerPublishing();
+    }
+
+    /**
+     * Register any application services.
+     */
+    public function register(): void
+    {
+        $this->configure();
+
+        $this->app->singleton(ClientInterface::class, function () {
+            return $this->configureClient();
+        });
+
+        $this->app->bind('laravel-openrouter', function () {
+            return new OpenRouterRequest(
+                new OpenRouterHelper,
+            );
+        });
+
+        $this->app->bind(OpenRouterRequest::class, function () {
+            return $this->app->make('laravel-openrouter');
+        });
+
+        // Register the facade alias.
+        AliasLoader::getInstance()->alias('LaravelOpenRouter', LaravelOpenRouter::class);
+    }
+
+    /**
+     * Get the services provided by the provider.
+     */
+    public function provides(): array
+    {
+        return ['laravel-openrouter'];
+    }
+
+    /**
+     * Setup the configuration.
+     */
+    protected function configure(): void
+    {
+        $this->mergeConfigFrom(
+            __DIR__ . '/../config/laravel-openrouter.php', 'laravel-openrouter'
+        );
+    }
+
+    /**
+     * Register the package's publishable resources.
+     */
+    protected function registerPublishing(): void
+    {
+        if ($this->app->runningInConsole()) {
+            $this->publishes([
+                __DIR__ . '/../config/laravel-openrouter.php' => config_path('laravel-openrouter.php'),
+            ], 'laravel-openrouter');
+        }
+    }
+
+    /**
+     * Configure the Guzzle client.
+     */
+    private function configureClient(): Client
+    {
+        // Set the default configuration for retrying requests
+        $retryOptions = [
+            'max_retry_attempts' => 5,
+            'retry_on_status' => [429, 500, 502, 503, 504],
+            'retry_on_timeout' => true,
+        ];
+
+        // Create a handler stack with the retry middleware.
+        $handlerStack = HandlerStack::create();
+
+        // Add the retry middleware to the handler stack.
+        $handlerStack->push(GuzzleRetryMiddleware::factory($retryOptions));
+
+        /*
+         * Create and return a Guzzle client with the base_uri, timeout, headers and handler stack request options.
+         * For more info: https://openrouter.ai/docs
+         */
+        return new Client([
+            'base_uri' => config('laravel-openrouter.api_endpoint'),
+            'timeout' => config('laravel-openrouter.api_timeout', self::DEFAULT_TIMEOUT),
+            'handler' => $handlerStack,
+            'headers' => [
+                'Authorization' => 'Bearer ' . config('laravel-openrouter.api_key'),
+                'HTTP-Referer' => config('laravel-openrouter.referer'),
+                'X-Title' => config('laravel-openrouter.title'),
+                'Content-Type' => 'application/json',
+            ],
+        ]);
+    }
+}

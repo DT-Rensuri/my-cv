@@ -1,0 +1,58 @@
+<?php
+
+declare(strict_types=1);
+
+namespace DtRensuri\LaravelOpenrouter\DTO;
+
+use DtRensuri\LaravelOpenrouter\Rules\AllowedValues;
+use DtRensuri\LaravelOpenrouter\Types\EffortType;
+
+/**
+ * ReasoningData is the DTO for the reasoning parameters of the API call.
+ * For more info: https://openrouter.ai/docs/use-cases/reasoning-tokens
+ */
+final class ReasoningData extends DataTransferObject
+{
+    /**
+     * {@inheritDoc}
+     */
+    public function __construct(
+        /**
+         * OpenAI-style reasoning effort setting
+         */
+        #[AllowedValues([EffortType::HIGH, EffortType::MEDIUM, EffortType::LOW, EffortType::MINIMAL, EffortType::NONE])]
+        public ?string $effort = null,
+
+        /**
+         * Non-OpenAI-style reasoning effort setting.
+         * Note: Cannot be used simultaneously with effort.
+         */
+        public ?int $max_tokens = null,
+
+        /**
+         * Whether to exclude reasoning from the response
+         */
+        public ?bool $exclude = false,
+
+        /**
+         * Enable reasoning with the default parameters.
+         * Default: inferred from `effort` or `max_tokens`
+         */
+        public ?bool $enabled = null,
+    ) {
+        parent::__construct(...func_get_args());
+    }
+
+    public function convertToArray(): array
+    {
+        return array_filter(
+            [
+                'effort' => $this->effort,
+                'max_tokens' => $this->max_tokens,
+                'exclude' => $this->exclude,
+                'enabled' => $this->enabled,
+            ],
+            fn($value) => $value !== null
+        );
+    }
+}
