@@ -13,6 +13,10 @@ use DtRensuri\LaravelOpenrouter\DTO\PromptTokensDetailsData;
 use DtRensuri\LaravelOpenrouter\DTO\RateLimitData;
 use DtRensuri\LaravelOpenrouter\DTO\ResponseData;
 use DtRensuri\LaravelOpenrouter\DTO\UsageData;
+use DtRensuri\LaravelOpenrouter\DTO\AudioResponseData;
+use DtRensuri\LaravelOpenrouter\DTO\AudioSegmentsData;
+use DtRensuri\LaravelOpenrouter\DTO\AudioUsageData;
+use DtRensuri\LaravelOpenrouter\DTO\AudioWordData;
 use Psr\Http\Message\ResponseInterface;
 use ReflectionException;
 
@@ -73,6 +77,56 @@ final class OpenRouterHelper
             usage: $usage,
         );
     }
+
+    public function formAudioResponse(mixed $response = null): AudioResponseData
+    {
+        $usageArray = Arr::get($response, 'usage');
+
+        $usage = new AudioUsageData(
+            input_tokens: Arr::get($usageArray, 'input_tokens'),
+            output_tokens: Arr::get($usageArray, 'output_tokens'),
+            total_tokens: Arr::get($usageArray, 'total_tokens'),
+            cost: Arr::get($usageArray, 'cost'),
+            seconds: Arr::get($usageArray, 'seconds'),
+        );
+
+        $segmentsArray = Arr::get($response, 'segments');
+        $segments = $segmentsArray
+            ? array_map(fn(array $segment) => new AudioSegmentsData(
+                id: Arr::get($segment, 'id'),
+                start: Arr::get($segment, 'start'),
+                end: Arr::get($segment, 'end'),
+                text: Arr::get($segment, 'text'),
+                avg_logprob: Arr::get($segment, 'avg_logprob'),
+                compression_ratio: Arr::get($segment, 'compression_ratio'),
+                no_speech_prob: Arr::get($segment, 'no_speech_prob'),
+                seek: Arr::get($segment, 'seek'),
+                speaker: Arr::get($segment, 'speaker'),
+                temperature: Arr::get($segment, 'temperature'),
+                tokens: Arr::get($segment, 'tokens'),
+            ), $segmentsArray)
+            : null;
+
+        $wordsArray = Arr::get($response, 'words');
+        $words = $wordsArray
+            ? collect($wordsArray)->map(fn(array $word) => new AudioWordData(
+                word: Arr::get($word, 'word'),
+                start: Arr::get($word, 'start'),
+                end: Arr::get($word, 'end'),
+                speaker: Arr::get($word, 'speaker'),
+            ))->all()
+            : null;
+
+        return new AudioResponseData(
+            text: Arr::get($response, 'text'),
+            duration: Arr::get($response, 'duration'),
+            language: Arr::get($response, 'language'),
+            task: Arr::get($response, 'task'),
+            segments: $segments,
+            words: $words,
+            usage: $usage,
+        );
+    } 
 
     /**
      * Forms the cost response as CostResponseData.

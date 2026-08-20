@@ -1,9 +1,9 @@
-import { api } from './http';
+import { guestApi } from '@/services/api/guest';
 import { BraveSearchRequest } from '@/types/brave';
 
 export async function searchBrave(params: Partial<BraveSearchRequest> = {}) {
     try {
-        const response = await api.get('/brave/search', {
+        const response = await guestApi.get('/brave/search', {
             params: { ...params },
         });
         return response.data;

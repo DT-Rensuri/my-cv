@@ -1,7 +1,7 @@
 export interface BraveSearchRequest {
     q: string;
-    country?: 'US' | 'VN' | 'JP';
-    search_lang?: 'en' | 'vi' | 'ja';
+    country?: 'US' | 'JP';
+    search_lang?: 'en' | 'ja';
     count?: number; // max 20
     offset?: number; //max 9, default 0
     safesearch?: 'moderate' | 'off' | 'strict'; // default 'moderate'

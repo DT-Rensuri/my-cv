@@ -8,15 +8,28 @@ use DtRensuri\LaravelOpenrouter\DTO\ErrorData;
 use DtRensuri\LaravelOpenrouter\DTO\FunctionData;
 use DtRensuri\LaravelOpenrouter\DTO\MessageData;
 use DtRensuri\LaravelOpenrouter\DTO\ToolCallData;
+use DtRensuri\LaravelOpenrouter\DTO\InputAudioData;
+use DtRensuri\LaravelOpenrouter\DTO\AudioContentData;
+use DtRensuri\LaravelOpenrouter\DTO\AudioResponseData;
 use DtRensuri\LaravelOpenrouter\OpenRouterRequest;
 use DtRensuri\LaravelOpenrouter\Types\RoleType;
+use App\Http\Requests\OpenRouter\AudioRequest;
 use Illuminate\Support\Facades\File;
+use App\Support\ApiResponseBuilder;
 
 class OpenRouterController extends Controller
 {
+    private string $assistanceModel;
+    private string $audioModel;
+
+    public function __construct()
+    {
+        $this->assistanceModel = config('services.openrouter.model', 'gpt-4o-mini');
+        $this->audioModel = config('services.openrouter.audio_model', 'whisper');
+    }
+
     public function chat(ChatRequest $request, OpenRouterRequest $openRouter)
     {
-        $model = config('services.openrouter.model', 'gpt-4o-mini');
         $sysPromptPath = storage_path('app/prompts/SYSTEM.md');
         $prompt = File::exists($sysPromptPath)
             ? File::get($sysPromptPath)
@@ -30,11 +43,11 @@ class OpenRouterController extends Controller
         ];
 
         $messages = array_merge($messages, collect($request->input('messages', []))
-            ->map(fn (array $message) => new MessageData(
+            ->map(fn(array $message) => new MessageData(
                 role: $message['role'] ?? RoleType::USER,
                 content: $message['content'],
                 tool_calls: isset($message['tool_calls'])
-                    ? collect($message['tool_calls'])->map(fn (array $tc) => new ToolCallData(
+                    ? collect($message['tool_calls'])->map(fn(array $tc) => new ToolCallData(
                         id: $tc['id'] ?? null,
                         type: $tc['type'] ?? 'function',
                         function: isset($tc['function'])
@@ -51,7 +64,7 @@ class OpenRouterController extends Controller
 
         // Forward tool definitions (OpenAI format) so the model can call tools.
         $tools = collect($request->input('tools', []))
-            ->map(fn (array $tool) => new ToolCallData(
+            ->map(fn(array $tool) => new ToolCallData(
                 type: $tool['type'] ?? 'function',
                 function: isset($tool['function'])
                     ? new FunctionData(
@@ -65,7 +78,7 @@ class OpenRouterController extends Controller
 
         $chatData = new ChatData(
             messages: $messages,
-            model: $model,
+            model: $this->assistanceModel,
             stream: $request->boolean('stream') ? true : null,
             temperature: $request->float('temperature') ?: null,
             max_tokens: $request->integer('max_tokens') ?: null,
@@ -97,14 +110,40 @@ class OpenRouterController extends Controller
         $response = $openRouter->chatRequest($chatData);
 
         if ($response instanceof ErrorData) {
-            return response()->json([
-                'error' => [
-                    'code' => $response->code,
-                    'message' => $response->message,
-                ],
-            ], $response->code >= 400 && $response->code < 600 ? $response->code : 500);
+            return ApiResponseBuilder::error($response->message, $response->code, $response->metadata);
         }
 
-        return response()->json($response->toArray());
+        return ApiResponseBuilder::success($response->toArray());
+    }
+
+    public function transcription(AudioRequest $request, OpenRouterRequest $openRouter)
+    {
+        $audioData = $request->file('audio_data');
+        $audioFormat = $request->input('audio_format');
+
+        $audioBase64 = base64_encode(file_get_contents($audioData->getRealPath()));
+
+        $audioContentData = new AudioContentData(
+            input_audio: new InputAudioData(
+                data: $audioBase64,
+                format: $audioFormat,
+            ),
+            model: $this->audioModel,
+            language: $request->input('language'),
+            response_format: $request->input('response_format'),
+            temperature: $request->float('temperature') ?: null,
+            timestamp_granularities: $request->input('timestamp_granularities'),
+        );
+
+        $response = $openRouter->audioRequest($audioContentData);
+
+        if ($response instanceof ErrorData) {
+            return ApiResponseBuilder::error($response->message, $response->code, $response->metadata);
+        }
+
+        return ApiResponseBuilder::success([
+            'original_text' => $response->text,
+            'summary_text' => $response->text,
+        ]);
     }
 }

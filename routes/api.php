@@ -9,4 +9,5 @@ Route::prefix('brave')->group(function () {
 
 Route::prefix('openrouter')->group(function () {
     Route::post('/chat/completions', [\App\Http\Controllers\OpenRouterController::class, 'chat']);
+    Route::post('/audio/transcriptions', [\App\Http\Controllers\OpenRouterController::class, 'transcription']);
 });

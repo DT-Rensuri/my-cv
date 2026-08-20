@@ -13,6 +13,8 @@ use DtRensuri\LaravelOpenrouter\DTO\CostResponseData;
 use DtRensuri\LaravelOpenrouter\DTO\ErrorData;
 use DtRensuri\LaravelOpenrouter\DTO\LimitResponseData;
 use DtRensuri\LaravelOpenrouter\DTO\ResponseData;
+use DtRensuri\LaravelOpenrouter\DTO\AudioContentData;
+use DtRensuri\LaravelOpenrouter\DTO\AudioResponseData;
 use Psr\Http\Message\ResponseInterface;
 use ReflectionException;
 
@@ -72,6 +74,50 @@ final class OpenRouterRequest extends OpenRouterAPI
         }
 
         return $this->openRouterHelper->formChatResponse($decoded);
+    }
+
+    /**
+     * Sends a model request for the given audio data.
+     *
+     * @throws ReflectionException|GuzzleException
+    */
+    public function audioRequest(AudioContentData $audioData): ErrorData|AudioResponseData
+    {
+        // The path for the transcription request.
+        $transcriptionPath = 'audio/transcriptions';
+
+        // Filter null values from the audioData object and return array.
+        $audioData = $audioData->convertToArray();
+
+        // Options for the Guzzle request
+        $options = [
+            'json' => $audioData,
+        ];
+
+        $response = app(ClientInterface::class)->request(
+            'POST',
+            $transcriptionPath,
+            $options
+        );
+
+        $decoded = $this->openRouterHelper->jsonDecode($response);
+
+        if ($decoded === null) {
+            return new ErrorData(
+                code: 500,
+                message: 'Empty response from OpenRouter API.',
+            );
+        }
+
+        if (Arr::get($decoded, 'error')) {
+            return new ErrorData(
+                code: Arr::get($decoded, 'error.code', 500),
+                message: Arr::get($decoded, 'error.message', 'Unknown error from OpenRouter API.'),
+                metadata: Arr::get($decoded, 'error.metadata'),
+            );
+        }
+
+        return $this->openRouterHelper->formAudioResponse($decoded);
     }
 
     /**

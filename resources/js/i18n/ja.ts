@@ -217,6 +217,8 @@ export default {
             start: '▶ 開始',
             stop: '■ 停止',
             download: '↓ ダウンロード',
+            aiSummaryBtn: '✦ 要約',
+            aiSummaryLoading: '要約中...',
             clear: '✕ クリア',
             playback: '録音 / 再生',
             size: 'サイズ:',
@@ -224,6 +226,8 @@ export default {
             aiSummaryDesc: '会議の自動要約',
             aiSummaryText: '録音後、AIが会議内容を要約し、アクション項目や重要なポイントを抽出します。',
             footer: 'AI MEETING RECORDER · SURISUITE',
+            original: 'オリジナル',
+            summary: '要約',
         },
     },
 };

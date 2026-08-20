@@ -43,5 +43,6 @@ return [
         // Server-side key ONLY. NEVER expose this to the frontend.
         'api_key' => env('OPENROUTER_API_KEY'),
         'model' => env('OPENROUTER_MODEL', 'gpt-4o-mini'), // Default model if not provided
+        'audio_model' => env('OPENROUTER_AUDIO_MODEL', 'whisper'), // Default audio model if not provided
     ],
 ];

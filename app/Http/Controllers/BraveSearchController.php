@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Http\Requests\Brave\BraveSearchRequest;
 use App\Services\BraveService;
+use App\Support\ApiResponseBuilder;
 
 class BraveSearchController extends Controller
 {
@@ -13,6 +13,6 @@ class BraveSearchController extends Controller
     {
         $query = $request->all();
         $results = $braveService->sendRequest('GET', '/search', $query);
-        return response()->json($results);
+        return ApiResponseBuilder::success($results);
     }
 }
