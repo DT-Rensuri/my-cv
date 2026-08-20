@@ -64,7 +64,7 @@
 
         <!-- Controls -->
         <div class="flex flex-wrap items-center justify-center gap-3">
-          <template v-if="!isAiSummaryLoading">
+          <template v-if="!isAiTranscriptionLoading">
             <button v-if="!isRecording" @click="startRecording"
               class="px-6 py-3 bg-success text-background pixel-border-sm font-retro text-base hover:opacity-90 active:translate-y-0.5">
               {{ t('projects.aimettingVoiceRecorder.start') }}
@@ -77,9 +77,9 @@
               class="px-6 py-3 bg-accent text-background pixel-border-sm font-retro text-base hover:opacity-90 active:translate-y-0.5">
               {{ t('projects.aimettingVoiceRecorder.download') }}
             </button>
-            <button v-if="audioUrl" @click="aiSummaryBtn"
+            <button v-if="audioUrl" @click="aiTranscriptionBtn()"
               class="px-6 py-3 bg-accent text-background pixel-border-sm font-retro text-base hover:opacity-90 active:translate-y-0.5">
-              {{ t('projects.aimettingVoiceRecorder.aiSummaryBtn') }}
+              {{ t('projects.aimettingVoiceRecorder.aiTranscriptionBtn') }}
             </button>
             <button v-if="audioUrl" @click="clear"
               class="px-6 py-3 bg-panel text-ink pixel-border-sm font-retro text-base hover:border-danger hover:text-danger active:translate-y-0.5">
@@ -88,8 +88,9 @@
           </template>
           <template v-else>
             <div class="flex items-center gap-2">
-              <span class="font-pixel text-px-16 text-ink-dim">{{ t('projects.aimettingVoiceRecorder.aiSummaryLoading')
-              }}</span>
+              <span class="font-pixel text-px-16 text-ink-dim">
+                {{ t('projects.aimettingVoiceRecorder.aiTranscriptionLoading') }}
+              </span>
               <svg class="animate-spin h-5 w-5 text-accent" xmlns="http://www.w3.org/2000/svg" fill="none"
                 viewBox="0 0 24 24">
                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
@@ -197,6 +198,7 @@ const audioUrl = ref<string | null>(null);
 const audioBlob = ref<Blob | null>(null);
 const elapsed = ref(0);
 const isAiSummaryLoading = ref(false);
+const isAiTranscriptionLoading = ref(false);
 const originalText = ref<string | null>(null);
 const aiSummary = ref<string | null>(null);
 const activeTab = ref<'summary' | 'original'>('summary');
@@ -353,9 +355,9 @@ const clear = () => {
   elapsed.value = 0;
 };
 
-const aiSummaryBtn = async () => {
+const aiTranscriptionBtn = async () => {
   if (!audioBlob.value) return;
-  isAiSummaryLoading.value = true;
+  isAiTranscriptionLoading.value = true;
   const formData = new FormData();
   formData.append('audio_data', audioBlob.value, 'recording.webm');
   formData.append('audio_format', 'webm');
@@ -368,11 +370,24 @@ const aiSummaryBtn = async () => {
     });
 
     const data = response.data;
-    aiSummary.value = data.summary_text || 'No summary available.';
-    originalText.value = data.original_text || 'No original text available.';
+    originalText.value = data.text || 'No original text available.';
+
+    aiSummaryHandler();
   } catch (error) {
     aiSummary.value = 'Error fetching summary.';
     originalText.value = 'Error fetching original text.';
+  } finally {
+    isAiTranscriptionLoading.value = false;
+  }
+};
+
+const aiSummaryHandler = async () => {
+  if (!originalText.value) return;
+  isAiSummaryLoading.value = true;
+  try {
+
+  } catch (error) {
+    aiSummary.value = 'Error fetching summary.';
   } finally {
     isAiSummaryLoading.value = false;
   }

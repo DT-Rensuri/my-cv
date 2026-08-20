@@ -218,6 +218,8 @@ export default {
             stop: '■ 停止',
             download: '↓ ダウンロード',
             aiSummaryBtn: '✦ 要約',
+            aiTranscriptionBtn: '✦ 文字起こし',
+            aiTranscriptionLoading: '文字起こし中...',
             aiSummaryLoading: '要約中...',
             clear: '✕ クリア',
             playback: '録音 / 再生',

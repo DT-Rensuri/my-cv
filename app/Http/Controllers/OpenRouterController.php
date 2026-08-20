@@ -113,7 +113,7 @@ class OpenRouterController extends Controller
             return ApiResponseBuilder::error($response->message, $response->code, $response->metadata);
         }
 
-        return ApiResponseBuilder::success($response->toArray());
+        return response()->json($response->toArray());
     }
 
     public function transcription(AudioRequest $request, OpenRouterRequest $openRouter)
@@ -142,8 +142,7 @@ class OpenRouterController extends Controller
         }
 
         return ApiResponseBuilder::success([
-            'original_text' => $response->text,
-            'summary_text' => $response->text,
+            'text' => $response->text
         ]);
     }
 }

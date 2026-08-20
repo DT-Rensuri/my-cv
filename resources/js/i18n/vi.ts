@@ -219,6 +219,8 @@ export default {
             download: '↓ Download',
             clear: '✕ Clear',
             aiSummaryBtn: '✦ Summarize',
+            aiTranscriptionBtn: '✦ Transcribe',
+            aiTranscriptionLoading: 'Transcribing...',
             aiSummaryLoading: 'Summarizing...',
             playback: 'RECORDING / PLAYBACK',
             size: 'Size:',
