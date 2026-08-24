@@ -9,6 +9,7 @@ import { MemorySaver } from '@langchain/langgraph';
 
 const provider = (import.meta.env.VITE_LLM_PROVIDER ?? 'ollama').toLowerCase();
 const checkpointer = new MemorySaver();
+const voiceMeetingCheckpointer = new MemorySaver();
 
 function resolveModel(): BaseChatModel {
     if (provider === 'ollama') {
@@ -43,4 +44,10 @@ const agent = createAgent({
     checkpointer,
 });
 
-export { agent, provider };
+const voiceMeetingAgent = createAgent({
+    model: resolveModel(),
+    tools: [braveSearchTool],
+    checkpointer: voiceMeetingCheckpointer,
+})
+
+export { agent, voiceMeetingAgent, provider };

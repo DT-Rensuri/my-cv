@@ -2,10 +2,10 @@
 import { ref } from 'vue';
 import { Send } from 'lucide-vue-next';
 import { useI18n } from 'vue-i18n';
-import { useAgentStore } from '@/stores/agents';
+import { useChatbotAgentStore } from '@/stores/chatbotAgent';
 
 const { t } = useI18n();
-const agentStore = useAgentStore();
+const agentStore = useChatbotAgentStore();
 
 const emit = defineEmits<{
   (e: 'send', text: string): void;

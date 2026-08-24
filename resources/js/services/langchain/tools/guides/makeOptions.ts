@@ -1,11 +1,11 @@
 import { tool } from '@langchain/core/tools';
 import * as z from 'zod';
 
-import { useAgentStore } from '@/stores/agents';
+import { useChatbotAgentStore } from '@/stores/chatbotAgent';
 
 export const makeChoicesOptionsTool = tool(
     async (input: { choices: string[] }) => {
-        const store = useAgentStore();
+        const store = useChatbotAgentStore();
         const { choices } = input;
         if (!choices || choices.length === 0) {
             return {

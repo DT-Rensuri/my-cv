@@ -6,12 +6,11 @@ import { useAvatarStore } from './avatar';
 
 export type AgentMessage = { role: string; content: string };
 
-export const useAgentStore = defineStore('agent', () => {
+export const useChatbotAgentStore = defineStore('chatbotAgent', () => {
     const response = ref<string | null>(null);
     const loading = ref(false);
     const enableSuggestions = ref(true);
     const suggestions = ref<string[]>([]);
-    const selectedAgent = ref('default');
 
     const streamOutput = ref<string>('');
     const thinkingOutput = ref<string>('');
@@ -34,21 +33,11 @@ export const useAgentStore = defineStore('agent', () => {
         suggestions.value = [];
     }
 
-    function getAgentInstance() {
-        switch (selectedAgent.value) {
-            case 'default':
-                return agent;
-            default:
-                return agent;
-        }
-    }
-
     async function invokeAgent(message: AgentMessage): Promise<string | null> {
         loading.value = true;
         response.value = null;
-        const agentInstance = getAgentInstance();
         try {
-            const result = await agentInstance.invoke(
+            const result = await agent.invoke(
                 { messages: [message] },
                 { configurable: { thread_id: 'default' } },
             );
@@ -81,8 +70,7 @@ export const useAgentStore = defineStore('agent', () => {
         try {
             resetStream();
             loading.value = true;
-            const agentInstance = getAgentInstance();
-            const stream = await agentInstance.streamEvents(
+            const stream = await agent.streamEvents(
                 { messages: [message] },
                 { configurable: { thread_id: 'default' } },
             );

@@ -3,13 +3,13 @@ import { ref, watch, nextTick, computed } from 'vue';
 import { User } from 'lucide-vue-next';
 import { useI18n } from 'vue-i18n';
 import type { ChatMessage } from '@/types/chat';
-import { useAgentStore } from '@/stores/agents';
+import { useChatbotAgentStore } from '@/stores/chatbotAgent';
 import { useAvatarStore } from '@/stores/avatar';
 import { EMOTE_GIFS } from '@/stores/avatarEmotes';
 import { renderMarkdown } from '@/lib/markdown';
 
 const { t } = useI18n();
-const agentStore = useAgentStore();
+const agentStore = useChatbotAgentStore();
 const avatarStore = useAvatarStore();
 const streamHtml = computed(() => renderMarkdown(agentStore.streamOutput));
 const thinkingHtml = computed(() => renderMarkdown(agentStore.thinkingOutput));

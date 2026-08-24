@@ -2,7 +2,7 @@
 import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useCvData } from '@/composables/useCvData';
-import { useAgentStore } from '@/stores/agents';
+import { useChatbotAgentStore } from '@/stores/chatbotAgent';
 import { useAvatarStore } from '@/stores/avatar';
 import { EMOTE_GIFS } from '@/stores/avatarEmotes';
 import ChatHeader from './ChatHeader.vue';
@@ -12,7 +12,7 @@ import type { ChatMessage } from '@/types/chat';
 import { renderMarkdown } from '@/lib/markdown';
 
 const { t, tm, locale } = useI18n();
-const agentStore = useAgentStore();
+const agentStore = useChatbotAgentStore();
 const { profile, education } = useCvData();
 const avatarStore = useAvatarStore();
 const open = ref(false);
