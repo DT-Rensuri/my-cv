@@ -20,7 +20,7 @@ const open = ref(false);
 // --- Floating guide avatar (merged with the chat trigger) ---
 const emoteFaces = EMOTE_GIFS;
 
-const face = computed(() => emoteFaces[avatarStore.emote] ?? emoteFaces.idle);
+const face = computed(() => (emoteFaces[avatarStore.emote] ?? emoteFaces.idle).el);
 const avatarPos = computed(() => ({
     left: avatarStore.x + 'px',
     top: avatarStore.y + 'px',

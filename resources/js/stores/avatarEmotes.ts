@@ -1,62 +1,201 @@
 /**
- * Central registry of avatar emotes → GIF URLs.
+ * Central registry of avatar emotes → local webp assets + metadata.
  *
  * This is the SINGLE source of truth for the floating guide avatar's
  * expressions. To add a new emote, just add one line here:
  *
- *   myEmote: 'https://media.giphy.com/media/XXXX/giphy.gif',
+ *   myEmote: { name: '...', description: '...', el: '...' },
  *
  * The type `AvatarEmote`, the `EMOTES` array (used by the AI tool schema)
  * and the `EMOTE_GIFS` map (used by the UI) are all derived from this object,
  * so everything stays in sync automatically.
  */
-export const EMOTE_GIFS = {
-  // --- Core emotes (used by the guide logic) ---
-  idle: 'https://media.giphy.com/media/uBn5A3rxwD7N8nZvlw/giphy.gif', // idle
-  wave: 'https://media.giphy.com/media/1hoKkBNSBxVyHIsPer/giphy.gif', // thả tim
-  happy: 'https://media.giphy.com/media/pbKSEFrEEudOIclaL8/giphy.gif', // vui vẻ
-  think: 'https://media.giphy.com/media/XWj51fkipHFMUNP8xB/giphy.gif', // loading
-  point: 'https://media.giphy.com/media/QYjC3IJxPGNnhget13/giphy.gif', // like
-  celebrate: 'https://media.giphy.com/media/h20IwOYYJgCMbj4uaD/giphy.gif', // phởn
 
-  // --- Extended emotes (from Emoji.txt) ---
-  cool: 'https://media.giphy.com/media/5eFtKFqu5D34WNno9u/giphy.gif', // Cool ngầu
-  refuse: 'https://media.giphy.com/media/oy9hVQl8Hq7o8T3tER/giphy.gif', // Hết lòng từ chối
-  craving: 'https://media.giphy.com/media/WNlsQiGMU387hn7UZQ/giphy.gif', // Thèm khát
-  superAngry: 'https://media.giphy.com/media/65Th0K9yQJtKcxeYyN/giphy.gif', // Siêu tức giận
-  rich: 'https://media.giphy.com/media/2mzRDsekJ4VqZIa2Cd/giphy.gif', // Đại gia
-  dozing: 'https://media.giphy.com/media/XoM1eSwGMXK4huqV2E/giphy.gif', // Ngủ gật
-  love: 'https://media.giphy.com/media/1hMjSIv1JBPEdoz73Y/giphy.gif', // yêu quá
-  heartbroken: 'https://media.giphy.com/media/45314GJC3sIVJWP0S1/giphy.gif', // thất tình
-  heart: 'https://media.giphy.com/media/1hoKkBNSBxVyHIsPer/giphy.gif', // thả tim
-  dazed: 'https://media.giphy.com/media/5jYcUPGBGgUioiBq4r/giphy.gif', // Ngơ ngác
-  noListen: 'https://media.giphy.com/media/1ynDNZYeUwPkQBhx99/giphy.gif', // Không muốn nghe
-  worried: 'https://media.giphy.com/media/WxKdPPaxNLCdxgLoBN/giphy.gif', // lo lắng
-  workStress: 'https://media.giphy.com/media/9PwWklO9tSELtIhBka/giphy.gif', // Stress vì công việc
-  tongue: 'https://media.giphy.com/media/Q66dCIgxnb4uzEYDqS/giphy.gif', // lêu lêu
-  surprised: 'https://media.giphy.com/media/h5WUsjFmE6329tkcAz/giphy.gif', // ngạc nhiên
-  elated: 'https://media.giphy.com/media/h20IwOYYJgCMbj4uaD/giphy.gif', // Phởn
-  silly: 'https://media.giphy.com/media/jTAkn6hKyy2esWjOOZ/giphy.gif', // Ngốc nghếch
-  sulky: 'https://media.giphy.com/media/KdB5DnYdadrJMWP6Rz/giphy.gif', // Dỗi
-  like: 'https://media.giphy.com/media/QYjC3IJxPGNnhget13/giphy.gif', // Like
-  angry: 'https://media.giphy.com/media/MFkTITj69pMOPlbfeX/giphy.gif', // Tức giận
-  exploited: 'https://media.giphy.com/media/j9eToXPhhR2Mh4ZMLg/giphy.gif', // Bị bóc lột
-  crying: 'https://media.giphy.com/media/QlQdLBS70XJcZY1fLF/giphy.gif', // khóc
-  lazy: 'https://media.giphy.com/media/Pkuzzo4rVMXW558Uka/giphy.gif', // Lười biếng
-  serious: 'https://media.giphy.com/media/OgmbF5ibV01vflyU2n/giphy.gif', // Nghiêm nghị
-  hungry: 'https://media.giphy.com/media/EExJM3NifsBwjJukuF/giphy.gif', // đói
-  scared: 'https://media.giphy.com/media/MQGNf0r6Xagrw5KfVL/giphy.gif', // hoảng sợ
-  heart2: 'https://media.giphy.com/media/IEm8kcqLVCctHJ1kWm/giphy.gif', // Thả tim
-  lag: 'https://media.giphy.com/media/6IEIFOBIb1Y2f2mcnO/giphy.gif', // Bị lag
-  doubt: 'https://media.giphy.com/media/2weSkZg9hvQW5Zv2fk/giphy.gif', // Nghi ngờ
-  holdLaugh: 'https://media.giphy.com/media/XaYigEghuWAyS3HOoA/giphy.gif', // Nhịn cười
-  panicked: 'https://media.giphy.com/media/FF5i6JkK5BE83PU9K1/giphy.gif', // hốt hoảng
-  loading: 'https://media.giphy.com/media/XWj51fkipHFMUNP8xB/giphy.gif', // loading
-  like2: 'https://media.giphy.com/media/qGmLWDPFAzOAz8DU2L/giphy.gif', // like nè
-  sleepy: 'https://media.giphy.com/media/eH1hKMxY7ZzhJiML2C/giphy.gif', // buồn ngủ
-  naive: 'https://media.giphy.com/media/yPAWyc35MhDUNrzySi/giphy.gif', // khờ khạo
-  slamTable: 'https://media.giphy.com/media/Z3Op6V4KdP7ZQWft5O/giphy.gif', // đập bàn
-  ok: 'https://media.giphy.com/media/4i5XhA2un9XG4lqSxC/giphy.gif', // ok
+// Eagerly import every local emoji asset so Vite bundles & hashes them.
+const emojiAssets = import.meta.glob('../../emoji/*.webp', {
+    eager: true,
+    import: 'default',
+    query: '?url',
+}) as Record<string, string>;
+
+/** Resolves a local emoji file to its bundled URL. */
+const emoji = (file: string): string => emojiAssets[`../../emoji/${file}`];
+
+export const EMOTE_GIFS = {
+    // --- Core emotes (used by the guide logic) ---
+    idle: {
+        name: 'idle',
+        description: 'Khuôn mặt nghỉ ngơi bình thường (mặc định).',
+        el: emoji('idle.webp'),
+    },
+    wave: {
+        name: 'wave',
+        description: 'Vẫy tay chào hỏi hoặc tạm biệt.',
+        el: emoji('wave.webp'),
+    },
+    happy: {
+        name: 'happy',
+        description: 'Vui vẻ, chào hỏi, tin tốt.',
+        el: emoji('happy.webp'),
+    },
+    think: {
+        name: 'think',
+        description: 'Đang suy nghĩ, cân nhắc câu hỏi.',
+        el: emoji('think.webp'),
+    },
+    point: {
+        name: 'point',
+        description: 'Chỉ vào một phần hoặc chi tiết nào đó.',
+        el: emoji('point.webp'),
+    },
+    celebrate: {
+        name: 'celebrate',
+        description: 'Ăn mừng thành công, thành tích, tin tuyệt vời.',
+        el: emoji('celebrate.webp'),
+    },
+
+    // --- Extended emotes (from Emoji.txt) ---
+    cool: {
+        name: 'cool',
+        description: 'Ngầu, tự tin, phong cách.',
+        el: emoji('cool.webp'),
+    },
+    refuse: {
+        name: 'refuse',
+        description: 'Từ chối một cách lịch sự.',
+        el: emoji('refuse.webp'),
+    },
+    craving: {
+        name: 'craving',
+        description: 'Thèm khát, khao khát điều gì đó.',
+        el: emoji('craving.webp'),
+    },
+    superAngry: {
+        name: 'superAngry',
+        description: 'Siêu tức giận.',
+        el: emoji('superAngry.webp'),
+    },
+    rich: {
+        name: 'rich',
+        description: 'Đại gia, giàu có.',
+        el: emoji('rich.webp'),
+    },
+    dozing: {
+        name: 'dozing',
+        description: 'Ngủ gật, buồn ngủ.',
+        el: emoji('dozing.webp'),
+    },
+    love: {
+        name: 'love',
+        description: 'Yêu quá, trìu mến.',
+        el: emoji('love.webp'),
+    },
+    heartbroken: {
+        name: 'heartbroken',
+        description: 'Thất tình, buồn bã.',
+        el: emoji('heartbroken.webp'),
+    },
+    dazed: {
+        name: 'dazed',
+        description: 'Ngơ ngác, bối rối.',
+        el: emoji('dazed.webp'),
+    },
+    noListen: {
+        name: 'noListen',
+        description: 'Không muốn nghe.',
+        el: emoji('noListen.webp'),
+    },
+    worried: {
+        name: 'worried',
+        description: 'Lo lắng.',
+        el: emoji('worried.webp'),
+    },
+    workStress: {
+        name: 'workStress',
+        description: 'Căng thẳng vì công việc.',
+        el: emoji('workStress.webp'),
+    },
+    tongue: {
+        name: 'tongue',
+        description: 'Lêu lêu, trêu chọc.',
+        el: emoji('tongue.webp'),
+    },
+    surprised: {
+        name: 'surprised',
+        description: 'Ngạc nhiên.',
+        el: emoji('supprised.webp'),
+    },
+    silly: {
+        name: 'silly',
+        description: 'Ngốc nghếch, khờ khạo.',
+        el: emoji('silly.webp'),
+    },
+    sulky: { name: 'sulky', description: 'Dỗi, hờn.', el: emoji('sulky.webp') },
+    angry: { name: 'angry', description: 'Tức giận.', el: emoji('angry.webp') },
+    exploited: {
+        name: 'exploited',
+        description: 'Bị bóc lột, làm việc quá sức.',
+        el: emoji('exploited.webp'),
+    },
+    crying: {
+        name: 'crying',
+        description: 'Khóc, buồn.',
+        el: emoji('crying.webp'),
+    },
+    lazy: { name: 'lazy', description: 'Lười biếng.', el: emoji('lazy.webp') },
+    serious: {
+        name: 'serious',
+        description: 'Nghiêm nghị, nghiêm túc.',
+        el: emoji('serious.webp'),
+    },
+    hungry: { name: 'hungry', description: 'Đói.', el: emoji('hungry.webp') },
+    scared: {
+        name: 'scared',
+        description: 'Hoảng sợ.',
+        el: emoji('scared.webp'),
+    },
+    heart2: {
+        name: 'heart2',
+        description: 'Thả tim, thích.',
+        el: emoji('heart2.webp'),
+    },
+    lag: {
+        name: 'lag',
+        description: 'Bị lag, đang xử lý.',
+        el: emoji('lag.webp'),
+    },
+    doubt: { name: 'doubt', description: 'Nghi ngờ.', el: emoji('doubt.webp') },
+    holdLaugh: {
+        name: 'holdLaugh',
+        description: 'Nhịn cười.',
+        el: emoji('holdLaugh.webp'),
+    },
+    panicked: {
+        name: 'panicked',
+        description: 'Hốt hoảng.',
+        el: emoji('panicked.webp'),
+    },
+    like2: {
+        name: 'like2',
+        description: 'Like, thích.',
+        el: emoji('like2.webp'),
+    },
+    sleepy: {
+        name: 'sleepy',
+        description: 'Buồn ngủ.',
+        el: emoji('sleepy.webp'),
+    },
+    naive: {
+        name: 'naive',
+        description: 'Khờ khạo, ngây thơ.',
+        el: emoji('naive.webp'),
+    },
+    slamTable: {
+        name: 'slamTable',
+        description: 'Đập bàn, tức giận.',
+        el: emoji('slamTable.webp'),
+    },
+    ok: { name: 'ok', description: 'Đồng ý, ok.', el: emoji('ok.webp') },
 } as const;
 
 /** Union type of every available emote key. */

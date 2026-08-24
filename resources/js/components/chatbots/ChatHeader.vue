@@ -10,7 +10,7 @@ const { t } = useI18n();
 const { profile } = useCvData();
 const avatarStore = useAvatarStore();
 
-const face = computed(() => EMOTE_GIFS[avatarStore.emote] ?? EMOTE_GIFS.idle);
+const face = computed(() => (EMOTE_GIFS[avatarStore.emote] ?? EMOTE_GIFS.idle).el);
 
 const emit = defineEmits<{
   (e: 'close'): void;

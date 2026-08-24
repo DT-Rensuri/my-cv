@@ -15,7 +15,7 @@ const streamHtml = computed(() => renderMarkdown(agentStore.streamOutput));
 const thinkingHtml = computed(() => renderMarkdown(agentStore.thinkingOutput));
 
 // Live avatar face (GIF) reflecting the current emote, updates continuously.
-const botFace = computed(() => EMOTE_GIFS[avatarStore.emote] ?? EMOTE_GIFS.idle);
+const botFace = computed(() => (EMOTE_GIFS[avatarStore.emote] ?? EMOTE_GIFS.idle).el);
 
 const props = defineProps<{
   messages: ChatMessage[];
