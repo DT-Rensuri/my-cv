@@ -11,7 +11,8 @@ export default {
     },
     hero: {
         ready: 'READY TO QUEST',
-        tagline: '> Building efficient, smart and scalable web systems — combining optimization thinking and AI automation.',
+        tagline:
+            '> Building efficient, smart and scalable web systems — combining optimization thinking and AI automation.',
         contactMe: 'CONTACT ME',
         downloadCv: 'DOWNLOAD CV',
         character: 'CHARACTER',
@@ -46,7 +47,8 @@ export default {
     },
     contact: {
         heading: 'Contact',
-        subtitle: '> I am always ready to discuss Fullstack opportunities, AI projects and automation. Feel free to reach out!',
+        subtitle:
+            '> I am always ready to discuss Fullstack opportunities, AI projects and automation. Feel free to reach out!',
         phone: 'Phone',
         address: 'Address',
         sendEmail: 'SEND EMAIL',
@@ -55,10 +57,10 @@ export default {
     },
     chatbot: {
         greeting:
-            '> Hello! I am **Suri** — {name}\'s smart AI assistant.\n> Ask me anything you care about! **(⁠ ⁠╹⁠▽⁠╹⁠ ⁠)**',
+            "> Hello! I am **Suri** — {name}'s smart AI assistant.\n> Ask me anything you care about! **(⁠ ⁠╹⁠▽⁠╹⁠ ⁠)**",
         suggestions: [
             'How do I change the theme?',
-            'What are {name}\'s skills?',
+            "What are {name}'s skills?",
             'How to contact?',
         ],
         inputPlaceholder: '> Type your question...',
@@ -70,15 +72,20 @@ export default {
         online: '[ONLINE] LV.',
         thinking: 'Thinking',
         fallback: {
-            experience: '> {name} is a Fullstack Developer at ZOTEK 8 (10/2023 — present). Completed 5 projects: Survey System, Data Collection Tool, Multi-Platform CMS, Enterprise Invoice CMS, and E-Learning Platform.',
+            experience:
+                '> {name} is a Fullstack Developer at ZOTEK 8 (10/2023 — present). Completed 5 projects: Survey System, Data Collection Tool, Multi-Platform CMS, Enterprise Invoice CMS, and E-Learning Platform.',
             skills: '> Backend: Laravel, Express.js, Next.js | Frontend: Vue.js, React.js, Blade, TailwindCSS, Bootstrap | AI: AI assistant & Automation Tools, Vibe coding | Other: Embedded Systems, API & Automation.',
-            contact: '> Phone: {phone} | Email: {email} | GitHub: {github} | Address: {address}',
-            education: '> {name} graduated with {degree} from UTT (10/2020 — 08/2025). Rank: Good.',
-            objective: '> Objective: Build efficient, smart and scalable web systems. Integrate AI to optimize UX and operations in the next 2 years.',
-            who: '> I am **Suri** — {name}\'s smart AI assistant — Fullstack Developer & AI Automation Mage (LV. {level}).',
+            contact:
+                '> Phone: {phone} | Email: {email} | GitHub: {github} | Address: {address}',
+            education:
+                '> {name} graduated with {degree} from UTT (10/2020 — 08/2025). Rank: Good.',
+            objective:
+                '> Objective: Build efficient, smart and scalable web systems. Integrate AI to optimize UX and operations in the next 2 years.',
+            who: "> I am **Suri** — {name}'s smart AI assistant — Fullstack Developer & AI Automation Mage (LV. {level}).",
             cv: '> You can download the CV via the "DOWNLOAD CV" button at the top of the page, or contact directly via email: {email}',
-            hello: '> Hello! Ask me about {name}\'s experience, skills, education, or contact!',
-            unknown: '> I don\'t understand that question. Try asking about: experience, skills, education, contact, or career objective!',
+            hello: "> Hello! Ask me about {name}'s experience, skills, education, or contact!",
+            unknown:
+                "> I don't understand that question. Try asking about: experience, skills, education, contact, or career objective!",
         },
     },
     cv: {
@@ -113,7 +120,9 @@ export default {
                             'Designed system architecture optimized for high traffic and concurrent users.',
                             'Achieved stable performance handling thousands of simultaneous responses.',
                         ],
-                        highlights: ['Worked for an international client (Japan)'],
+                        highlights: [
+                            'Worked for an international client (Japan)',
+                        ],
                     },
                     {
                         name: 'Automated Data Collection Tool',
@@ -121,7 +130,9 @@ export default {
                             'Built an automated system to collect data from Facebook, Instagram, TikTok.',
                             'Integrated API, crawling and scheduled data processing.',
                         ],
-                        highlights: ['Fully automated data collection pipeline'],
+                        highlights: [
+                            'Fully automated data collection pipeline',
+                        ],
                     },
                     {
                         name: 'Multi-Platform CMS',
@@ -136,7 +147,9 @@ export default {
                             'Built a centralized system to manage invoices, customers and financial data.',
                             'Supported authentication, authorization, logging and real-time revenue statistics.',
                         ],
-                        highlights: ['Handles sensitive financial data with security'],
+                        highlights: [
+                            'Handles sensitive financial data with security',
+                        ],
                     },
                     {
                         name: 'E-Learning WordPress Platform',
@@ -156,11 +169,21 @@ export default {
             },
         ],
         skillGroups: [
-            { label: 'Backend Development', icon: 'server', skills: ['Laravel', 'Express.js', 'Next.js'] },
+            {
+                label: 'Backend Development',
+                icon: 'server',
+                skills: ['Laravel', 'Express.js', 'Next.js'],
+            },
             {
                 label: 'Frontend Development',
                 icon: 'layout',
-                skills: ['Vue.js', 'React.js', 'Blade Template', 'TailwindCSS', 'Bootstrap'],
+                skills: [
+                    'Vue.js',
+                    'React.js',
+                    'Blade Template',
+                    'TailwindCSS',
+                    'Bootstrap',
+                ],
             },
             {
                 label: 'AI & Automation',
@@ -226,10 +249,26 @@ export default {
             size: 'Size:',
             aiSummary: 'AI SUMMARY',
             aiSummaryDesc: 'Automatic meeting summary',
-            aiSummaryText: 'After recording, AI will summarize the meeting content, extract action items and key points.',
+            aiSummaryText:
+                'After recording, AI will summarize the meeting content, extract action items and key points.',
             footer: 'AI MEETING RECORDER · SURISUITE',
             original: 'Original',
             summary: 'Summary',
+            notes: 'NOTES',
+            latest: 'Latest',
+            chatTitle: 'AI CHAT',
+            chatEmpty: 'Ask the AI about the meeting notes...',
+            chatPlaceholder: 'Ask about the notes...',
+            send: 'Send',
+            manageVersions: 'Versions',
+            versionHistory: 'VERSION HISTORY',
+            noVersions:
+                'No versions yet. Chat with the AI to create note versions.',
+            chatbotSuggestions: [
+                'Summarize the meeting notes.',
+                'Extract action items from the transcript.',
+                'Highlight key decisions made during the meeting.',
+            ],
         },
     },
 };

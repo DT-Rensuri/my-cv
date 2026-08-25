@@ -1,6 +1,6 @@
-import { ref, watch } from 'vue';
+import { ref, watch, computed } from 'vue';
 import { defineStore } from 'pinia';
-import { agent } from '@/services/langchain';
+import { agent, voiceMeetingAgent } from '@/services/langchain';
 import { LanguageOption } from '@/types/chat';
 import { useAvatarStore } from './avatar';
 
@@ -16,13 +16,19 @@ export const useChatbotAgentStore = defineStore('chatbotAgent', () => {
     const thinkingOutput = ref<string>('');
     const isStreaming = ref(false);
     const isThinking = ref(false);
-    const selectedLanguage = ref<LanguageOption>( { code: 'vi', name: 'Vietnamese' });
+    const selectedLanguage = ref<LanguageOption>({
+        code: 'vi',
+        name: 'Vietnamese',
+    });
     const agentTone = ref<string>('friendly');
     const agentResponseLength = ref<string>('balanced');
     const agentResponseFormat = ref<string>('plain_text');
     const agentTechnicalLevel = ref<string>('adaptive');
     const agentProactivity = ref<string>('normal');
-    const agentPersonality = ref<string>('I am a helpful and friendly assistant.');
+    const agentPersonality = ref<string>(
+        'I am a helpful and friendly assistant.',
+    );
+    const selectedAgent = ref('default');
 
     function resetStream() {
         streamOutput.value = '';
@@ -33,14 +39,20 @@ export const useChatbotAgentStore = defineStore('chatbotAgent', () => {
         suggestions.value = [];
     }
 
+    function getAgentInstance() {
+        switch (selectedAgent.value) {
+            case 'voiceMeetingAgent':
+                return voiceMeetingAgent;
+            default:
+                return agent;
+        }
+    }
+
     async function invokeAgent(message: AgentMessage): Promise<string | null> {
         loading.value = true;
         response.value = null;
         try {
-            const result = await agent.invoke(
-                { messages: [message] },
-                { configurable: { thread_id: 'default' } },
-            );
+            const result = await getAgentInstance().invoke({ messages: [message] });
 
             if (result && result.messages && result.messages.length > 0) {
                 const last = result.messages[result.messages.length - 1];
@@ -70,9 +82,8 @@ export const useChatbotAgentStore = defineStore('chatbotAgent', () => {
         try {
             resetStream();
             loading.value = true;
-            const stream = await agent.streamEvents(
-                { messages: [message] },
-                { configurable: { thread_id: 'default' } },
+            const stream = await getAgentInstance().streamEvents(
+                { messages: [message] }
             );
 
             for await (const event of stream) {
@@ -155,6 +166,7 @@ export const useChatbotAgentStore = defineStore('chatbotAgent', () => {
         agentPersonality,
         enableSuggestions,
         suggestions,
+        selectedAgent,
         invokeAgent,
         streamAgent,
     };

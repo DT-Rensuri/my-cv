@@ -24,6 +24,7 @@ class ChatRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'model' => ['required', 'in:default,voice-meeting-ai'],
             'messages' => ['required', 'array', 'min:1'],
             'messages.*.role' => ['required', 'string', 'in:system,user,assistant,tool'],
             'messages.*.content' => ['nullable'],
@@ -35,10 +36,34 @@ class ChatRequest extends FormRequest
             'tools.*.function.description' => ['nullable', 'string'],
             'tools.*.function.parameters' => ['nullable', 'array'],
             'tool_choice' => ['nullable', 'string'],
-            'model' => ['nullable', 'string'],
             'stream' => ['nullable', 'boolean'],
             'temperature' => ['nullable', 'numeric'],
             'max_tokens' => ['nullable', 'integer'],
         ];
+    }
+
+    function getDefaultSystemPrompt(): string
+    {
+        $sysPromptPath = storage_path('app/prompts/SYSTEM.md');
+        return file_exists($sysPromptPath)
+            ? file_get_contents($sysPromptPath)
+            : 'You are ``Suri`` a helpful assistant.';
+    }
+
+    function getVoiceMeetingSystemPrompt(): string
+    {
+        $sysPromptPath = storage_path('app/prompts/VOICE_MEETING.md');
+        return file_exists($sysPromptPath)
+            ? file_get_contents($sysPromptPath)
+            : 'You are ``Suri`` a helpful assistant.';
+    }
+
+    public function getSystemPrompt(): string
+    {
+        $model = $this->input('model', 'default');
+        return match ($model) {
+            'voice-meeting-ai' => $this->getVoiceMeetingSystemPrompt(),
+            default => $this->getDefaultSystemPrompt(),
+        };
     }
 }

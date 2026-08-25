@@ -161,9 +161,55 @@
           </div>
 
           <div v-else>
-            <div v-if="renderAiSummary" v-html="renderAiSummary" />
 
-            <div v-else>
+            <div class="flex items-center justify-end mb-3">
+              <div class="flex items-center gap-2">
+                <select v-model="selectedVersionId"
+                  class="bg-background text-ink px-2 py-1.5 pixel-border-sm font-pixel text-px-12"
+                  @change="onVersionSelect">
+                  <option :value="null">
+                    {{ t('projects.aimettingVoiceRecorder.latest') }}
+                  </option>
+                  <option v-for="version in versions" :key="version.id" :value="version.id">
+                    {{ version.title }} · {{ formatVersionTime(version.createdAt) }}
+                  </option>
+                </select>
+                <button type="button" class="font-pixel text-px-12 px-3 py-2 transition-colors"
+                  :class="showVersionPopup ? 'bg-highlight text-background' : 'text-ink-dim hover:text-highlight'"
+                  @click="showVersionPopup = !showVersionPopup">
+                  {{ t('projects.aimettingVoiceRecorder.manageVersions') }}
+                </button>
+              </div>
+            </div>
+
+            <!-- Version popup -->
+            <div v-if="showVersionPopup" class="mb-3 bg-background pixel-border-sm p-4">
+              <p class="font-pixel text-px-14 text-highlight mb-2">
+                {{ t('projects.aimettingVoiceRecorder.versionHistory') }}
+              </p>
+              <div v-if="versions.length === 0" class="text-ink-dim text-px-14">
+                {{ t('projects.aimettingVoiceRecorder.noVersions') }}
+              </div>
+              <ul v-else class="space-y-2">
+                <li v-for="version in versions" :key="version.id" class="flex items-center justify-between gap-2">
+                  <button type="button" class="font-pixel text-px-12 text-left"
+                    :class="activeVersionId === version.id ? 'text-highlight' : 'text-ink-dim hover:text-highlight'"
+                    @click="selectVersion(version.id)">
+                    {{ version.title }} · {{ formatVersionTime(version.createdAt) }}
+                  </button>
+                  <button type="button" class="font-pixel text-px-12 text-danger hover:text-danger"
+                    @click="removeVersion(version.id)">
+                    ✕
+                  </button>
+                </li>
+              </ul>
+            </div>
+
+            <div v-if="activeVersion" class="whitespace-pre-wrap">
+              {{ activeVersion.content }}
+            </div>
+            <div v-else-if="renderAiSummary" v-html="renderAiSummary" />
+            <div v-else class="text-ink-dim">
               {{ t('projects.aimettingVoiceRecorder.aiSummaryText') }}
             </div>
           </div>
@@ -178,30 +224,38 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, onUnmounted } from 'vue';
+import { ref, computed, onUnmounted, onMounted } from 'vue';
 import { Mic, MicVocal, MonitorSpeaker, Sparkles } from 'lucide-vue-next';
 import ProjectLayouts from '@/layouts/ProjectLayouts.vue';
 import { useI18n } from 'vue-i18n';
 import { marked } from 'marked';
 import { guestApi } from '@/services/api/guest';
 import { STTResponse } from '@/types/openrouter';
+import { useVoiceMeetingStore } from '@/stores/voiceMeeting';
+import { useChatbotAgentStore } from '@/stores/chatbotAgent';
 
-const { t } = useI18n();
+const { t, tm } = useI18n();
 
 defineOptions({
   layout: ProjectLayouts,
 });
+
+const voiceMeetingStore = useVoiceMeetingStore();
+const chatbotAgentStore = useChatbotAgentStore();
+const versions = voiceMeetingStore.versions;
+const activeVersionId = voiceMeetingStore.activeVersionId;
 
 const source = ref<'mic' | 'tab'>('mic');
 const isRecording = ref(false);
 const audioUrl = ref<string | null>(null);
 const audioBlob = ref<Blob | null>(null);
 const elapsed = ref(0);
-const isAiSummaryLoading = ref(false);
 const isAiTranscriptionLoading = ref(false);
 const originalText = ref<string | null>(null);
 const aiSummary = ref<string | null>(null);
 const activeTab = ref<'summary' | 'original'>('summary');
+const selectedVersionId = ref<string | null>(null);
+const showVersionPopup = ref(false);
 
 let recorder: MediaRecorder | null = null;
 let stream: MediaStream | null = null;
@@ -218,6 +272,38 @@ const renderAiSummary = computed(() => {
   if (!aiSummary.value) return null;
   return marked.parse(aiSummary.value);
 });
+
+const activeVersion = computed(() => {
+  if (!voiceMeetingStore.activeVersionId) return null;
+  return (
+    voiceMeetingStore.versions.find(
+      (v) => v.id === voiceMeetingStore.activeVersionId,
+    ) ?? null
+  );
+});
+
+const selectVersion = (id: string | null) => {
+  voiceMeetingStore.setActiveVersion(id);
+  selectedVersionId.value = id;
+};
+
+const onVersionSelect = () => {
+  selectVersion(selectedVersionId.value);
+};
+
+const removeVersion = (id: string) => {
+  voiceMeetingStore.removeVersion(id);
+  if (selectedVersionId.value === id) {
+    selectedVersionId.value = voiceMeetingStore.activeVersionId;
+  }
+};
+
+const formatVersionTime = (ts: number): string => {
+  const d = new Date(ts);
+  const hh = d.getHours().toString().padStart(2, '0');
+  const mm = d.getMinutes().toString().padStart(2, '0');
+  return `${hh}:${mm}`;
+};
 
 const startTimer = () => {
   elapsed.value = 0;
@@ -353,6 +439,12 @@ const clear = () => {
   originalText.value = null;
   chunks = [];
   elapsed.value = 0;
+
+  voiceMeetingStore.setOriginalText(null);
+  voiceMeetingStore.setSummary(null);
+  voiceMeetingStore.clearVersions();
+  selectedVersionId.value = null;
+  showVersionPopup.value = false;
 };
 
 const aiTranscriptionBtn = async () => {
@@ -371,8 +463,9 @@ const aiTranscriptionBtn = async () => {
 
     const data = response.data;
     originalText.value = data.text || 'No original text available.';
+    voiceMeetingStore.setOriginalText(originalText.value);
 
-    aiSummaryHandler();
+    // aiSummaryHandler();
   } catch (error) {
     aiSummary.value = 'Error fetching summary.';
     originalText.value = 'Error fetching original text.';
@@ -381,19 +474,16 @@ const aiTranscriptionBtn = async () => {
   }
 };
 
-const aiSummaryHandler = async () => {
-  if (!originalText.value) return;
-  isAiSummaryLoading.value = true;
-  try {
-
-  } catch (error) {
-    aiSummary.value = 'Error fetching summary.';
-  } finally {
-    isAiSummaryLoading.value = false;
-  }
-};
+onMounted(() => {
+  chatbotAgentStore.selectedAgent = 'voiceMeetingAgent';
+  chatbotAgentStore.suggestions = tm('projects.aimettingVoiceRecorder.chatbotSuggestions') as string[];
+  chatbotAgentStore.enableSuggestions = true;
+});
 
 onUnmounted(() => {
+  chatbotAgentStore.selectedAgent = 'default';
+  chatbotAgentStore.suggestions = [];
+  chatbotAgentStore.enableSuggestions = false;
   stopRecording();
   clear();
 });

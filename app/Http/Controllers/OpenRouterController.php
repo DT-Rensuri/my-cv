@@ -30,15 +30,10 @@ class OpenRouterController extends Controller
 
     public function chat(ChatRequest $request, OpenRouterRequest $openRouter)
     {
-        $sysPromptPath = storage_path('app/prompts/SYSTEM.md');
-        $prompt = File::exists($sysPromptPath)
-            ? File::get($sysPromptPath)
-            : 'You are ``Suri`` a helpful assistant.';
-
         $messages = [
             new MessageData(
                 role: RoleType::SYSTEM,
-                content: $prompt,
+                content: $request->getSystemPrompt(),
             )
         ];
 

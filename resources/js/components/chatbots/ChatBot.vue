@@ -107,7 +107,7 @@ const messages = ref<ChatMessage[]>([
 
 const suggestions = computed<string[]>(() => {
     const raw =
-        messages.value.length <= 1
+        agentStore.suggestions.length < 1
             ? tm('chatbot.suggestions')
             : agentStore.suggestions;
 
