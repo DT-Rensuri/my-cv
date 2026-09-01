@@ -52,7 +52,10 @@ export const useChatbotAgentStore = defineStore('chatbotAgent', () => {
         loading.value = true;
         response.value = null;
         try {
-            const result = await getAgentInstance().invoke({ messages: [message] });
+            const result = await getAgentInstance().invoke(
+                { messages: [message] },
+                { configurable: { thread_id: 'chatbot-invoke' } },
+            );
 
             if (result && result.messages && result.messages.length > 0) {
                 const last = result.messages[result.messages.length - 1];
@@ -83,7 +86,8 @@ export const useChatbotAgentStore = defineStore('chatbotAgent', () => {
             resetStream();
             loading.value = true;
             const stream = await getAgentInstance().streamEvents(
-                { messages: [message] }
+                { messages: [message] },
+                { configurable: { thread_id: 'chatbot-stream' } },
             );
 
             for await (const event of stream) {

@@ -11,7 +11,8 @@ export default {
     },
     hero: {
         ready: 'SẴN SÀNG THỬ THÁCH',
-        tagline: '> Xây dựng các hệ thống web hiệu quả, thông minh và dễ mở rộng — kết hợp tư duy tối ưu hóa và tự động hóa bằng AI.',
+        tagline:
+            '> Xây dựng các hệ thống web hiệu quả, thông minh và dễ mở rộng — kết hợp tư duy tối ưu hóa và tự động hóa bằng AI.',
         contactMe: 'LIÊN HỆ TÔI',
         downloadCv: 'TẢI CV',
         character: 'NHÂN VẬT',
@@ -46,7 +47,8 @@ export default {
     },
     contact: {
         heading: 'Liên hệ',
-        subtitle: '> Tôi luôn sẵn sàng trao đổi về các cơ hội Fullstack, dự án AI và tự động hóa. Đừng ngần ngại liên hệ!',
+        subtitle:
+            '> Tôi luôn sẵn sàng trao đổi về các cơ hội Fullstack, dự án AI và tự động hóa. Đừng ngần ngại liên hệ!',
         phone: 'Điện thoại',
         address: 'Địa chỉ',
         sendEmail: 'GỬI EMAIL',
@@ -70,15 +72,20 @@ export default {
         online: '[ONLINE] LV.',
         thinking: 'Đang suy nghĩ',
         fallback: {
-            experience: '> {name} đang là Fullstack Developer tại ZOTEK 8 (10/2023 — nay). Đã hoàn thành 5 project: Survey System, Data Collection Tool, Multi-Platform CMS, Enterprise Invoice CMS, và E-Learning Platform.',
+            experience:
+                '> {name} đang là Fullstack Developer tại ZOTEK 8 (10/2023 — nay). Đã hoàn thành 5 project: Survey System, Data Collection Tool, Multi-Platform CMS, Enterprise Invoice CMS, và E-Learning Platform.',
             skills: '> Backend: Laravel, Express.js, Next.js | Frontend: Vue.js, React.js, Blade, TailwindCSS, Bootstrap | AI: AI assistant & Automation Tools, Vibe coding | Khác: Embedded Systems, API & Automation.',
-            contact: '> Phone: {phone} | Email: {email} | GitHub: {github} | Địa chỉ: {address}',
-            education: '> {name} tốt nghiệp {degree} tại UTT (10/2020 — 08/2025). Xếp loại: Giỏi.',
-            objective: '> Mục tiêu: Xây dựng hệ thống web hiệu quả, thông minh, dễ mở rộng. Tích hợp AI để tối ưu UX và vận hành trong 2 năm tới.',
+            contact:
+                '> Phone: {phone} | Email: {email} | GitHub: {github} | Địa chỉ: {address}',
+            education:
+                '> {name} tốt nghiệp {degree} tại UTT (10/2020 — 08/2025). Xếp loại: Giỏi.',
+            objective:
+                '> Mục tiêu: Xây dựng hệ thống web hiệu quả, thông minh, dễ mở rộng. Tích hợp AI để tối ưu UX và vận hành trong 2 năm tới.',
             who: '> Tôi là **Suri** — trợ lý AI thông minh của **{name}** — Fullstack Developer & AI Automation Mage (LV. {level}).',
             cv: '> Bạn có thể tải CV qua nút "DOWNLOAD CV" ở phần đầu trang, hoặc liên hệ trực tiếp qua email: {email}',
             hello: '> Xin chào! Hỏi tôi về kinh nghiệm, kỹ năng, học vấn, hoặc liên hệ của {name} nhé!',
-            unknown: '> Tôi chưa hiểu câu hỏi đó. Thử hỏi về: kinh nghiệm, kỹ năng, học vấn, liên hệ, hoặc mục tiêu nghề nghiệp!',
+            unknown:
+                '> Tôi chưa hiểu câu hỏi đó. Thử hỏi về: kinh nghiệm, kỹ năng, học vấn, liên hệ, hoặc mục tiêu nghề nghiệp!',
         },
     },
     cv: {
@@ -121,7 +128,9 @@ export default {
                             'Xây dựng hệ thống tự động thu thập dữ liệu từ Facebook, Instagram, TikTok.',
                             'Tích hợp API, crawling và xử lý dữ liệu theo lịch trình.',
                         ],
-                        highlights: ['Tự động hóa hoàn toàn luồng thu thập dữ liệu'],
+                        highlights: [
+                            'Tự động hóa hoàn toàn luồng thu thập dữ liệu',
+                        ],
                     },
                     {
                         name: 'Hệ thống quản lý nội dung đa nền tảng (Multi-Platform CMS)',
@@ -136,7 +145,9 @@ export default {
                             'Xây dựng hệ thống quản lý hóa đơn, khách hàng và dữ liệu tài chính tập trung.',
                             'Hỗ trợ xác thực, phân quyền, ghi log và thống kê doanh thu thời gian thực.',
                         ],
-                        highlights: ['Xử lý dữ liệu tài chính nhạy cảm, có bảo mật'],
+                        highlights: [
+                            'Xử lý dữ liệu tài chính nhạy cảm, có bảo mật',
+                        ],
                     },
                     {
                         name: 'Nền tảng bán khóa học trực tuyến (E-Learning WordPress Platform)',
@@ -156,11 +167,21 @@ export default {
             },
         ],
         skillGroups: [
-            { label: 'Backend Development', icon: 'server', skills: ['Laravel', 'Express.js', 'Next.js'] },
+            {
+                label: 'Backend Development',
+                icon: 'server',
+                skills: ['Laravel', 'Express.js', 'Next.js'],
+            },
             {
                 label: 'Frontend Development',
                 icon: 'layout',
-                skills: ['Vue.js', 'React.js', 'Blade Template', 'TailwindCSS', 'Bootstrap'],
+                skills: [
+                    'Vue.js',
+                    'React.js',
+                    'Blade Template',
+                    'TailwindCSS',
+                    'Bootstrap',
+                ],
             },
             {
                 label: 'AI & Automation',
@@ -226,7 +247,8 @@ export default {
             size: 'Size:',
             aiSummary: 'AI Tóm tắt',
             aiSummaryDesc: 'Tự động tóm tắt cuộc họp bằng AI',
-            aiSummaryText: 'Sau khi ghi âm, AI sẽ tóm tắt nội dung cuộc họp, trích xuất các mục hành động và điểm quan trọng.',
+            aiSummaryText:
+                'Sau khi ghi âm, AI sẽ tóm tắt nội dung cuộc họp, trích xuất các mục hành động và điểm quan trọng.',
             footer: 'AI MEETING RECORDER · SURISUITE',
             original: 'Original',
             summary: 'Summary',
@@ -238,12 +260,18 @@ export default {
             send: 'Gửi',
             manageVersions: 'Phiên bản',
             versionHistory: 'LỊCH SỬ PHIÊN BẢN',
-            noVersions: 'Chưa có phiên bản nào. Hãy chat với AI để tạo phiên bản ghi chú.',
+            noVersions:
+                'Chưa có phiên bản nào. Hãy chat với AI để tạo phiên bản ghi chú.',
             chatbotSuggestions: [
                 'Tóm tắt nội dung cuộc họp',
                 'Trích xuất các mục cần làm',
                 'Xác định các điểm quan trọng',
             ],
+            error: {
+                erSummary: 'Lỗi khi tạo tóm tắt. Vui lòng thử lại.',
+                erTranscription:
+                    'Lỗi khi tạo bản chép. Vui lòng thử lại.',
+            },
         },
     },
 };

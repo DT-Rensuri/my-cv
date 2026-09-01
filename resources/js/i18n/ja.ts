@@ -11,7 +11,8 @@ export default {
     },
     hero: {
         ready: '冒険の準備完了',
-        tagline: '> 効率的でスマート、拡張性のあるWebシステムの構築 — 最適化思考とAI自動化の融合。',
+        tagline:
+            '> 効率的でスマート、拡張性のあるWebシステムの構築 — 最適化思考とAI自動化の融合。',
         contactMe: 'お問い合わせ',
         downloadCv: 'CVをダウンロード',
         character: 'キャラクター',
@@ -46,7 +47,8 @@ export default {
     },
     contact: {
         heading: '連絡先',
-        subtitle: '> フルスタック開発、AIプロジェクト、自動化の機会について常に話し合う準備ができています。お気軽にご連絡ください！',
+        subtitle:
+            '> フルスタック開発、AIプロジェクト、自動化の機会について常に話し合う準備ができています。お気軽にご連絡ください！',
         phone: '電話',
         address: '住所',
         sendEmail: 'メールを送信',
@@ -70,15 +72,20 @@ export default {
         online: '[ONLINE] LV.',
         thinking: '考え中',
         fallback: {
-            experience: '> {name}はZOTEK 8でフルスタックデベロッパーとして勤務中（2023年10月〜現在）。5つのプロジェクトを完了：Survey System、Data Collection Tool、Multi-Platform CMS、Enterprise Invoice CMS、E-Learning Platform。',
+            experience:
+                '> {name}はZOTEK 8でフルスタックデベロッパーとして勤務中（2023年10月〜現在）。5つのプロジェクトを完了：Survey System、Data Collection Tool、Multi-Platform CMS、Enterprise Invoice CMS、E-Learning Platform。',
             skills: '> バックエンド: Laravel, Express.js, Next.js | フロントエンド: Vue.js, React.js, Blade, TailwindCSS, Bootstrap | AI: AIアシスタント & 自動化ツール, Vibe coding | その他: 組み込みシステム, API & 自動化。',
-            contact: '> 電話: {phone} | メール: {email} | GitHub: {github} | 住所: {address}',
-            education: '> {name}はUTTで{degree}を取得（2020年10月〜2025年8月）。成績: 優。',
-            objective: '> 目標: 効率的でスマート、拡張性のあるWebシステムの構築。今後2年間でAIを統合しUXと運用を最適化。',
+            contact:
+                '> 電話: {phone} | メール: {email} | GitHub: {github} | 住所: {address}',
+            education:
+                '> {name}はUTTで{degree}を取得（2020年10月〜2025年8月）。成績: 優。',
+            objective:
+                '> 目標: 効率的でスマート、拡張性のあるWebシステムの構築。今後2年間でAIを統合しUXと運用を最適化。',
             who: '> 私は**{name}**のスマートAIアシスタント、**Suri**です — フルスタックデベロッパー & AI自動化メイジ（LV. {level}）。',
             cv: '> ページ上部の「DOWNLOAD CV」ボタンからCVをダウンロードできます。またはメールで直接連絡: {email}',
             hello: '> こんにちは！{name}の経験、スキル、学歴、連絡先について聞いてください！',
-            unknown: '> その質問は理解できませんでした。経験、スキル、学歴、連絡先、キャリア目標について聞いてみてください！',
+            unknown:
+                '> その質問は理解できませんでした。経験、スキル、学歴、連絡先、キャリア目標について聞いてみてください！',
         },
     },
     cv: {
@@ -156,11 +163,21 @@ export default {
             },
         ],
         skillGroups: [
-            { label: 'バックエンド開発', icon: 'server', skills: ['Laravel', 'Express.js', 'Next.js'] },
+            {
+                label: 'バックエンド開発',
+                icon: 'server',
+                skills: ['Laravel', 'Express.js', 'Next.js'],
+            },
             {
                 label: 'フロントエンド開発',
                 icon: 'layout',
-                skills: ['Vue.js', 'React.js', 'Blade Template', 'TailwindCSS', 'Bootstrap'],
+                skills: [
+                    'Vue.js',
+                    'React.js',
+                    'Blade Template',
+                    'TailwindCSS',
+                    'Bootstrap',
+                ],
             },
             {
                 label: 'AI & 自動化',
@@ -226,7 +243,8 @@ export default {
             size: 'サイズ:',
             aiSummary: 'AI サマリー',
             aiSummaryDesc: '会議の自動要約',
-            aiSummaryText: '録音後、AIが会議内容を要約し、アクション項目や重要なポイントを抽出します。',
+            aiSummaryText:
+                '録音後、AIが会議内容を要約し、アクション項目や重要なポイントを抽出します。',
             footer: 'AI MEETING RECORDER · SURISUITE',
             original: 'オリジナル',
             summary: '要約',
@@ -238,12 +256,18 @@ export default {
             send: '送信',
             manageVersions: 'バージョン',
             versionHistory: 'バージョン履歴',
-            noVersions: 'まだバージョンがありません。AIとチャットしてメモのバージョンを作成してください。',
+            noVersions:
+                'まだバージョンがありません。AIとチャットしてメモのバージョンを作成してください。',
             chatbotSuggestions: [
                 '会議内容を要約',
                 'アクション項目を抽出',
                 '重要なポイントを特定',
             ],
+        },
+        error: {
+            erSummary: 'エラーが発生しました。再度お試しください。',
+            erTranscription:
+                'エラーが発生しました。再度お試しください。',
         },
     },
 };

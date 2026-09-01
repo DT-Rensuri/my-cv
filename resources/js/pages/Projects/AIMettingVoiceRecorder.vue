@@ -151,10 +151,21 @@
         <!-- Content -->
         <div class="font-retro text-base text-ink leading-relaxed text-ink-dim">
           <div v-if="activeTab === 'original'">
-            <div v-if="originalText" class="whitespace-pre-wrap">
+            <div v-if="isTranscribing" class="flex items-center justify-center gap-2 mb-3">
+              <span class="font-pixel text-px-16 text-ink-dim">
+                {{ t('projects.aimettingVoiceRecorder.aiTranscriptionLoading') }}
+              </span>
+              <svg class="animate-spin h-5 w-5 text-accent" xmlns="http://www.w3.org/2000/svg" fill="none"
+                viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                </path>
+              </svg>
+            </div>
+            <div v-else-if="originalText" class="whitespace-pre-wrap">
               {{ originalText }}
             </div>
-
             <div v-else class="text-ink-dim">
               {{ t('projects.aimettingVoiceRecorder.aiSummaryText') }}
             </div>
@@ -204,8 +215,19 @@
                 </li>
               </ul>
             </div>
-
-            <div v-if="activeVersion" class="whitespace-pre-wrap">
+            <div v-if="isSummarizing" class="flex items-center justify-center gap-2 mb-3">
+              <span class="font-pixel text-px-16 text-ink-dim">
+                {{ t('projects.aimettingVoiceRecorder.aiSummaryLoading') }}
+              </span>
+              <svg class="animate-spin h-5 w-5 text-accent" xmlns="http://www.w3.org/2000/svg" fill="none"
+                viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                </path>
+              </svg>
+            </div>
+            <div v-else-if="activeVersion" class="whitespace-pre-wrap">
               {{ activeVersion.content }}
             </div>
             <div v-else-if="renderAiSummary" v-html="renderAiSummary" />
@@ -224,7 +246,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, onUnmounted, onMounted } from 'vue';
+import { ref, watch, computed, onUnmounted, onMounted } from 'vue';
 import { Mic, MicVocal, MonitorSpeaker, Sparkles } from 'lucide-vue-next';
 import ProjectLayouts from '@/layouts/ProjectLayouts.vue';
 import { useI18n } from 'vue-i18n';
@@ -233,8 +255,9 @@ import { guestApi } from '@/services/api/guest';
 import { STTResponse } from '@/types/openrouter';
 import { useVoiceMeetingStore } from '@/stores/voiceMeeting';
 import { useChatbotAgentStore } from '@/stores/chatbotAgent';
+import { voiceMeetingAgent } from '@/services/langchain';
 
-const { t, tm } = useI18n();
+const { t, tm, locale } = useI18n();
 
 defineOptions({
   layout: ProjectLayouts,
@@ -247,6 +270,8 @@ const activeVersionId = voiceMeetingStore.activeVersionId;
 
 const source = ref<'mic' | 'tab'>('mic');
 const isRecording = ref(false);
+const isTranscribing = ref(false);
+const isSummarizing = ref(false);
 const audioUrl = ref<string | null>(null);
 const audioBlob = ref<Blob | null>(null);
 const elapsed = ref(0);
@@ -449,6 +474,7 @@ const clear = () => {
 
 const aiTranscriptionBtn = async () => {
   if (!audioBlob.value) return;
+  isTranscribing.value = true;
   isAiTranscriptionLoading.value = true;
   const formData = new FormData();
   formData.append('audio_data', audioBlob.value, 'recording.webm');
@@ -462,15 +488,54 @@ const aiTranscriptionBtn = async () => {
     });
 
     const data = response.data;
-    originalText.value = data.text || 'No original text available.';
+    originalText.value = data.text;
     voiceMeetingStore.setOriginalText(originalText.value);
 
-    // aiSummaryHandler();
+    aiSummaryHandler();
   } catch (error) {
-    aiSummary.value = 'Error fetching summary.';
-    originalText.value = 'Error fetching original text.';
+    originalText.value = t('projects.aimettingVoiceRecorder.error.erTranscription');
   } finally {
     isAiTranscriptionLoading.value = false;
+    isTranscribing.value = false;
+  }
+};
+
+const aiSummaryHandler = async () => {
+  if (!originalText.value) return;
+  isSummarizing.value = true;
+  try {
+    const result = await voiceMeetingAgent.invoke(
+      {
+        messages: [
+          {
+            role: 'system',
+            content: `Summarize data:\n\n${originalText.value}`,
+          },
+        ],
+      },
+      { configurable: { thread_id: 'ai-summary' } }
+    );
+
+    if (result && result.messages && result.messages.length > 0) {
+      const last = result.messages[result.messages.length - 1];
+      const content = last?.content;
+      const text =
+        typeof content === 'string'
+          ? content
+          : Array.isArray(content)
+            ? content
+              .map((c) =>
+                typeof c === 'string' ? c : (c.text ?? ''),
+              )
+              .join('')
+            : '';
+      aiSummary.value = text;
+      voiceMeetingStore.setSummary(aiSummary.value);
+    }
+  } catch (error) {
+    aiSummary.value = t('projects.aimettingVoiceRecorder.error.erSummary');
+  } finally {
+    isSummarizing.value = false;
   }
 };
 
@@ -487,4 +552,11 @@ onUnmounted(() => {
   stopRecording();
   clear();
 });
+
+watch(
+  () => locale.value,
+  () => {
+    chatbotAgentStore.suggestions = tm('projects.aimettingVoiceRecorder.chatbotSuggestions') as string[];
+  }
+)
 </script>

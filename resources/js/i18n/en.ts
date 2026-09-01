@@ -269,6 +269,10 @@ export default {
                 'Extract action items from the transcript.',
                 'Highlight key decisions made during the meeting.',
             ],
+            error: {
+                erSummary: 'Error generating summary. Please try again.',
+                erTranscription: 'Error generating transcription. Please try again.',
+            }
         },
     },
 };
