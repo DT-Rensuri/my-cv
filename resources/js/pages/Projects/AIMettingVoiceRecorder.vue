@@ -252,7 +252,7 @@ import ProjectLayouts from '@/layouts/ProjectLayouts.vue';
 import { useI18n } from 'vue-i18n';
 import { marked } from 'marked';
 import { guestApi } from '@/services/api/guest';
-import { STTResponse } from '@/types/openrouter';
+import type { STTResponse } from '@/types/openrouter';
 import { useVoiceMeetingStore } from '@/stores/voiceMeeting';
 import { useChatbotAgentStore } from '@/stores/chatbotAgent';
 import { voiceMeetingAgent } from '@/services/langchain';

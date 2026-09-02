@@ -1,7 +1,7 @@
 import { ref, watch, computed } from 'vue';
 import { defineStore } from 'pinia';
 import { agent, voiceMeetingAgent } from '@/services/langchain';
-import { LanguageOption } from '@/types/chat';
+import type { LanguageOption } from '@/types/chat';
 import { useAvatarStore } from './avatar';
 
 export type AgentMessage = { role: string; content: string };

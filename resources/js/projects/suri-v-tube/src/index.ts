@@ -1,0 +1,1 @@
+export { default as SuriVTube } from './SuriVTube.vue'

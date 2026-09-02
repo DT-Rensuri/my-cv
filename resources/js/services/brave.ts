@@ -1,5 +1,5 @@
 import { guestApi } from '@/services/api/guest';
-import { BraveSearchRequest } from '@/types/brave';
+import type { BraveSearchRequest } from '@/types/brave';
 
 export async function searchBrave(params: Partial<BraveSearchRequest> = {}) {
     try {

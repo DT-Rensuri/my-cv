@@ -3,18 +3,21 @@ import { Alert, ErrorContainer, RadioCardManySelect, RadioCardSimple } from '@pr
 import { useAnalytics } from '@proj-airi/stage-ui/composables'
 import { useAiriCardStore } from '@proj-airi/stage-ui/stores/modules/airi-card'
 import { useVisionProcessingStore, useVisionStore } from '@proj-airi/stage-ui/stores/modules/vision'
-import { useProvidersStore } from '@proj-airi/stage-ui/stores/providers'
+import { useProviderConfigStore } from '@proj-airi/stage-ui/stores/providers/config'
+import { useProviderStore } from '@proj-airi/stage-ui/stores/providers/provider'
 import { FieldCheckbox, FieldRange } from '@proj-airi/ui'
 import { storeToRefs } from 'pinia'
 import { computed, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { RouterLink } from 'vue-router'
 
-const providersStore = useProvidersStore()
+const providersStore = useProviderStore()
+const providerStore = useProviderConfigStore()
 const airiCardStore = useAiriCardStore()
 const visionStore = useVisionStore()
 const visionProcessingStore = useVisionProcessingStore()
-const { persistedVisionProvidersMetadata, configuredProviders } = storeToRefs(providersStore)
+const { configuredProviders } = storeToRefs(providerStore)
+const { moduleVisionProvidersMetadata } = storeToRefs(providersStore)
 const {
   activeProvider,
   activeModel,
@@ -50,7 +53,7 @@ watch(activeProvider, async (provider, oldProvider) => {
 }, { immediate: true })
 
 watch([activeProvider, activeModel], ([provider, model]) => {
-  airiCardStore.updateActiveCardVision({ provider, model })
+  void airiCardStore.updateActiveCardVision({ provider, model })
 })
 
 function updateCustomModelName(value: string) {
@@ -103,12 +106,12 @@ function formatRelativeTime(timestamp: number | null) {
         </div>
         <div :class="['max-w-full']">
           <fieldset
-            v-if="persistedVisionProvidersMetadata.length > 0"
+            v-if="moduleVisionProvidersMetadata.length > 0"
             :class="['flex', 'min-w-0', 'flex-row', 'gap-4', 'overflow-x-auto', 'scroll-smooth']"
             role="radiogroup"
           >
             <RadioCardSimple
-              v-for="metadata in persistedVisionProvidersMetadata"
+              v-for="metadata in moduleVisionProvidersMetadata"
               :id="metadata.id"
               :key="metadata.id"
               v-model="activeProvider"
