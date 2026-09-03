@@ -1,7 +1,7 @@
 import type { ComposerTranslation } from 'vue-i18n'
 
-import { isStageTamagotchi } from '@proj-airi/stage-shared'
-import { isWebGPUSupported } from '@proj-airi/stage-shared/webgpu'
+import { isStageTamagotchi } from '@dtrensuri/stage-shared'
+import { isWebGPUSupported } from '@dtrensuri/stage-shared/webgpu'
 import { createOpenAI } from '@xsai-ext/providers/create'
 import { z } from 'zod'
 

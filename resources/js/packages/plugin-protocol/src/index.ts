@@ -1,1 +1,1 @@
-console.warn('import @proj-airi/plugin-protocol/types instead')
+console.warn('import @dtrensuri/plugin-protocol/types instead')

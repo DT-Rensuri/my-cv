@@ -1,5 +1,5 @@
-import type { LlmStreamingControlCallManifest } from '@proj-airi/pipelines-audio'
-import type { WebSocketEventOf } from '@proj-airi/server-sdk'
+import type { LlmStreamingControlCallManifest } from '@dtrensuri/pipelines-audio'
+import type { WebSocketEventOf } from '@dtrensuri/server-sdk'
 import type { ChatProvider } from '@xsai-ext/providers/utils'
 import type { UserMessage } from '@xsai/shared-chat'
 
@@ -7,7 +7,7 @@ import type { ChatStreamEventContext, ContextMessage } from '../../../types/chat
 import type { SparkNotifyPerformanceResult, SparkNotifyReactionOptions } from './spark-notify-reaction'
 
 import { errorMessageFrom } from '@moeru/std'
-import { isStageTamagotchi, isStageWeb } from '@proj-airi/stage-shared'
+import { isStageTamagotchi, isStageWeb } from '@dtrensuri/stage-shared'
 import { useBroadcastChannel } from '@vueuse/core'
 import { Mutex } from 'es-toolkit'
 import { nanoid } from 'nanoid'

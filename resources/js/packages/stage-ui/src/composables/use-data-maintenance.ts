@@ -1,8 +1,8 @@
 import type { ChatSessionsExport } from '../types/chat-session'
 
-import { isStageTamagotchi } from '@proj-airi/stage-shared'
-import { useLive2dParams, useSettingsLive2d } from '@proj-airi/stage-ui-live2d'
-import { useModelStore } from '@proj-airi/stage-ui-three'
+import { isStageTamagotchi } from '@dtrensuri/stage-shared'
+import { useLive2dParams, useSettingsLive2d } from '@dtrensuri/stage-ui-live2d'
+import { useModelStore } from '@dtrensuri/stage-ui-three'
 
 import { useLive2DMotionMagicSettings } from '../features/motions/live2d'
 import { useChatStore } from '../stores/chat'

@@ -1,5 +1,5 @@
 {
-  "name": "@proj-airi/core-agent",
+  "name": "@dtrensuri/core-agent",
   "type": "module",
   "version": "0.12.0-beta.4",
   "private": true,
@@ -39,11 +39,11 @@
   },
   "dependencies": {
     "@moeru/std": "catalog:",
-    "@proj-airi/pipelines-audio": "workspace:^",
-    "@proj-airi/plugin-protocol": "workspace:^",
-    "@proj-airi/server-sdk": "workspace:^",
-    "@proj-airi/server-shared": "workspace:^",
-    "@proj-airi/stream-kit": "workspace:^",
+    "@dtrensuri/pipelines-audio": "workspace:^",
+    "@dtrensuri/plugin-protocol": "workspace:^",
+    "@dtrensuri/server-sdk": "workspace:^",
+    "@dtrensuri/server-shared": "workspace:^",
+    "@dtrensuri/stream-kit": "workspace:^",
     "@xsai-ext/providers": "catalog:",
     "@xsai/generate-speech": "catalog:",
     "@xsai/generate-text": "catalog:",

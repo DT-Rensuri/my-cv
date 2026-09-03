@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { ContextBucketSnapshot } from '@proj-airi/stage-ui/stores/chat/context-store'
+import type { ContextBucketSnapshot } from '@dtrensuri/stage-ui/stores/chat/context-store'
 
-import { Section } from '@proj-airi/stage-ui/components'
+import { Section } from '@dtrensuri/stage-ui/components'
 import { computed } from 'vue'
 
 const props = defineProps<{

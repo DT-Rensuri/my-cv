@@ -38,14 +38,22 @@ export function setupSynced(options: Pick<SyncedOptions, 'leadership'> = {}): { 
       return
 
     disposed = true
-    window.removeEventListener('pagehide', dispose)
+    // [FIX SSR]: Chỉ gọi window nếu tồn tại đối tượng window ở Client
+    if (typeof window !== 'undefined') {
+      window.removeEventListener('pagehide', dispose)
+    }
     runtime.dispose()
   }
 
   const vue: Plugin = {
     install(app) {
       app.provide(injectKeyPiniaSynced, runtime)
-      window.addEventListener('pagehide', dispose, { once: true })
+      
+      // [FIX SSR]: Chỉ gắn sự kiện window ở Client-side
+      if (typeof window !== 'undefined') {
+        window.addEventListener('pagehide', dispose, { once: true })
+      }
+      
       app.onUnmount(dispose)
     },
   }

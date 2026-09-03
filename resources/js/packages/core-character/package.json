@@ -1,5 +1,5 @@
 {
-  "name": "@proj-airi/core-character",
+  "name": "@dtrensuri/core-character",
   "type": "module",
   "version": "0.12.0-beta.4",
   "private": true,
@@ -34,7 +34,7 @@
   },
   "dependencies": {
     "@moeru/std": "catalog:",
-    "@proj-airi/stream-kit": "workspace:^",
+    "@dtrensuri/stream-kit": "workspace:^",
     "clustr": "catalog:"
   },
   "devDependencies": {}

@@ -1,4 +1,4 @@
-import type { StageAvatarBoundsPayload, StageViewState } from '@proj-airi/stage-shared/godot-stage'
+import type { StageAvatarBoundsPayload, StageViewState } from '@dtrensuri/stage-shared/godot-stage'
 
 import type { StageModelRenderer } from '../../../../stores/settings/stage-model'
 

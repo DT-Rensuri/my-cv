@@ -3,12 +3,12 @@ import type {
   StageViewErrorPayload,
   StageViewPatch,
   StageViewSnapshotPayload,
-} from '@proj-airi/stage-shared/godot-stage'
+} from '@dtrensuri/stage-shared/godot-stage'
 
 import type { DisplayModel } from '../../../../stores/display-models'
 import type { ModelSettingsRuntimeSnapshot } from './runtime'
 
-import { Button, Callout, ScrollableArea } from '@proj-airi/ui'
+import { Button, Callout, ScrollableArea } from '@dtrensuri/ui'
 import { storeToRefs } from 'pinia'
 import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'

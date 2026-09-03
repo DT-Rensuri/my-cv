@@ -1,4 +1,4 @@
-import { toWavFromPCM16 } from '@proj-airi/audio/encoding'
+import { toWavFromPCM16 } from '@dtrensuri/audio/encoding'
 import { z } from 'zod'
 
 import { OPENROUTER_ATTRIBUTION_HEADERS } from '../openrouter-ai'

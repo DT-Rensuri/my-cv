@@ -1,4 +1,4 @@
-import type { ContextUpdate } from '@proj-airi/server-sdk'
+import type { ContextUpdate } from '@dtrensuri/server-sdk'
 import type { Tool } from '@xsai/shared-chat'
 
 import type { SparkNotifyRuntimeEvent } from './types'

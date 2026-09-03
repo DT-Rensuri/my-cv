@@ -1,5 +1,5 @@
 {
-  "name": "@proj-airi/stage-ui-mmd",
+  "name": "@dtrensuri/stage-ui-mmd",
   "type": "module",
   "private": true,
   "description": "MMD (MikuMikuDance) scene components and stores for Project AIRI",
@@ -36,8 +36,8 @@
     "@moeru/std": "catalog:",
     "@moeru/three-mmd": "catalog:",
     "@moeru/three-mmd-physics-ammo": "catalog:",
-    "@proj-airi/stage-shared": "workspace:^",
-    "@proj-airi/ui": "workspace:^",
+    "@dtrensuri/stage-shared": "workspace:^",
+    "@dtrensuri/ui": "workspace:^",
     "@vueuse/core": "catalog:",
     "@xsai/tool": "catalog:",
     "culori": "catalog:",

@@ -1,5 +1,5 @@
 {
-  "name": "@proj-airi/stage-shared",
+  "name": "@dtrensuri/stage-shared",
   "type": "module",
   "private": true,
   "description": "Shared",
@@ -45,7 +45,7 @@
     "@electron-toolkit/preload": "catalog:",
     "@moeru/eventa": "catalog:",
     "@nekopaw/tempora": "catalog:",
-    "@proj-airi/electron-screen-capture": "workspace:^",
+    "@dtrensuri/electron-screen-capture": "workspace:^",
     "@types/audioworklet": "catalog:"
   }
 }

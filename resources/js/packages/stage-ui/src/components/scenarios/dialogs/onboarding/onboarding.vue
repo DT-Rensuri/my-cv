@@ -9,7 +9,7 @@ import type {
   ProviderConfigData,
 } from './types'
 
-import { isCustomProvidersDisabled } from '@proj-airi/stage-shared'
+import { isCustomProvidersDisabled } from '@dtrensuri/stage-shared'
 import { storeToRefs } from 'pinia'
 import { computed, nextTick, onMounted, ref } from 'vue'
 

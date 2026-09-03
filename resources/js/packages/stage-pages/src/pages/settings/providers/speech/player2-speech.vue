@@ -6,11 +6,11 @@ import {
   Alert,
   SpeechPlayground,
   SpeechProviderSettings,
-} from '@proj-airi/stage-ui/components'
-import { useSpeechStore } from '@proj-airi/stage-ui/stores/modules/speech'
-import { useProviderConfigStore } from '@proj-airi/stage-ui/stores/providers/config'
-import { useProviderStore } from '@proj-airi/stage-ui/stores/providers/provider'
-import { FieldRange } from '@proj-airi/ui'
+} from '@dtrensuri/stage-ui/components'
+import { useSpeechStore } from '@dtrensuri/stage-ui/stores/modules/speech'
+import { useProviderConfigStore } from '@dtrensuri/stage-ui/stores/providers/config'
+import { useProviderStore } from '@dtrensuri/stage-ui/stores/providers/provider'
+import { FieldRange } from '@dtrensuri/ui'
 import { computed, onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 

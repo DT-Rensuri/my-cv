@@ -1,6 +1,6 @@
 import type { ControlsIslandAction } from './controls-island'
 
-import { getStage } from '@proj-airi/stage-shared'
+import { getStage } from '@dtrensuri/stage-shared'
 
 import { useSettingsAnalytics } from '../../../stores/settings/analytics'
 import { enableAnalytics, getAnalytics, isAnalyticsAvailableInBuild } from '../index'

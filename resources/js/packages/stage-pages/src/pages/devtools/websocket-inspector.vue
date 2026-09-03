@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { useWebSocketInspectorStore } from '@proj-airi/stage-ui/stores/devtools/websocket-inspector'
-import { FieldCheckbox, GhostButton, Input } from '@proj-airi/ui'
+import { useWebSocketInspectorStore } from '@dtrensuri/stage-ui/stores/devtools/websocket-inspector'
+import { FieldCheckbox, GhostButton, Input } from '@dtrensuri/ui'
 import { computed, nextTick, ref, watch } from 'vue'
 
 const store = useWebSocketInspectorStore()

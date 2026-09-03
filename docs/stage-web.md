@@ -12,7 +12,7 @@ Tài liệu này tập trung chi tiết vào **`resources/js/projects/stage-web`
 - Nhận diện giọng nói (VAD) → **transcription** (ASR) → **LLM chat** → **TTS** phản hồi.
 - Có đầy đủ auth, settings, onboarding, multi-tab sync, PWA.
 
-Nó **không phụ thuộc Laravel/Inertia** — nó là một app độc lập, được CV project nhúng qua iframe (route `/projects/suri-v-tube`). Toàn bộ logic được chia nhỏ thành các **workspace packages** (từ `@proj-airi/*`) trong monorepo.
+Nó **không phụ thuộc Laravel/Inertia** — nó là một app độc lập, được CV project nhúng qua iframe (route `/projects/suri-v-tube`). Toàn bộ logic được chia nhỏ thành các **workspace packages** (từ `@dtrensuri/*`) trong monorepo.
 
 ---
 
@@ -30,9 +30,9 @@ createApp(App)
   .use(router)            // vue-router
   .use(pinia)             // state
   .use(PiniaColada)       // data fetching / cache
-  .use(i18n)              // vue-i18n (+ @proj-airi/i18n locales)
+  .use(i18n)              // vue-i18n (+ @dtrensuri/i18n locales)
   .use(Tres)              // @tresjs/core (Three.js)
-  .use(trackButtonPlugin) // @proj-airi/stage-ui/directives
+  .use(trackButtonPlugin) // @dtrensuri/stage-ui/directives
   .mount('#app')
 ```
 
@@ -63,50 +63,50 @@ createApp(App)
 
 | Package | Tên | Chức năng |
 | -------- | ---- | --------- |
-| `@proj-airi/ui` | Airtable UI components | Bộ component UI dùng chung (Button, Input, Dialog...), `useTheme`, `ErrorBoundary` |
-| `@proj-airi/ui-transitions` | Transition animations | Bộ hiệu ứng chuyển trang (ví dụ `StageTransitionGroup` dùng `bubble-wave-out`) |
-| `@proj-airi/stage-layouts` | Shared Layouts | Layout dùng chung: `Header`, `InteractiveArea`, `MobileHeader`, `MobileInteractiveArea`, `BackgroundProvider`, `AdaptiveInput`, `ViewControls`, `Widgets` |
-| `@proj-airi/stage-pages` | Shared Pages | Các page dùng chung (settings, model...), đóng góp route cho auto-router |
-| `@proj-airi/stage-ui` | Shared core for stage | **Package lớn nhất**: stores, composables, components, workers/vad, libs (auth, analytics, pinia, providers, inference), directives |
+| `@dtrensuri/ui` | Airtable UI components | Bộ component UI dùng chung (Button, Input, Dialog...), `useTheme`, `ErrorBoundary` |
+| `@dtrensuri/ui-transitions` | Transition animations | Bộ hiệu ứng chuyển trang (ví dụ `StageTransitionGroup` dùng `bubble-wave-out`) |
+| `@dtrensuri/stage-layouts` | Shared Layouts | Layout dùng chung: `Header`, `InteractiveArea`, `MobileHeader`, `MobileInteractiveArea`, `BackgroundProvider`, `AdaptiveInput`, `ViewControls`, `Widgets` |
+| `@dtrensuri/stage-pages` | Shared Pages | Các page dùng chung (settings, model...), đóng góp route cho auto-router |
+| `@dtrensuri/stage-ui` | Shared core for stage | **Package lớn nhất**: stores, composables, components, workers/vad, libs (auth, analytics, pinia, providers, inference), directives |
 
 ### 3.2 Package Model Driver (render nhân vật)
 
 | Package | Tên | Chức năng |
 | -------- | ---- | --------- |
-| `@proj-airi/stage-ui-live2d` | Live2D render | Render + quản lý model Live2D (Cubism SDK) |
-| `@proj-airi/stage-ui-three` | Three.js/VRM render | Render model 3D VRM qua `@tresjs` |
-| `@proj-airi/stage-ui-mmd` | MMD stage | Hỗ trợ model MikuMikuDance |
-| `@proj-airi/stage-ui-spine` | Spine render | Render sprite Spine |
-| `@proj-airi/stage-ui-tachie` | Tachie (立ち絵) | Render ảnh lập thể / tachie |
-| `@proj-airi/model-driver-mediapipe` | MediaPipe mocap | Bắt chuyển động cơ thể (pose) từ camera |
-| `@proj-airi/model-driver-lipsync` | Lipsync driver | Đồng bộ môi (lipsync) theo audio |
-| `@proj-airi/model-driver-magic-live2d` | Live2D magic driver | Điều khiển Live2D bằng motion/magic |
-| `@proj-airi/motion-driver-magic` | Magic motion driver | Điều khiển chuyển động bằng keyframe/magic |
+| `@dtrensuri/stage-ui-live2d` | Live2D render | Render + quản lý model Live2D (Cubism SDK) |
+| `@dtrensuri/stage-ui-three` | Three.js/VRM render | Render model 3D VRM qua `@tresjs` |
+| `@dtrensuri/stage-ui-mmd` | MMD stage | Hỗ trợ model MikuMikuDance |
+| `@dtrensuri/stage-ui-spine` | Spine render | Render sprite Spine |
+| `@dtrensuri/stage-ui-tachie` | Tachie (立ち絵) | Render ảnh lập thể / tachie |
+| `@dtrensuri/model-driver-mediapipe` | MediaPipe mocap | Bắt chuyển động cơ thể (pose) từ camera |
+| `@dtrensuri/model-driver-lipsync` | Lipsync driver | Đồng bộ môi (lipsync) theo audio |
+| `@dtrensuri/model-driver-magic-live2d` | Live2D magic driver | Điều khiển Live2D bằng motion/magic |
+| `@dtrensuri/motion-driver-magic` | Magic motion driver | Điều khiển chuyển động bằng keyframe/magic |
 
 ### 3.3 Package Audio / Speech / AI
 
 | Package | Tên | Chức năng |
 | -------- | ---- | --------- |
-| `@proj-airi/audio` | Audio processing | Tiện ích xử lý âm thanh (encoding wav, recorder...) |
-| `@proj-airi/pipelines-audio` | Audio pipeline | Dàn âm thanh: capture → VAD → encode → stream, TTS chunking |
-| `@proj-airi/core-agent` | Core agent runtime | Vòng điều phối agent: chat orchestration, context registry, response categoriser, llm-marker-parser |
-| `@proj-airi/core-character` | Core character pipeline | Pipeline nhân vật: segmentation, emotion, delay, TTS tuỳ chọn |
-| `@proj-airi/i18n` | i18n locales | Bộ locale đa ngôn ngữ (en/ja/vi...) dùng cho `vue-i18n` |
-| `@proj-airi/server-sdk` | Server client SDK | SDK client kết nối tới API server (Hono) |
+| `@dtrensuri/audio` | Audio processing | Tiện ích xử lý âm thanh (encoding wav, recorder...) |
+| `@dtrensuri/pipelines-audio` | Audio pipeline | Dàn âm thanh: capture → VAD → encode → stream, TTS chunking |
+| `@dtrensuri/core-agent` | Core agent runtime | Vòng điều phối agent: chat orchestration, context registry, response categoriser, llm-marker-parser |
+| `@dtrensuri/core-character` | Core character pipeline | Pipeline nhân vật: segmentation, emotion, delay, TTS tuỳ chọn |
+| `@dtrensuri/i18n` | i18n locales | Bộ locale đa ngôn ngữ (en/ja/vi...) dùng cho `vue-i18n` |
+| `@dtrensuri/server-sdk` | Server client SDK | SDK client kết nối tới API server (Hono) |
 
 ### 3.4 Package Tiện ích (utility)
 
 | Package | Tên | Chức năng |
 | -------- | ---- | --------- |
-| `@proj-airi/stage-shared` | Shared | Hằng số & tiện ích dùng chung: `isEnvTruthy`, analytics/posthog, auth, beat-sync, io-trace |
-| `@proj-airi/stream-kit` | Stream utils | Stream utilities (queues, streams) |
-| `@proj-airi/ccc` | Code/Config Core | Định nghĩa card/cấu hình dùng trong nhiều nơi |
-| `@proj-airi/better-ws` | Better WebSocket | WebSocket helper (crossws) |
-| `@proj-airi/input-gamepad` | Gamepad input | Hỗ trợ input gamepad |
-| `@proj-airi/electron-screen-capture` | Electron capture | Chụp màn hình trong Electron |
-| `@proj-airi/font-*` | Fonts | Font hiển thị (chillroundm, cjkfonts-allseto, xiaolai) |
-| `@proj-airi/plugin-protocol` | Plugin protocol | Giao thức plugin/host |
-| `@proj-airi/server-sdk-shared` / `server-shared` | Shared server | Kiểu dữ liệu chia sẻ giữa server & client |
+| `@dtrensuri/stage-shared` | Shared | Hằng số & tiện ích dùng chung: `isEnvTruthy`, analytics/posthog, auth, beat-sync, io-trace |
+| `@dtrensuri/stream-kit` | Stream utils | Stream utilities (queues, streams) |
+| `@dtrensuri/ccc` | Code/Config Core | Định nghĩa card/cấu hình dùng trong nhiều nơi |
+| `@dtrensuri/better-ws` | Better WebSocket | WebSocket helper (crossws) |
+| `@dtrensuri/input-gamepad` | Gamepad input | Hỗ trợ input gamepad |
+| `@dtrensuri/electron-screen-capture` | Electron capture | Chụp màn hình trong Electron |
+| `@dtrensuri/font-*` | Fonts | Font hiển thị (chillroundm, cjkfonts-allseto, xiaolai) |
+| `@dtrensuri/plugin-protocol` | Plugin protocol | Giao thức plugin/host |
+| `@dtrensuri/server-sdk-shared` / `server-shared` | Shared server | Kiểu dữ liệu chia sẻ giữa server & client |
 
 > **Lưu ý:** stage-web chỉ **dùng trực tiếp** một phần các package trên (xem `package.json` dependencies). Một số package như `better-ws`, `input-gamepad`, `electron-screen-capture`, `electron` chỉ dùng trong các app khác (desktop, server) nhưng vẫn nằm cùng monorepo.
 
@@ -121,7 +121,7 @@ createApp(App)
 | **vue** | Framework |
 | **vue-router** | Routing (auto-routes qua plugin) |
 | **pinia** + **@pinia/colada** | State + data fetching/cache |
-| **vue-i18n** | i18n (dùng locale từ `@proj-airi/i18n`) |
+| **vue-i18n** | i18n (dùng locale từ `@dtrensuri/i18n`) |
 | **@vueuse/core** | Composables utilities |
 | **@vueuse/motion** | Animation motion |
 
@@ -144,8 +144,8 @@ createApp(App)
 | -------- | ------- |
 | **three** | 3D engine |
 | **@tresjs/core** + **@tresjs/cientos** | Vue wrapper cho Three.js |
-| **@proj-airi/model-driver-mediapipe** | MediaPipe pose |
-| **@proj-airi/stage-ui-live2d** | Live2D |
+| **@dtrensuri/model-driver-mediapipe** | MediaPipe pose |
+| **@dtrensuri/stage-ui-live2d** | Live2D |
 
 ### 4.4 AI / ML / Audio
 
@@ -155,8 +155,8 @@ createApp(App)
 | **@xsai/stream-transcription** / **stream-transcription** | Streaming ASR |
 | **onnxruntime-web** | Chạy model ONNX trong browser |
 | **@huggingface/transformers** | Transformers inference (whisper, embeddings) |
-| **@proj-airi/pipelines-audio** | Audio pipeline |
-| **@proj-airi/audio** | Audio utils |
+| **@dtrensuri/pipelines-audio** | Audio pipeline |
+| **@dtrensuri/audio** | Audio utils |
 | **unspeech** | Text-to-speech |
 | **audio-vad / silero-vad** | Voice Activity Detection (WASM) |
 
@@ -197,21 +197,21 @@ createApp(App)
 
 ```mermaid
 flowchart TD
-    WEB[stage-web (app)] --> UI[@proj-airi/stage-ui]
-    WEB --> LAY[@proj-airi/stage-layouts]
-    WEB --> PAGES[@proj-airi/stage-pages]
-    WEB --> SHRD[@proj-airi/stage-shared]
-    WEB --> I18N[@proj-airi/i18n]
-    WEB --> AUDIO[@proj-airi/audio]
-    WEB --> PIPES[@proj-airi/pipelines-audio]
-    WEB --> AGENT[@proj-airi/core-agent]
-    WEB --> CHAR[@proj-airi/core-character]
-    WEB --> SSDK[@proj-airi/server-sdk]
-    WEB --> SUI_L2D[@proj-airi/stage-ui-live2d]
-    WEB --> SUI3D[@proj-airi/stage-ui-three]
-    WEB --> MPM[@proj-airi/model-driver-mediapipe]
-    WEB --> MP[@proj-airi/ui]
-    WEB --> MPT[@proj-airi/ui-transitions]
+    WEB[stage-web (app)] --> UI[@dtrensuri/stage-ui]
+    WEB --> LAY[@dtrensuri/stage-layouts]
+    WEB --> PAGES[@dtrensuri/stage-pages]
+    WEB --> SHRD[@dtrensuri/stage-shared]
+    WEB --> I18N[@dtrensuri/i18n]
+    WEB --> AUDIO[@dtrensuri/audio]
+    WEB --> PIPES[@dtrensuri/pipelines-audio]
+    WEB --> AGENT[@dtrensuri/core-agent]
+    WEB --> CHAR[@dtrensuri/core-character]
+    WEB --> SSDK[@dtrensuri/server-sdk]
+    WEB --> SUI_L2D[@dtrensuri/stage-ui-live2d]
+    WEB --> SUI3D[@dtrensuri/stage-ui-three]
+    WEB --> MPM[@dtrensuri/model-driver-mediapipe]
+    WEB --> MP[@dtrensuri/ui]
+    WEB --> MPT[@dtrensuri/ui-transitions]
 
     UI --> SHRD
     UI --> I18N
@@ -229,12 +229,12 @@ flowchart TD
 ### Giải thích luồng phụ thuộc chính
 
 1. **`stage-web` (app)** là nơi lắp ráp mọi thứ lại — nó phụ thuộc hầu hết các package.
-2. **`@proj-airi/stage-ui`** là package "trái tim" — chứa hầu hết stores/composables/components dùng chung. Nó phụ thuộc `stage-shared`, `i18n`.
-3. **`@proj-airi/stage-layouts`** cung cấp layout (Header, Background) và **phụ thuộc `stage-ui`** và `stage-shared`.
-4. **`@proj-airi/stage-pages`** cung cấp page dùng chung; được **auto-router** gộp route với `src/pages` của stage-web.
-5. **`@proj-airi/core-agent`** xử lý logic agent (LLM orchestration) — là "não" — và **phụ thuộc `server-sdk`** để gọi API.
-6. **`@proj-airi/pipelines-audio`** xử lý audio pipeline và **phụ thuộc `@proj-airi/audio`**.
-7. **`@proj-airi/stage-ui-live2d`** / **`stage-ui-three`** render nhân vật; phụ thuộc `stage-ui` (stores/settings).
+2. **`@dtrensuri/stage-ui`** là package "trái tim" — chứa hầu hết stores/composables/components dùng chung. Nó phụ thuộc `stage-shared`, `i18n`.
+3. **`@dtrensuri/stage-layouts`** cung cấp layout (Header, Background) và **phụ thuộc `stage-ui`** và `stage-shared`.
+4. **`@dtrensuri/stage-pages`** cung cấp page dùng chung; được **auto-router** gộp route với `src/pages` của stage-web.
+5. **`@dtrensuri/core-agent`** xử lý logic agent (LLM orchestration) — là "não" — và **phụ thuộc `server-sdk`** để gọi API.
+6. **`@dtrensuri/pipelines-audio`** xử lý audio pipeline và **phụ thuộc `@dtrensuri/audio`**.
+7. **`@dtrensuri/stage-ui-live2d`** / **`stage-ui-three`** render nhân vật; phụ thuộc `stage-ui` (stores/settings).
 8. **`stage-shared`** nằm ở **tầng dưới cùng** — hầu hết package đều dùng nó cho hằng số/type chung.
 
 ---

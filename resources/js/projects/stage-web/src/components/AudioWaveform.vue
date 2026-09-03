@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { useAudioContext } from '@proj-airi/stage-ui/stores/audio'
-import { useTheme } from '@proj-airi/ui'
+import { useAudioContext } from '@dtrensuri/stage-ui/stores/audio'
+import { useTheme } from '@dtrensuri/ui'
 import { useElementBounding } from '@vueuse/core'
 import { onMounted, ref } from 'vue'
 

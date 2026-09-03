@@ -1,8 +1,8 @@
-import type { Card, ccv3 } from '@proj-airi/ccc'
+import type { Card, ccv3 } from '@dtrensuri/ccc'
 
 import type { AiriCard, AiriExtension } from '../../types/airiCard'
 
-import { useLocalStorageManualReset } from '@proj-airi/stage-shared/composables'
+import { useLocalStorageManualReset } from '@dtrensuri/stage-shared/composables'
 import { nanoid } from 'nanoid'
 import { defineStore } from 'pinia'
 import { computed } from 'vue'

@@ -3,11 +3,11 @@ import type { AnalyticsAdapter, AnalyticsAdapterOptions } from './client'
 
 import posthog from 'posthog-js'
 
-import { isStageCapacitor, isStageTamagotchi } from '@proj-airi/stage-shared'
+import { isStageCapacitor, isStageTamagotchi } from '@dtrensuri/stage-shared'
 import {
   DEFAULT_POSTHOG_CONFIG,
   POSTHOG_PROJECT_KEY,
-} from '@proj-airi/stage-shared/analytics/posthog'
+} from '@dtrensuri/stage-shared/analytics/posthog'
 
 /** Creates and initializes the default PostHog adapter. */
 export function createPosthogAdapter(options: AnalyticsAdapterOptions): AnalyticsAdapter {

@@ -1,16 +1,16 @@
 <script setup lang="ts">
 import type { SpeechProvider } from '@xsai-ext/providers/utils'
 
-import { getCachedWebGPUCapabilities } from '@proj-airi/stage-shared/webgpu'
+import { getCachedWebGPUCapabilities } from '@dtrensuri/stage-shared/webgpu'
 import {
   SpeechPlayground,
   SpeechProviderSettings,
-} from '@proj-airi/stage-ui/components'
-import { useSpeechStore } from '@proj-airi/stage-ui/stores/modules/speech'
-import { useProviderConfigStore } from '@proj-airi/stage-ui/stores/providers/config'
-import { useProviderStore } from '@proj-airi/stage-ui/stores/providers/provider'
-import { getDefaultKokoroModel } from '@proj-airi/stage-ui/workers/kokoro/constants'
-import { Callout, ComboboxSelect } from '@proj-airi/ui'
+} from '@dtrensuri/stage-ui/components'
+import { useSpeechStore } from '@dtrensuri/stage-ui/stores/modules/speech'
+import { useProviderConfigStore } from '@dtrensuri/stage-ui/stores/providers/config'
+import { useProviderStore } from '@dtrensuri/stage-ui/stores/providers/provider'
+import { getDefaultKokoroModel } from '@dtrensuri/stage-ui/workers/kokoro/constants'
+import { Callout, ComboboxSelect } from '@dtrensuri/ui'
 import { computed, onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 

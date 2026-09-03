@@ -249,7 +249,7 @@ export interface ProviderDefinition<TConfig extends any = any> {
     }
     /**
      * Declares the TTS transport this provider speaks. Drives Stage's TTS
-     * session adapter selection (`@proj-airi/stage-ui/libs/speech/tts-session`):
+     * session adapter selection (`@dtrensuri/stage-ui/libs/speech/tts-session`):
      *
      * - `rest` (default when this whole block is absent): the host opens
      *   a `pipelines-audio` IntentHandle and the provider's `speech()` is

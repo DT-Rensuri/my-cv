@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { signOut } from '@proj-airi/stage-ui/libs/auth'
-import { useAuthStore } from '@proj-airi/stage-ui/stores/auth'
-import { Avatar } from '@proj-airi/ui'
+import { signOut } from '@dtrensuri/stage-ui/libs/auth'
+import { useAuthStore } from '@dtrensuri/stage-ui/stores/auth'
+import { Avatar } from '@dtrensuri/ui'
 import { onClickOutside } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
 import { computed, ref } from 'vue'

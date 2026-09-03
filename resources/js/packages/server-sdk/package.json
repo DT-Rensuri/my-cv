@@ -1,5 +1,5 @@
 {
-  "name": "@proj-airi/server-sdk",
+  "name": "@dtrensuri/server-sdk",
   "type": "module",
   "version": "0.12.0-beta.4",
   "description": "Client-side SDK implementation for connecting to AIRI server components and runtimes",
@@ -38,8 +38,8 @@
   },
   "dependencies": {
     "@moeru/std": "catalog:",
-    "@proj-airi/better-ws": "workspace:^",
-    "@proj-airi/server-shared": "workspace:^",
+    "@dtrensuri/better-ws": "workspace:^",
+    "@dtrensuri/server-shared": "workspace:^",
     "superjson": "catalog:",
     "valibot": "catalog:"
   }

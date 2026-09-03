@@ -1,9 +1,9 @@
 import type { Component } from 'vue'
 
-import PolaroidPage from '@proj-airi/stage-pages/pages/devtools/polaroid.vue'
+import PolaroidPage from '@dtrensuri/stage-pages/pages/devtools/polaroid.vue'
 
-import { DisplayModelFormat, useDisplayModelsStore } from '@proj-airi/stage-ui/stores/display-models'
-import { useSettingsStageModel } from '@proj-airi/stage-ui/stores/settings/stage-model'
+import { DisplayModelFormat, useDisplayModelsStore } from '@dtrensuri/stage-ui/stores/display-models'
+import { useSettingsStageModel } from '@dtrensuri/stage-ui/stores/settings/stage-model'
 import { createPinia } from 'pinia'
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it } from 'vitest'
 import { createApp } from 'vue'
@@ -34,8 +34,8 @@ beforeAll(async () => {
   `
   document.head.appendChild(layoutStyle)
 
-  await import('@proj-airi/stage-ui-live2d/utils/live2d-zip-loader')
-  await import('@proj-airi/stage-ui-live2d/utils/live2d-opfs-registration')
+  await import('@dtrensuri/stage-ui-live2d/utils/live2d-zip-loader')
+  await import('@dtrensuri/stage-ui-live2d/utils/live2d-opfs-registration')
 
   const pinia = createPinia()
   const displayModels = useDisplayModelsStore(pinia)

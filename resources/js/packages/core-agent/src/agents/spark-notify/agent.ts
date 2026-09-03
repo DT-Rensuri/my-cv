@@ -1,5 +1,5 @@
-import type { ProtocolEvents } from '@proj-airi/plugin-protocol/types'
-import type { WebSocketEventOf } from '@proj-airi/server-sdk'
+import type { ProtocolEvents } from '@dtrensuri/plugin-protocol/types'
+import type { WebSocketEventOf } from '@dtrensuri/server-sdk'
 import type { Message, ToolChoice } from '@xsai/shared-chat'
 
 import type { SparkNotifyCommandDraft } from './tools'

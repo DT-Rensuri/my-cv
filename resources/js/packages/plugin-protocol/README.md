@@ -1,4 +1,4 @@
-# @proj-airi/plugin-protocol
+# @dtrensuri/plugin-protocol
 
 Shared protocol contracts for plugin-module communication in Project AIRI.
 
@@ -11,9 +11,9 @@ Shared protocol contracts for plugin-module communication in Project AIRI.
 ## How to use
 
 ```ts
-import type { WebSocketEvent, WebSocketEventOf, WebSocketEvents } from '@proj-airi/plugin-protocol/types'
+import type { WebSocketEvent, WebSocketEventOf, WebSocketEvents } from '@dtrensuri/plugin-protocol/types'
 
-import { moduleAnnounce, moduleAuthenticate } from '@proj-airi/plugin-protocol/types'
+import { moduleAnnounce, moduleAuthenticate } from '@dtrensuri/plugin-protocol/types'
 ```
 
 ## When to use

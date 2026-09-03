@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { Live2DBreathControlOptions } from '@proj-airi/stage-ui-live2d/stores'
+import type { Live2DBreathControlOptions } from '@dtrensuri/stage-ui-live2d/stores'
 
-import { defaultLive2DBreathControlOptions, sampleLive2DBreath } from '@proj-airi/stage-ui-live2d/stores'
-import { BasicButton, FieldRange } from '@proj-airi/ui'
+import { defaultLive2DBreathControlOptions, sampleLive2DBreath } from '@dtrensuri/stage-ui-live2d/stores'
+import { BasicButton, FieldRange } from '@dtrensuri/ui'
 import { useRafFn } from '@vueuse/core'
 import { computed, shallowRef } from 'vue'
 import { useI18n } from 'vue-i18n'

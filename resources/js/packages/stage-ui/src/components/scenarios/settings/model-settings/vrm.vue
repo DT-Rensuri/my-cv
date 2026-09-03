@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { ModelSettingsRuntimeSnapshot } from './runtime'
 
-import { useModelStore } from '@proj-airi/stage-ui-three'
-import { Button, Callout, GhostButton, SelectTab } from '@proj-airi/ui'
+import { useModelStore } from '@dtrensuri/stage-ui-three'
+import { Button, Callout, GhostButton, SelectTab } from '@dtrensuri/ui'
 import { storeToRefs } from 'pinia'
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'

@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import type { ChatHistoryItem } from '@proj-airi/stage-ui/types/chat'
+import type { ChatHistoryItem } from '@dtrensuri/stage-ui/types/chat'
 
-import { ChatHistory } from '@proj-airi/stage-ui/components'
-import { useAnalytics } from '@proj-airi/stage-ui/composables/use-analytics'
-import { useChatStore } from '@proj-airi/stage-ui/stores/chat'
-import { useChatSessionStore } from '@proj-airi/stage-ui/stores/chat/session-store'
-import { useChatStreamStore } from '@proj-airi/stage-ui/stores/chat/stream-store'
-import { useContextBridgeStore } from '@proj-airi/stage-ui/stores/mods/api/context-bridge'
-import { useDeferredMount } from '@proj-airi/ui'
+import { ChatHistory } from '@dtrensuri/stage-ui/components'
+import { useAnalytics } from '@dtrensuri/stage-ui/composables/use-analytics'
+import { useChatStore } from '@dtrensuri/stage-ui/stores/chat'
+import { useChatSessionStore } from '@dtrensuri/stage-ui/stores/chat/session-store'
+import { useChatStreamStore } from '@dtrensuri/stage-ui/stores/chat/stream-store'
+import { useContextBridgeStore } from '@dtrensuri/stage-ui/stores/mods/api/context-bridge'
+import { useDeferredMount } from '@dtrensuri/ui'
 import { storeToRefs } from 'pinia'
 import { computed, ref } from 'vue'
 

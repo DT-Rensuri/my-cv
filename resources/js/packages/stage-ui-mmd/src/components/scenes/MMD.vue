@@ -15,7 +15,7 @@ import type { GazeOffset, MMDAnimationManager, MorphController } from '../../com
 import type { ResolvedMMDModel } from '../../utils/mmd-loader'
 
 import { errorMessageFrom } from '@moeru/std'
-import { Screen } from '@proj-airi/ui'
+import { Screen } from '@dtrensuri/ui'
 import { storeToRefs } from 'pinia'
 import {
   AmbientLight,

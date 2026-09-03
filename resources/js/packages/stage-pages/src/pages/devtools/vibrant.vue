@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { InputFileCard } from '@proj-airi/ui'
+import { InputFileCard } from '@dtrensuri/ui'
 import { Vibrant } from 'node-vibrant/browser'
 import { ref, watch } from 'vue'
 

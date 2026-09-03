@@ -1,5 +1,5 @@
 {
-  "name": "@proj-airi/server-shared",
+  "name": "@dtrensuri/server-shared",
   "type": "module",
   "version": "0.12.0-beta.4",
   "description": "Server shared types, utilities for AIRI server components and runtimes",
@@ -37,6 +37,6 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@proj-airi/plugin-protocol": "workspace:*"
+    "@dtrensuri/plugin-protocol": "workspace:*"
   }
 }

@@ -9,13 +9,13 @@ import {
   ProviderSettingsContainer,
   ProviderSettingsLayout,
   ProviderValidationAlerts,
-} from '@proj-airi/stage-ui/components'
-import { useProviderValidation } from '@proj-airi/stage-ui/composables/use-provider-validation'
-import { getDefinedProvider } from '@proj-airi/stage-ui/libs'
-import { useConsciousnessStore } from '@proj-airi/stage-ui/stores/modules/consciousness'
-import { useProviderConfigStore } from '@proj-airi/stage-ui/stores/providers/config'
-import { useProviderStore } from '@proj-airi/stage-ui/stores/providers/provider'
-import { FieldCombobox } from '@proj-airi/ui'
+} from '@dtrensuri/stage-ui/components'
+import { useProviderValidation } from '@dtrensuri/stage-ui/composables/use-provider-validation'
+import { getDefinedProvider } from '@dtrensuri/stage-ui/libs'
+import { useConsciousnessStore } from '@dtrensuri/stage-ui/stores/modules/consciousness'
+import { useProviderConfigStore } from '@dtrensuri/stage-ui/stores/providers/config'
+import { useProviderStore } from '@dtrensuri/stage-ui/stores/providers/provider'
+import { FieldCombobox } from '@dtrensuri/ui'
 import { computedAsync } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
 import { computed } from 'vue'

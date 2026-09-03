@@ -1,6 +1,6 @@
-import type { IOSubsystem } from '@proj-airi/stage-shared'
+import type { IOSubsystem } from '@dtrensuri/stage-shared'
 
-import { IOSubsystems } from '@proj-airi/stage-shared'
+import { IOSubsystems } from '@dtrensuri/stage-shared'
 
 export interface SubsystemConfig {
   subsystem: IOSubsystem

@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { errorMessageFrom } from '@moeru/std'
-import { useAnalytics } from '@proj-airi/stage-ui/composables'
-import { applyOIDCTokens, triggerSignIn } from '@proj-airi/stage-ui/libs/auth'
-import { consumeFlowState, exchangeCodeForTokens } from '@proj-airi/stage-ui/libs/auth-oidc'
-import { Button } from '@proj-airi/ui'
+import { useAnalytics } from '@dtrensuri/stage-ui/composables'
+import { applyOIDCTokens, triggerSignIn } from '@dtrensuri/stage-ui/libs/auth'
+import { consumeFlowState, exchangeCodeForTokens } from '@dtrensuri/stage-ui/libs/auth-oidc'
+import { Button } from '@dtrensuri/ui'
 import { onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'

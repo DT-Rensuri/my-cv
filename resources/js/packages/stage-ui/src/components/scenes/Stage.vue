@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { Live2DLipSync, Live2DLipSyncOptions } from '@proj-airi/model-driver-lipsync'
-import type { Profile } from '@proj-airi/model-driver-lipsync/shared/wlipsync'
-import type { CaptionChannelEvent } from '@proj-airi/stage-shared'
-import type { VrmInteractionTarget } from '@proj-airi/stage-ui-three'
+import type { Live2DLipSync, Live2DLipSyncOptions } from '@dtrensuri/model-driver-lipsync'
+import type { Profile } from '@dtrensuri/model-driver-lipsync/shared/wlipsync'
+import type { CaptionChannelEvent } from '@dtrensuri/stage-shared'
+import type { VrmInteractionTarget } from '@dtrensuri/stage-ui-three'
 import type { SpeechProviderWithExtraOptions } from '@xsai-ext/providers/utils'
 import type { UnElevenLabsOptions } from 'unspeech'
 
@@ -11,17 +11,17 @@ import type { SpeechTransport, StageTtsSession, StreamingSessionSnapshot } from 
 
 import { defineInvokeHandler } from '@moeru/eventa'
 import { sleep } from '@moeru/std'
-import { createLive2DLipSync } from '@proj-airi/model-driver-lipsync'
-import { wlipsyncProfile } from '@proj-airi/model-driver-lipsync/shared/wlipsync'
-import { createPlaybackManager, createSpeechPipeline, normalizeActPayload } from '@proj-airi/pipelines-audio'
-import { defaultLive2DMotionControlDynamics, Live2DScene, useLive2DMotionControl, useLive2dParams, useSettingsLive2d } from '@proj-airi/stage-ui-live2d'
-import { MMDScene } from '@proj-airi/stage-ui-mmd'
-import { SpineScene } from '@proj-airi/stage-ui-spine'
-import { TachieScene } from '@proj-airi/stage-ui-tachie'
-import { ThreeScene } from '@proj-airi/stage-ui-three'
-import { animations } from '@proj-airi/stage-ui-three/assets/vrm'
-import { createQueue } from '@proj-airi/stream-kit'
-import { Callout } from '@proj-airi/ui'
+import { createLive2DLipSync } from '@dtrensuri/model-driver-lipsync'
+import { wlipsyncProfile } from '@dtrensuri/model-driver-lipsync/shared/wlipsync'
+import { createPlaybackManager, createSpeechPipeline, normalizeActPayload } from '@dtrensuri/pipelines-audio'
+import { defaultLive2DMotionControlDynamics, Live2DScene, useLive2DMotionControl, useLive2dParams, useSettingsLive2d } from '@dtrensuri/stage-ui-live2d'
+import { MMDScene } from '@dtrensuri/stage-ui-mmd'
+import { SpineScene } from '@dtrensuri/stage-ui-spine'
+import { TachieScene } from '@dtrensuri/stage-ui-tachie'
+import { ThreeScene } from '@dtrensuri/stage-ui-three'
+import { animations } from '@dtrensuri/stage-ui-three/assets/vrm'
+import { createQueue } from '@dtrensuri/stream-kit'
+import { Callout } from '@dtrensuri/ui'
 import { useBroadcastChannel } from '@vueuse/core'
 // import { createTransformers } from '@xsai-transformers/embed'
 // import embedWorkerURL from '@xsai-transformers/embed/worker?worker&url'
@@ -31,7 +31,7 @@ import { computed, nextTick, onMounted, onUnmounted, ref, shallowRef, watch } fr
 
 import StageRenderError from './stage-render-error.vue'
 
-import { useDuckDb } from '../../composables/use-duck-db'
+// import { useDuckDb } from '../../composables/use-duck-db'
 import { useIOTraceBridge } from '../../composables/use-io-trace-bridge'
 import { initIOTracer } from '../../composables/use-io-tracer'
 import { Emotion, EMOTION_EmotionMotionName_value, EMOTION_VRMExpressionName_value, EmotionThinkMotionName } from '../../constants/emotions'
@@ -64,7 +64,7 @@ const props = withDefaults(defineProps<{
 
 const componentState = defineModel<'pending' | 'loading' | 'mounted'>('state', { default: 'pending' })
 
-const { getDb } = useDuckDb()
+// const { getDb } = useDuckDb()
 // const transformersProvider = createTransformers({ embedWorkerURL })
 
 const vrmViewerRef = ref<InstanceType<typeof ThreeScene>>()
@@ -942,9 +942,9 @@ if (typeof window !== 'undefined') {
   })
 }
 
-onMounted(async () => {
-  await getDb() // stub for future update
-})
+// onMounted(async () => {
+//   await getDb() // stub for future update
+// })
 
 watch([stageModelRenderer, () => props.paused], ([renderer]) => {
   if (renderer === 'godot') {

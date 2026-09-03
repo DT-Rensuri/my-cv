@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Live2DEyeFocusSource } from '../../composables/live2d'
 
-import { Screen } from '@proj-airi/ui'
+import { Screen } from '@dtrensuri/ui'
 import { storeToRefs } from 'pinia'
 import { computed, onUnmounted, ref, watch } from 'vue'
 

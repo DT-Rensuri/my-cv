@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { PaneArea } from '@proj-airi/stage-ui/components'
-import { getDefinedProvider, listProviders } from '@proj-airi/stage-ui/libs'
-import { useProviderConfigStore } from '@proj-airi/stage-ui/stores/providers/config'
-import { Button, Input } from '@proj-airi/ui'
+import { PaneArea } from '@dtrensuri/stage-ui/components'
+import { getDefinedProvider, listProviders } from '@dtrensuri/stage-ui/libs'
+import { useProviderConfigStore } from '@dtrensuri/stage-ui/stores/providers/config'
+import { Button, Input } from '@dtrensuri/ui'
 import { breakpointsTailwind, refDebounced, useBreakpoints } from '@vueuse/core'
 import { DropdownMenuContent, DropdownMenuPortal, DropdownMenuRoot, DropdownMenuTrigger } from 'reka-ui'
 import { Pane, Splitpanes } from 'splitpanes'

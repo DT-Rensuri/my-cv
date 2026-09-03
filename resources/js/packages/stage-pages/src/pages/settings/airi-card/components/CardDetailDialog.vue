@@ -1,18 +1,18 @@
 <script setup lang="ts">
-import type { AiriCard } from '@proj-airi/stage-ui/stores/modules/airi-card'
+import type { AiriCard } from '@dtrensuri/stage-ui/stores/modules/airi-card'
 
 import DOMPurify from 'dompurify'
 
-import { useAnalytics } from '@proj-airi/stage-ui/composables'
-import { useDownload } from '@proj-airi/stage-ui/composables/download'
-import { exportAiriCardPackage } from '@proj-airi/stage-ui/services/airi-card-import-export'
-import { useBackgroundStore } from '@proj-airi/stage-ui/stores/background'
-import { useDisplayModelsStore } from '@proj-airi/stage-ui/stores/display-models'
-import { useAiriCardStore } from '@proj-airi/stage-ui/stores/modules/airi-card'
-import { useConsciousnessStore } from '@proj-airi/stage-ui/stores/modules/consciousness'
-import { useSpeechStore } from '@proj-airi/stage-ui/stores/modules/speech'
-import { useVisionStore } from '@proj-airi/stage-ui/stores/modules/vision'
-import { Button, Select } from '@proj-airi/ui'
+import { useAnalytics } from '@dtrensuri/stage-ui/composables'
+import { useDownload } from '@dtrensuri/stage-ui/composables/download'
+import { exportAiriCardPackage } from '@dtrensuri/stage-ui/services/airi-card-import-export'
+import { useBackgroundStore } from '@dtrensuri/stage-ui/stores/background'
+import { useDisplayModelsStore } from '@dtrensuri/stage-ui/stores/display-models'
+import { useAiriCardStore } from '@dtrensuri/stage-ui/stores/modules/airi-card'
+import { useConsciousnessStore } from '@dtrensuri/stage-ui/stores/modules/consciousness'
+import { useSpeechStore } from '@dtrensuri/stage-ui/stores/modules/speech'
+import { useVisionStore } from '@dtrensuri/stage-ui/stores/modules/vision'
+import { Button, Select } from '@dtrensuri/ui'
 import { storeToRefs } from 'pinia'
 import {
   DialogContent,

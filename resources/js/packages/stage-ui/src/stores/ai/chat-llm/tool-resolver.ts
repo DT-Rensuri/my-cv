@@ -1,5 +1,5 @@
-import type { StreamOptions } from '@proj-airi/core-agent'
-import type { WebSocketEvents } from '@proj-airi/server-sdk'
+import type { StreamOptions } from '@dtrensuri/core-agent'
+import type { WebSocketEvents } from '@dtrensuri/server-sdk'
 import type { Tool } from '@xsai/shared-chat'
 
 import { uniqBy } from 'es-toolkit'

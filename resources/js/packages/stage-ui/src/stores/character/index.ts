@@ -1,4 +1,4 @@
-import type { IntentHandle } from '@proj-airi/pipelines-audio'
+import type { IntentHandle } from '@dtrensuri/pipelines-audio'
 
 import { nanoid } from 'nanoid'
 import { defineStore, storeToRefs } from 'pinia'

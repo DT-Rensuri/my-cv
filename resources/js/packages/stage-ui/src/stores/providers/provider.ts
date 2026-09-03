@@ -14,7 +14,7 @@ import type { ProviderMetadata, ProviderValidationPlan } from '../../libs/provid
 import type { ChatRequestOptions, ModelInfo, ProviderDefinition, ProviderInstance, VoiceInfo } from '../../libs/providers/types'
 
 import { errorMessageFrom } from '@moeru/std'
-import { isCustomProvidersDisabled } from '@proj-airi/stage-shared'
+import { isCustomProvidersDisabled } from '@dtrensuri/stage-shared'
 import { computedAsync, useAsyncState, useIntervalFn } from '@vueuse/core'
 import { listModels } from '@xsai/model'
 import { uniqBy } from 'es-toolkit'

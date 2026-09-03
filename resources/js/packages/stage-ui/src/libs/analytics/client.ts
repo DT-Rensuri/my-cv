@@ -1,6 +1,6 @@
 import type { AboutBuildInfo } from '../../components/scenarios/about/types'
 
-import { isEnvTruthy } from '@proj-airi/stage-shared'
+import { isEnvTruthy } from '@dtrensuri/stage-shared'
 
 export interface AnalyticsIdentitySnapshot {
   /** Current provider distinct id for the browser, device, or user. */

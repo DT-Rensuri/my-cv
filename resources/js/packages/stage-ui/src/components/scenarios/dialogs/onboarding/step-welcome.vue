@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { OnboardingStepNextHandler } from './types'
 
-import { all } from '@proj-airi/i18n'
-import { AnimatedContent, Button } from '@proj-airi/ui'
+import { all } from '@dtrensuri/i18n'
+import { AnimatedContent, Button } from '@dtrensuri/ui'
 import { storeToRefs } from 'pinia'
 import {
   DropdownMenuContent,

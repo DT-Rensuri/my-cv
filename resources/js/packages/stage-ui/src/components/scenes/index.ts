@@ -4,5 +4,5 @@ export {
   Live2DCanvas,
   Live2DModel,
   Live2DScene as SceneLive2D,
-} from '@proj-airi/stage-ui-live2d/components/scenes'
-export { TachieScene as SceneTachie } from '@proj-airi/stage-ui-tachie/components/scenes'
+} from '@dtrensuri/stage-ui-live2d/components/scenes'
+export { TachieScene as SceneTachie } from '@dtrensuri/stage-ui-tachie/components/scenes'

@@ -7,7 +7,7 @@ Shared core for stage
 Register the shared plugin once in each Vue application:
 
 ```ts
-import { trackButtonPlugin } from '@proj-airi/stage-ui/directives/track-button'
+import { trackButtonPlugin } from '@dtrensuri/stage-ui/directives/track-button'
 
 createApp(App)
   .use(trackButtonPlugin)
@@ -32,7 +32,7 @@ in their owning business flows instead of attaching them to the initial click.
 https://histoire.dev/
 
 ```shell
-pnpm -F @proj-airi/stage-ui run story:dev
+pnpm -F @dtrensuri/stage-ui run story:dev
 ```
 
 ### Project structure

@@ -96,9 +96,9 @@ server/                                ← Backend
 | **@huggingface/transformers**                              | Transformers model inference (whisper, embeddings)  |
 | **onnxruntime-web**                                        | ONNX runtime (chạy model trong browser)            |
 | **audio-vad / silero VAD**                                 | Voice Activity Detection (WASM)                    |
-| **@proj-airi/pipelines-audio**                             | Audio pipelines (ASR, TTS chunking)                |
+| **@dtrensuri/pipelines-audio**                             | Audio pipelines (ASR, TTS chunking)                |
 | **@xsai-stream-transcription**                             | Streaming transcription                            |
-| **@proj-airi/model-driver-mediapipe**                      | MediaPipe mocap                                    |
+| **@dtrensuri/model-driver-mediapipe**                      | MediaPipe mocap                                    |
 
 ### Multimedia
 
@@ -231,7 +231,7 @@ server/                                ← Backend
 
 ## 6. Store modules (state management)
 
-Các store nằm trong package `@proj-airi/stage-ui/stores`:
+Các store nằm trong package `@dtrensuri/stage-ui/stores`:
 
 | Store                        | Chức năng                              |
 | ---------------------------- | -------------------------------------- |

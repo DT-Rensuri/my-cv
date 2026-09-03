@@ -1,6 +1,6 @@
-import type { SparkNotifyResponseControl } from '@proj-airi/core-agent/agents/spark-notify'
-import type { LlmStreamingControlCallManifest } from '@proj-airi/pipelines-audio'
-import type { WebSocketEventOf } from '@proj-airi/server-sdk'
+import type { SparkNotifyResponseControl } from '@dtrensuri/core-agent/agents/spark-notify'
+import type { LlmStreamingControlCallManifest } from '@dtrensuri/pipelines-audio'
+import type { WebSocketEventOf } from '@dtrensuri/server-sdk'
 
 import { array, boolean, finite, looseObject, nonEmpty, number, optional, picklist, pipe, record, string, trim, unknown } from 'valibot'
 

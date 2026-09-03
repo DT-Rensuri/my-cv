@@ -206,13 +206,13 @@ export const useDisplayModelsStore = defineStore('display-models', () => {
   }
 
   async function initialize() {
-    await import('@proj-airi/stage-ui-live2d/utils/live2d-zip-loader')
-    await import('@proj-airi/stage-ui-live2d/utils/live2d-opfs-registration')
+    await import('@dtrensuri/stage-ui-live2d/utils/live2d-zip-loader')
+    await import('@dtrensuri/stage-ui-live2d/utils/live2d-opfs-registration')
 
-    const { loadLive2DModelPreview } = await import('@proj-airi/stage-ui-live2d/utils/live2d-preview')
-    const { loadVrmModelPreview } = await import('@proj-airi/stage-ui-three/utils/vrm-preview')
-    const { loadSpineModelPreview } = await import('@proj-airi/stage-ui-spine/utils/spine-preview')
-    const { loadTachieModelPreview } = await import('@proj-airi/stage-ui-tachie/utils/tachie-preview')
+    const { loadLive2DModelPreview } = await import('@dtrensuri/stage-ui-live2d/utils/live2d-preview')
+    const { loadVrmModelPreview } = await import('@dtrensuri/stage-ui-three/utils/vrm-preview')
+    const { loadSpineModelPreview } = await import('@dtrensuri/stage-ui-spine/utils/spine-preview')
+    const { loadTachieModelPreview } = await import('@dtrensuri/stage-ui-tachie/utils/tachie-preview')
 
     generateLive2DPreview = loadLive2DModelPreview
     generateVrmPreview = loadVrmModelPreview
@@ -226,7 +226,7 @@ export const useDisplayModelsStore = defineStore('display-models', () => {
     // import previously aborted initialize() and silently broke all previews.
     // Removal condition: the MMD preview module is guaranteed to import.
     try {
-      const { loadMMDModelPreview } = await import('@proj-airi/stage-ui-mmd/utils/mmd-preview')
+      const { loadMMDModelPreview } = await import('@dtrensuri/stage-ui-mmd/utils/mmd-preview')
       generateMMDPreview = loadMMDModelPreview
     }
     catch (err) {

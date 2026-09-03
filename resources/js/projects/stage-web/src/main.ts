@@ -6,11 +6,11 @@ import NProgress from 'nprogress'
 
 import { autoAnimatePlugin } from '@formkit/auto-animate/vue'
 import { PiniaColada } from '@pinia/colada'
-import { isEnvTruthy } from '@proj-airi/stage-shared'
-import { trackButtonPlugin } from '@proj-airi/stage-ui/directives/track-button'
-import { configureAnalyticsAdapter } from '@proj-airi/stage-ui/libs/analytics'
-import { browserAuthorizationHandler, registerAuthorizationHandler } from '@proj-airi/stage-ui/libs/auth'
-import { piniaPluginTracing, setupSynced } from '@proj-airi/stage-ui/libs/pinia'
+import { isEnvTruthy } from '@dtrensuri/stage-shared'
+import { trackButtonPlugin } from '@dtrensuri/stage-ui/directives/track-button'
+import { configureAnalyticsAdapter } from '@dtrensuri/stage-ui/libs/analytics'
+import { browserAuthorizationHandler, registerAuthorizationHandler } from '@dtrensuri/stage-ui/libs/auth'
+import { piniaPluginTracing, setupSynced } from '@dtrensuri/stage-ui/libs/pinia'
 import { MotionPlugin } from '@vueuse/motion'
 import { createPinia } from 'pinia'
 import { setupLayouts } from 'virtual:generated-layouts'
@@ -22,8 +22,8 @@ import App from './App.vue'
 
 import { i18n } from './modules/i18n'
 
-import '@proj-airi/font-cjkfonts-allseto/index.css'
-import '@proj-airi/font-xiaolai/index.css'
+import '@dtrensuri/font-cjkfonts-allseto/index.css'
+import '@dtrensuri/font-xiaolai/index.css'
 import '@unocss/reset/tailwind.css'
 import 'splitpanes/dist/splitpanes.css'
 import 'vue-sonner/style.css'
@@ -31,7 +31,7 @@ import './styles/main.css'
 import 'uno.css'
 
 configureAnalyticsAdapter(async (options) => {
-  const { createPosthogAdapter } = await import('@proj-airi/stage-ui/libs/analytics/posthog')
+  const { createPosthogAdapter } = await import('@dtrensuri/stage-ui/libs/analytics/posthog')
   return createPosthogAdapter(options)
 })
 registerAuthorizationHandler(browserAuthorizationHandler)

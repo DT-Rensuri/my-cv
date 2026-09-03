@@ -1,6 +1,6 @@
-import { useAnalytics } from '@proj-airi/stage-ui/composables/use-analytics'
-import { useSpeakingStore } from '@proj-airi/stage-ui/stores/audio'
-import { useSpeechOutputControlStore } from '@proj-airi/stage-ui/stores/speech-output-control'
+import { useAnalytics } from '@dtrensuri/stage-ui/composables/use-analytics'
+import { useSpeakingStore } from '@dtrensuri/stage-ui/stores/audio'
+import { useSpeechOutputControlStore } from '@dtrensuri/stage-ui/stores/speech-output-control'
 import { storeToRefs } from 'pinia'
 import { computed } from 'vue'
 

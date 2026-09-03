@@ -11,16 +11,16 @@
     ],
     "useDefineForClassFields": true,
     "paths": {
-      "@proj-airi/stage-ui/*": [
+      "@dtrensuri/stage-ui/*": [
         "../../packages/stage-ui/src/*"
       ],
-      "@proj-airi/stage-layouts/*": [
+      "@dtrensuri/stage-layouts/*": [
         "../../packages/stage-layouts/src/*"
       ]
     },
     "resolveJsonModule": true,
     "types": [
-      "vitest",
+      // "vitest",
       "vite/client",
       "vite-plugin-vue-layouts/client",
       "vite-plugin-pwa/client",

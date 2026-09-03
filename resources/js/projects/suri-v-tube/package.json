@@ -9,8 +9,39 @@
     "exports": {
         ".": "./src/index.ts"
     },
+    "devDependencies": {
+        "uncrypto": "catalog:",
+        "@proj-airi/iconify-meteocons": "catalog:",
+        "@proj-airi/lobe-icons": "catalog:",
+        "@proj-airi/unplugin-fetch": "catalog:",
+        "@proj-airi/unplugin-live2d-sdk": "catalog:",
+        "@intlify/unplugin-vue-i18n": "catalog:",
+        "unplugin-yaml": "catalog:",
+        "@vueuse/motion": "catalog:"
+    },
     "dependencies": {
         "@vueuse/core": "catalog:",
-        "@proj-airi/stage-ui": "workspace:^"
+        "@dtrensuri/stage-ui": "workspace:^",
+        "zod": "catalog:",
+        "vue-sonner": "catalog:",
+        "@tresjs/core": "catalog:",
+        "@pinia/colada": "catalog:",
+        "@dtrensuri/audio": "workspace:^",
+        "@dtrensuri/ccc": "workspace:^",
+        "@dtrensuri/font-chillroundm": "workspace:^",
+        "@dtrensuri/font-cjkfonts-allseto": "workspace:^",
+        "@dtrensuri/font-xiaolai": "workspace:^",
+        "@dtrensuri/i18n": "workspace:^",
+        "@dtrensuri/model-driver-mediapipe": "workspace:^",
+        "@dtrensuri/pipelines-audio": "workspace:^",
+        "@dtrensuri/server-sdk": "workspace:^",
+        "@dtrensuri/stage-layouts": "workspace:^",
+        "@dtrensuri/stage-pages": "workspace:^",
+        "@dtrensuri/stage-shared": "workspace:^",
+        "@dtrensuri/stage-ui-live2d": "workspace:^",
+        "@dtrensuri/stage-ui-three": "workspace:^",
+        "@dtrensuri/stream-kit": "workspace:^",
+        "@dtrensuri/ui": "workspace:^",
+        "@dtrensuri/ui-transitions": "workspace:^"
     }
 }

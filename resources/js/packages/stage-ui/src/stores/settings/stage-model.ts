@@ -2,7 +2,7 @@ import type {} from 'pinia-plugin-synced'
 
 import type { DisplayModel } from '../display-models'
 
-import { useLocalStorageManualReset } from '@proj-airi/stage-shared/composables'
+import { useLocalStorageManualReset } from '@dtrensuri/stage-shared/composables'
 import { refManualReset, useEventListener } from '@vueuse/core'
 import { defineStore, storeToRefs } from 'pinia'
 import { computed, watch } from 'vue'
@@ -153,9 +153,9 @@ export const useSettingsStageModel = defineStore('settings-stage-model', () => {
     await updateStageModel()
   }
 
-  useEventListener('unload', () => {
-    revokeStageModelUrl(stageModelSelectedUrl.value)
-  })
+  // useEventListener('unload', () => {
+  //   revokeStageModelUrl(stageModelSelectedUrl.value)
+  // })
 
   watch(stageModelSelectedState, (_newValue, _oldValue) => {
     void updateStageModel()

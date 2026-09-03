@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { SelectContentProps } from 'reka-ui'
 
-import { Select } from '@proj-airi/ui'
+import { Select } from '@dtrensuri/ui'
 import { onClickOutside } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
 import { computed, nextTick, ref, toRaw, watch } from 'vue'

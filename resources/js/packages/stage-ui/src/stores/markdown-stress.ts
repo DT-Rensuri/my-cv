@@ -1,9 +1,9 @@
-import type { TraceEvent } from '@proj-airi/stage-shared'
+import type { TraceEvent } from '@dtrensuri/stage-shared'
 import type { ChatProvider } from '@xsai-ext/providers/utils'
 
 import type { StreamEvent } from './ai/chat-llm/llm'
 
-import { defaultPerfTracer, exportCsv as exportCsvFile } from '@proj-airi/stage-shared'
+import { defaultPerfTracer, exportCsv as exportCsvFile } from '@dtrensuri/stage-shared'
 import { defineStore, storeToRefs } from 'pinia'
 import { ref } from 'vue'
 

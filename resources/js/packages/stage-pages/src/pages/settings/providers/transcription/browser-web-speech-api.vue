@@ -1,20 +1,20 @@
 <script setup lang="ts">
 import type { RemovableRef } from '@vueuse/core'
 
-import { errorMessageFromValue } from '@proj-airi/stage-shared'
+import { errorMessageFromValue } from '@dtrensuri/stage-shared'
 import {
   Alert,
   ErrorContainer,
   ProviderBasicSettings,
   ProviderSettingsContainer,
   ProviderSettingsLayout,
-} from '@proj-airi/stage-ui/components'
-import { selectProviderMetadata } from '@proj-airi/stage-ui/libs'
-import { streamWebSpeechAPITranscription } from '@proj-airi/stage-ui/libs/providers/providers/browser-web-speech-api'
-import { useProviderConfigStore } from '@proj-airi/stage-ui/stores/providers/config'
-import { useProviderStore } from '@proj-airi/stage-ui/stores/providers/provider'
-import { useSettingsAudioDevice } from '@proj-airi/stage-ui/stores/settings'
-import { Button, FieldCombobox } from '@proj-airi/ui'
+} from '@dtrensuri/stage-ui/components'
+import { selectProviderMetadata } from '@dtrensuri/stage-ui/libs'
+import { streamWebSpeechAPITranscription } from '@dtrensuri/stage-ui/libs/providers/providers/browser-web-speech-api'
+import { useProviderConfigStore } from '@dtrensuri/stage-ui/stores/providers/config'
+import { useProviderStore } from '@dtrensuri/stage-ui/stores/providers/provider'
+import { useSettingsAudioDevice } from '@dtrensuri/stage-ui/stores/settings'
+import { Button, FieldCombobox } from '@dtrensuri/ui'
 import { computedAsync, until } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
 import { computed, onMounted, onUnmounted, ref } from 'vue'

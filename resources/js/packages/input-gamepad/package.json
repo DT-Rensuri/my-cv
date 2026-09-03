@@ -1,5 +1,5 @@
 {
-  "name": "@proj-airi/input-gamepad",
+  "name": "@dtrensuri/input-gamepad",
   "type": "module",
   "version": "0.12.0-beta.1",
   "private": true,

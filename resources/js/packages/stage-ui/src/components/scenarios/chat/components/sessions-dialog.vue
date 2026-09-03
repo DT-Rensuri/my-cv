@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { ChatSessionMeta } from '../../../../types/chat-session'
 
-import { ScrollableArea } from '@proj-airi/ui'
+import { ScrollableArea } from '@dtrensuri/ui'
 import { DialogContent, DialogOverlay, DialogPortal, DialogRoot, DialogTitle } from 'reka-ui'
 import { useI18n } from 'vue-i18n'
 

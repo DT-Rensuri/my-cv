@@ -1,4 +1,4 @@
-import { ContextUpdateStrategy } from '@proj-airi/server-sdk'
+import { ContextUpdateStrategy } from '@dtrensuri/server-sdk'
 import { z } from 'zod/v4'
 
 export const sparkCommandIntentSchema = z.enum(['plan', 'proposal', 'action', 'pause', 'resume', 'reroute', 'context'])

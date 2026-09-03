@@ -2,7 +2,7 @@ import type { Message } from '@xsai/shared-chat'
 
 import { defineInvoke, defineInvokeEventa } from '@moeru/eventa'
 import { createContext } from '@moeru/eventa/adapters/electron/renderer'
-import { artistryGenerateHeadless } from '@proj-airi/stage-shared'
+import { artistryGenerateHeadless } from '@dtrensuri/stage-shared'
 import { generateText } from '@xsai/generate-text'
 import { defineStore } from 'pinia'
 import { ref, toRaw } from 'vue'

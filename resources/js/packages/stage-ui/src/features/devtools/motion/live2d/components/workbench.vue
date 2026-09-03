@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { DockviewReadyEvent, DockviewTheme, VueComponent } from 'dockview-vue'
 
-import { useTheme } from '@proj-airi/ui'
+import { useTheme } from '@dtrensuri/ui'
 import { DockviewVue } from 'dockview-vue'
 import { computed, defineComponent, h, useSlots } from 'vue'
 import { useI18n } from 'vue-i18n'

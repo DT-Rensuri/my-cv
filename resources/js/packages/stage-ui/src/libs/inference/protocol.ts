@@ -1,4 +1,4 @@
-import { errorMessageFromValue } from '@proj-airi/stage-shared'
+import { errorMessageFromValue } from '@dtrensuri/stage-shared'
 /**
  * Unified inference worker message protocol.
  *

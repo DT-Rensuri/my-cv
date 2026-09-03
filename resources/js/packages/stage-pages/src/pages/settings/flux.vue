@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import type { FluxBalanceBucket } from '@proj-airi/stage-ui/composables/use-analytics'
+import type { FluxBalanceBucket } from '@dtrensuri/stage-ui/composables/use-analytics'
 
-import { isFluxPurchaseDisabled, isStageTamagotchi } from '@proj-airi/stage-shared'
-import { client } from '@proj-airi/stage-ui/composables/api'
-import { useAnalytics } from '@proj-airi/stage-ui/composables/use-analytics'
-import { useAuthStore } from '@proj-airi/stage-ui/stores/auth'
-import { Button, SelectTab } from '@proj-airi/ui'
+import { isFluxPurchaseDisabled, isStageTamagotchi } from '@dtrensuri/stage-shared'
+import { client } from '@dtrensuri/stage-ui/composables/api'
+import { useAnalytics } from '@dtrensuri/stage-ui/composables/use-analytics'
+import { useAuthStore } from '@dtrensuri/stage-ui/stores/auth'
+import { Button, SelectTab } from '@dtrensuri/ui'
 import { useEventListener } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
 import { computed, onMounted, ref } from 'vue'

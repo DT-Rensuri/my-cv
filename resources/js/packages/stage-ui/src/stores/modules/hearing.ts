@@ -8,9 +8,9 @@ import type { AIRIStreamTranscriptionResult } from '../../libs/providers/stream-
 import type { StreamingTranscriptionCallbacks, StreamingTranscriptionConsumer } from './streaming-transcription-consumers'
 
 import { errorMessageFrom, tryCatch } from '@moeru/std'
-import { toPCM16FromFloat32 } from '@proj-airi/audio/encoding'
-import { errorMessageFromValue, IOAttributes, IOEvents, IOSpanNames, IOSubsystems } from '@proj-airi/stage-shared'
-import { useLocalStorageManualReset } from '@proj-airi/stage-shared/composables'
+import { toPCM16FromFloat32 } from '@dtrensuri/audio/encoding'
+import { errorMessageFromValue, IOAttributes, IOEvents, IOSpanNames, IOSubsystems } from '@dtrensuri/stage-shared'
+import { useLocalStorageManualReset } from '@dtrensuri/stage-shared/composables'
 import { refManualReset } from '@vueuse/core'
 import { generateTranscription } from '@xsai/generate-transcription'
 import { defineStore, storeToRefs } from 'pinia'

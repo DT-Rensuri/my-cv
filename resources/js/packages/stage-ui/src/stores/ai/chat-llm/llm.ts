@@ -1,16 +1,16 @@
-import type { StreamOptions } from '@proj-airi/core-agent'
+import type { StreamOptions } from '@dtrensuri/core-agent'
 import type { ChatProvider } from '@xsai-ext/providers/utils'
 import type { Message } from '@xsai/shared-chat'
 
-import { streamFrom as coreStreamFrom, isContentArrayRelatedError, isToolRelatedError, modelKey } from '@proj-airi/core-agent'
+import { streamFrom as coreStreamFrom, isContentArrayRelatedError, isToolRelatedError, modelKey } from '@dtrensuri/core-agent'
 import { listModels } from '@xsai/model'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
 import { resolveLlmTools } from './tool-resolver'
 
-export type { StreamEvent, StreamOptions } from '@proj-airi/core-agent'
-export { isContentArrayRelatedError, isToolRelatedError } from '@proj-airi/core-agent'
+export type { StreamEvent, StreamOptions } from '@dtrensuri/core-agent'
+export { isContentArrayRelatedError, isToolRelatedError } from '@dtrensuri/core-agent'
 
 export const useLLM = defineStore('llm', () => {
   const toolsCompatibility = ref<Map<string, boolean>>(new Map())
