@@ -36,7 +36,6 @@
     "typecheck": "vue-tsc --noEmit"
   },
   "dependencies": {
-    "@lemonneko/crop-empty-pixels": "catalog:",
     "@pixi/app": "catalog:",
     "@pixi/constants": "catalog:",
     "@pixi/core": "catalog:",

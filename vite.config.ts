@@ -15,9 +15,7 @@ import Yaml from 'unplugin-yaml/vite';
 const stageUIAssetsRoot = fileURLToPath(
     new URL('./public/assets', import.meta.url),
 );
-const sharedCacheDir = fileURLToPath(
-    new URL('.cache', import.meta.url),
-);
+const sharedCacheDir = fileURLToPath(new URL('.cache', import.meta.url));
 
 export default defineConfig({
     optimizeDeps: {
@@ -41,54 +39,6 @@ export default defineConfig({
             // '@framework/utils/cubismdebug',
             // '@framework/model/cubismmoc',
         ],
-    },
-    resolve: {
-        alias: {
-            '@': fileURLToPath(new URL('./resources/js', import.meta.url)),
-            '@dtrensuri/suri-v-tube': fileURLToPath(new URL('./resources/js/projects/suri-v-tube', import.meta.url)),
-            '@dtrensuri/server-sdk-shared': fileURLToPath(
-                new URL(
-                    './resources/js/packages/server-sdk-shared/src',
-                    import.meta.url,
-                ),
-            ),
-            '@dtrensuri/stage-ui': fileURLToPath(
-                new URL(
-                    './resources/js/packages/stage-ui/src',
-                    import.meta.url,
-                ),
-            ),
-            '@dtrensuri/server-sdk': fileURLToPath(
-                new URL(
-                    './resources/js/packages/server-sdk/src',
-                    import.meta.url,
-                ),
-            ),
-            '@dtrensuri/i18n': fileURLToPath(
-                new URL('./resources/js/packages/i18n/src', import.meta.url),
-            ),
-            '@dtrensuri/stage-pages': fileURLToPath(
-                new URL(
-                    './resources/js/packages/stage-pages/src',
-                    import.meta.url,
-                ),
-            ),
-            '@dtrensuri/stage-shared': fileURLToPath(
-                new URL(
-                    './resources/js/packages/stage-shared/src',
-                    import.meta.url,
-                ),
-            ),
-            '@dtrensuri/stage-layouts': fileURLToPath(
-                new URL(
-                    './resources/js/packages/stage-layouts/src',
-                    import.meta.url,
-                ),
-            ),
-            '@dtrensuri/i18n': fileURLToPath(
-                new URL('./resources/js/packages/i18n/src', import.meta.url),
-            ),
-        },
     },
     server: {
         fs: {
@@ -114,7 +64,9 @@ export default defineConfig({
             input: ['resources/css/app.css', 'resources/js/app.ts'],
             refresh: true,
         }),
-        inertia(),
+        inertia({
+            ssr: false,
+        }),
         tailwindcss(),
         vue({
             template: {

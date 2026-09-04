@@ -3,7 +3,6 @@ shellEmulator: true
 packages:
   - "resources/js/packages/**"
   - "resources/js/projects/**"
-  - "server/**"
   - "!**/dist/**"
 allowBuilds:
   "@parcel/watcher": true
@@ -17,6 +16,7 @@ allowBuilds:
   onnxruntime-node: false
   protobufjs: true
   sharp: true
+  simple-git-hooks: true
   unrs-resolver: true
   utf-8-validate: true
   vue-demi: true
@@ -97,7 +97,6 @@ catalog:
   "@langfuse/tracing": ^5.10.1
   "@laplace.live/event-bridge-sdk": ^1.1.0
   "@laplace.live/event-types": ^2.0.21
-  "@lemonneko/crop-empty-pixels": 0.1.1
   "@mdit/plugin-footnote": ^1.1.0
   "@mdit/plugin-tasklist": ^1.1.0
   "@mediapipe/tasks-vision": ^1.0.1
