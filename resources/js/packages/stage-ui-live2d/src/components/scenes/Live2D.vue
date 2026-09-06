@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Live2DEyeFocusSource } from '../../composables/live2d'
 
-import { Screen } from '@dtrensuri/ui'
+import Screen from './Screen.vue'
 import { storeToRefs } from 'pinia'
 import { computed, onUnmounted, ref, watch } from 'vue'
 
@@ -106,7 +106,6 @@ defineExpose({
       :height="height"
       :resolution="live2dRenderScale"
       :max-fps="live2dMaxFps"
-      max-h="100dvh"
       @error="emit('error', $event)"
     >
       <Live2DModel

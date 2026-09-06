@@ -4,7 +4,7 @@ import type { Application } from '@pixi/app'
 import type { PixiLive2DInternalModel } from '../../../composables/live2d'
 
 import { listenBeatSyncBeatSignal } from '@dtrensuri/stage-shared/beat-sync'
-import { useTheme } from '@dtrensuri/ui'
+import { useDark } from '@vueuse/core'
 import { until } from '@vueuse/core'
 import { animate } from 'animejs'
 import { formatHex } from 'culori'
@@ -13,6 +13,7 @@ import { storeToRefs } from 'pinia'
 import { DropShadowFilter } from 'pixi-filters'
 import { Live2DFactory, Live2DModel, MotionPriority } from 'pixi-live2d-display/cubism4'
 import { computed, onMounted, onUnmounted, ref, shallowRef, toRef, watch } from 'vue'
+import { LocalStorageShim } from '../../../utils/local-storage'
 
 import {
   createBeatSyncController,
@@ -110,7 +111,13 @@ const mouthOpenSize = computed(() => Math.max(0, Math.min(100, props.mouthOpenSi
 const nowSpeaking = toRef(() => props.nowSpeaking)
 const lastUpdateTime = ref(0)
 
-const { isDark: dark } = useTheme()
+const dark = useDark({
+  disableTransition: true,
+  // NOTICE: for histoire, used in packages/stage-ui, localStorage global variable exists but `storage.getItem is not a function` wil
+  // thrown, here we added LocalStorageShim to avoid this issue, and it will fallback to real localStorage when it's available.
+  storage: 'localStorage' in globalThis && localStorage != null && 'getItem' in localStorage && typeof localStorage.getItem === 'function' ? localStorage : new LocalStorageShim(),
+})
+
 const dropShadowFilter = shallowRef(new DropShadowFilter({
   alpha: 0.2,
   blur: 0,
@@ -347,7 +354,7 @@ async function performModelLoad() {
     if (motionManager.groups.idle) {
       motionManager.motionGroups[motionManager.groups.idle]?.forEach((motion) => {
         motion._motionData.curves.forEach((curve: any) => {
-        // TODO: After emotion mapper, stage editor, eye related parameters should be take cared to be dynamical instead of hardcoding
+          // TODO: After emotion mapper, stage editor, eye related parameters should be take cared to be dynamical instead of hardcoding
           if (curve.id === 'ParamEyeBallX' || curve.id === 'ParamEyeBallY') {
             curve.id = `_${curve.id}`
           }
@@ -443,14 +450,14 @@ async function performModelLoad() {
       // replaces it. The SDK's manager runs after motionManager.update() and
       // would overwrite our final-plugin values every frame.
       if (motionManager.expressionManager) {
-        ;(motionManager as any).expressionManager = null
+        ; (motionManager as any).expressionManager = null
       }
       // Disable SDK eyeBlink — it runs on frames where motionUpdated=false and
       // would conflict with expression eye parameter overrides. Our auto-blink
       // plugin (Force Auto Blink setting) provides the replacement for models
       // without idle-motion blink curves.
       if (internalModel.eyeBlink) {
-        ;(internalModel as any).eyeBlink = null
+        ; (internalModel as any).eyeBlink = null
       }
 
       internalModelRef.value = internalModel
