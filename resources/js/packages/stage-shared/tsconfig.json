@@ -10,7 +10,6 @@
     "moduleResolution": "Bundler",
     "resolveJsonModule": true,
     "types": [
-      "vitest",
       "vite/client"
     ],
     "allowJs": true,

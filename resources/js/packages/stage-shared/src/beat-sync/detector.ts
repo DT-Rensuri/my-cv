@@ -5,7 +5,7 @@ import type { BeatSyncDetectorEventMap, BeatSyncDetectorState } from './types'
 
 import analyserWorklet from '@nekopaw/tempora/worklet?url'
 
-import { defineInvoke, defineInvokeHandler } from '@moeru/eventa'
+import { defineInvokeHandler } from '@moeru/eventa'
 import { startAnalyser as startTemporaAnalyser } from '@nekopaw/tempora'
 import { setupElectronScreenCapture } from '@dtrensuri/electron-screen-capture/renderer'
 
@@ -15,7 +15,6 @@ import {
   beatSyncBeatSignaledInvokeEventa,
   beatSyncGetInputByteFrequencyDataInvokeEventa,
   beatSyncGetStateInvokeEventa,
-  beatSyncStateChangedInvokeEventa,
   beatSyncToggleInvokeEventa,
   beatSyncUpdateParametersInvokeEventa,
   createContext,
@@ -275,65 +274,6 @@ function getContext() {
   return context
 }
 
-/** Returns whether the current Stage runtime can capture audio for Beat Sync. */
-export function isBeatSyncSupported() {
-  return isStageWeb() || isStageTamagotchi()
-}
-
-export function toggleBeatSync(enabled: boolean) {
-  if (isStageWeb()) {
-    if (enabled) {
-      return getDetector().startScreenCapture()
-    }
-    else {
-      return getDetector().stop()
-    }
-  }
-
-  if (isStageTamagotchi() || isStageCapacitor()) {
-    const toggleFn = defineInvoke(getContext(), beatSyncToggleInvokeEventa)
-    return toggleFn(enabled)
-  }
-
-  throw new Error('Unknown environment for beatSyncToggle()')
-}
-
-export async function getBeatSyncState() {
-  if (isStageWeb()) {
-    return getDetector().state
-  }
-
-  if (isStageTamagotchi() || isStageCapacitor()) {
-    return defineInvoke(getContext(), beatSyncGetStateInvokeEventa)()
-  }
-
-  throw new Error('Unknown environment for getBeatSyncState()')
-}
-
-export function updateBeatSyncParameters(params: Partial<AnalyserWorkletParameters>) {
-  if (isStageWeb()) {
-    return getDetector().updateParameters(params)
-  }
-
-  if (isStageTamagotchi() || isStageCapacitor()) {
-    return defineInvoke(getContext(), beatSyncUpdateParametersInvokeEventa)(params)
-  }
-
-  throw new Error('Unknown environment for updateBeatSyncParameters()')
-}
-
-export function listenBeatSyncStateChange(listener: (state: BeatSyncDetectorState) => void) {
-  if (isStageWeb()) {
-    return getDetector().on('stateChange', listener)
-  }
-
-  if (isStageTamagotchi() || isStageCapacitor()) {
-    return defineInvokeHandler(getContext(), beatSyncStateChangedInvokeEventa, listener)
-  }
-
-  throw new Error('Unknown environment for listenBeatSyncStateChange()')
-}
-
 export function listenBeatSyncBeatSignal(listener: (e: AnalyserBeatEvent) => void) {
   if (isStageWeb()) {
     return getDetector().on('beat', listener)
@@ -344,16 +284,4 @@ export function listenBeatSyncBeatSignal(listener: (e: AnalyserBeatEvent) => voi
   }
 
   throw new Error('Unknown environment for listenBeatSyncBeatSignal()')
-}
-
-export async function getBeatSyncInputByteFrequencyData() {
-  if (isStageWeb()) {
-    return getDetector().getInputByteFrequencyData()
-  }
-
-  if (isStageTamagotchi() || isStageCapacitor()) {
-    return defineInvoke(getContext(), beatSyncGetInputByteFrequencyDataInvokeEventa)()
-  }
-
-  throw new Error('Unknown environment for getBeatSyncInputByteFrequencyData()')
 }

@@ -51,18 +51,6 @@ export default defineConfig({
             'live2d/models',
             { parentDir: stageUIAssetsRoot, cacheDir: sharedCacheDir },
         ),
-        Download(
-            'https://dist.ayaka.moe/vrm-models/VRoid-Hub/AvatarSample-A/AvatarSample_A.vrm',
-            'AvatarSample_A.vrm',
-            'vrm/models/AvatarSample-A',
-            { parentDir: stageUIAssetsRoot, cacheDir: sharedCacheDir },
-        ),
-        Download(
-            'https://dist.ayaka.moe/vrm-models/VRoid-Hub/AvatarSample-B/AvatarSample_B.vrm',
-            'AvatarSample_B.vrm',
-            'vrm/models/AvatarSample-B',
-            { parentDir: stageUIAssetsRoot, cacheDir: sharedCacheDir },
-        ),
 
         VueI18n({
             runtimeOnly: true,

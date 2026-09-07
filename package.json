@@ -44,6 +44,7 @@
         "@vueuse/motion": "catalog:"
     },
     "dependencies": {
+        "@vueuse/core": "catalog:",
         "@inertiajs/vite": "catalog:",
         "@inertiajs/vue3": "catalog:",
         "@langchain/core": "catalog:",
@@ -69,7 +70,9 @@
         "zod": "catalog:",
         "@tresjs/core": "catalog:",
         "@pinia/colada": "catalog:",
-        "@dtrensuri/suri-v-tube": "workspace:^"
+        "pinia-plugin-synced": "catalog:",
+        "@dtrensuri/stage-ui-live2d": "workspace:^",
+        "@dtrensuri/stage-shared": "workspace:^"
     },
     "optionalDependencies": {
         "@rollup/rollup-linux-x64-gnu": "4.9.5",
