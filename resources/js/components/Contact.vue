@@ -30,7 +30,8 @@ const year = new Date().getFullYear();
     <!-- starfield bg -->
     <div class="absolute inset-0 pixel-stars opacity-30 pointer-events-none" />
 
-    <div ref="el" :class="['reveal', revealStore.visible[key] ? 'is-visible' : '', 'relative mx-auto max-w-4xl px-4 sm:px-6']">
+    <div ref="el"
+      :class="['reveal', revealStore.visible[key] ? 'is-visible' : '', 'relative mx-auto max-w-4xl px-4 sm:px-6']">
       <div class="text-center">
         <p class="font-pixel text-xs text-accent glow-cyan">05</p>
         <h2 class="mt-3 font-pixel text-base sm:text-xl text-ink uppercase">{{ t('contact.heading') }}</h2>
@@ -40,34 +41,38 @@ const year = new Date().getFullYear();
       </div>
 
       <!-- contact menu -->
-      <div class="mt-10 grid sm:grid-cols-2 gap-3 sm:gap-4">
+      <div class="mt-6 sm:mt-10 grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
         <template v-for="c in contacts" :key="c.label">
-          <a
-            v-if="c.href"
-            :href="c.href"
-            :target="c.href.startsWith('http') ? '_blank' : undefined"
-            rel="noreferrer"
-            class="group bg-panel pixel-border-sm p-4 flex items-center gap-4 hover:border-success pixel-press transition-colors"
-          >
-            <span class="shrink-0 grid place-items-center h-11 w-11 bg-background-alt pixel-border-sm">
-              <component :is="c.icon" class="h-5 w-5 text-accent" />
+          <a v-if="c.href" :href="c.href" :target="c.href.startsWith('http') ? '_blank' : undefined" rel="noreferrer"
+            class="group min-w-0 bg-panel pixel-border-sm p-3 sm:p-4 flex items-center gap-3 sm:gap-4 hover:border-success pixel-press transition-colors">
+            <span class="shrink-0 grid place-items-center h-10 w-10 sm:h-11 sm:w-11 bg-background-alt pixel-border-sm">
+              <component :is="c.icon" class="h-4 w-4 sm:h-5 sm:w-5 text-accent" />
             </span>
-            <div class="min-w-0">
-              <p class="font-pixel text-px-16 text-ink-dim uppercase">{{ c.label }}</p>
-              <p class="font-retro text-base text-ink truncate">{{ c.value }}</p>
+
+            <div class="min-w-0 flex-1">
+              <p class="font-pixel text-xs sm:text-px-16 text-ink-dim uppercase break-words">
+                {{ c.label }}
+              </p>
+
+              <p class="font-retro text-sm sm:text-base text-ink break-words">
+                {{ c.value }}
+              </p>
             </div>
-            <ArrowUpRight class="ml-auto h-4 w-4 text-ink-dim group-hover:text-success shrink-0" />
           </a>
-          <div
-            v-else
-            class="bg-panel pixel-border-sm p-4 flex items-center gap-4"
-          >
-            <span class="shrink-0 grid place-items-center h-11 w-11 bg-background-alt pixel-border-sm">
-              <component :is="c.icon" class="h-5 w-5 text-accent" />
+
+          <div v-else class="min-w-0 bg-panel pixel-border-sm p-3 sm:p-4 flex items-center gap-3 sm:gap-4">
+            <span class="shrink-0 grid place-items-center h-10 w-10 sm:h-11 sm:w-11 bg-background-alt pixel-border-sm">
+              <component :is="c.icon" class="h-4 w-4 sm:h-5 sm:w-5 text-accent" />
             </span>
-            <div class="min-w-0">
-              <p class="font-pixel text-px-16 text-ink-dim uppercase">{{ c.label }}</p>
-              <p class="font-retro text-base text-ink truncate">{{ c.value }}</p>
+
+            <div class="min-w-0 flex-1">
+              <p class="font-pixel text-xs sm:text-px-16 text-ink-dim uppercase break-words">
+                {{ c.label }}
+              </p>
+
+              <p class="font-retro text-sm sm:text-base text-ink break-words">
+                {{ c.value }}
+              </p>
             </div>
           </div>
         </template>
@@ -75,10 +80,8 @@ const year = new Date().getFullYear();
 
       <!-- action button -->
       <div class="mt-8 flex justify-center">
-        <a
-          :href="`mailto:${profile.email}`"
-          class="inline-flex items-center gap-2 px-6 py-3.5 font-pixel text-px-18 bg-success text-background pixel-border-sm pixel-press hover:bg-accent"
-        >
+        <a :href="`mailto:${profile.email}`"
+          class="inline-flex items-center gap-2 px-6 py-3.5 font-pixel text-px-18 bg-success text-background pixel-border-sm pixel-press hover:bg-accent">
           <Mail class="h-4 w-4" /> {{ t('contact.sendEmail') }}
         </a>
       </div>
@@ -93,17 +96,17 @@ const year = new Date().getFullYear();
           {{ t('contact.builtWith') }}
         </p>
         <div class="flex items-center gap-3">
-          <a :href="profile.githubUrl" target="_blank" rel="noreferrer" class="grid place-items-center h-9 w-9 bg-panel pixel-border-sm text-ink-muted hover:text-accent transition-colors">
+          <a :href="profile.githubUrl" target="_blank" rel="noreferrer"
+            class="grid place-items-center h-9 w-9 bg-panel pixel-border-sm text-ink-muted hover:text-accent transition-colors">
             <GithubIcon class="h-4 w-4" />
           </a>
-          <a :href="`mailto:${profile.email}`" class="grid place-items-center h-9 w-9 bg-panel pixel-border-sm text-ink-muted hover:text-accent transition-colors">
+          <a :href="`mailto:${profile.email}`"
+            class="grid place-items-center h-9 w-9 bg-panel pixel-border-sm text-ink-muted hover:text-accent transition-colors">
             <Mail class="h-4 w-4" />
           </a>
-          <a
-            href="#top"
+          <a href="#top"
             class="grid place-items-center h-9 w-9 bg-panel pixel-border-sm text-ink-muted hover:text-success transition-colors"
-            :aria-label="t('contact.backToTop')"
-          >
+            :aria-label="t('contact.backToTop')">
             <ArrowUp class="h-4 w-4" />
           </a>
         </div>

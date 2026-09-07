@@ -17,8 +17,8 @@ export function useCvData() {
             level: 25,
             phone: '0362547882',
             email: 'dothanhcao2502@gmail.com',
-            github: 'github.com/dtrensuri',
-            githubUrl: 'https://github.com/dtrensuri',
+            github: 'github.com/DT-Rensuri',
+            githubUrl: 'https://github.com/DT-Rensuri',
             address: p.address,
             objective: p.objective,
         };

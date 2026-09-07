@@ -9,6 +9,10 @@ export default {
         language: 'Chọn ngôn ngữ',
         projectsCta: 'DỰ ÁN',
     },
+    projectNames: {
+        suri_v_tube: 'Suri AI YouTuber',
+        ai_recorder: 'AI Meeting Recorder',
+    },
     hero: {
         ready: 'SẴN SÀNG THỬ THÁCH',
         tagline:
