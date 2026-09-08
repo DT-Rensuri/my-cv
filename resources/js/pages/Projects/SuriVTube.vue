@@ -23,7 +23,7 @@
 import { defaultLive2DMotionControlDynamics, Live2DScene, useLive2DMotionControl, useLive2dParams, useSettingsLive2d } from '@dtrensuri/stage-ui-live2d'
 import type { Live2DEyeFocusSource } from '@dtrensuri/stage-ui-live2d'
 import { storeToRefs } from 'pinia'
-import { ref, shallowRef, computed, watch, onBeforeMount, onBeforeUnmount, onMounted } from 'vue'
+import { ref, shallowRef, computed, onUnmounted, onMounted } from 'vue'
 import { Settings, AudioLines } from 'lucide-vue-next'
 import { useStageSettingStore } from '@/stores/stageSettings'
 import ProjectLayouts from '@/layouts/ProjectLayouts.vue'
@@ -99,6 +99,8 @@ function handleStageRenderError(error: Error) {
 const { stopSpeech, queue } = useSpeech()
 
 onMounted(() => {
+  chatbotAgentStore.selectedAgent = 'suriVTubeAgent';
+  chatbotAgentStore.enableSuggestions = false;
   const unlockOnce = () => {
     queue.unlock()
     window.removeEventListener('pointerdown', unlockOnce)
@@ -109,13 +111,9 @@ onMounted(() => {
 })
 
 
-
-onBeforeMount(() => {
-  chatbotAgentStore.selectedAgent = 'suriVTubeAgent';
-})
-
-onBeforeUnmount(() => {
+onUnmounted(() => {
   chatbotAgentStore.selectedAgent = 'default';
+  chatbotAgentStore.enableSuggestions = false;
   stopSpeech()
 })
 
