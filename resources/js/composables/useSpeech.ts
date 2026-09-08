@@ -22,10 +22,6 @@ export function useSpeech() {
     const selectedVoice = ref<string | undefined>(undefined);
     const isSpeaking = computed(() => playbackState.value !== 'idle');
 
-    function startMouthAnimation() {
-        lipSync.speech();
-    }
-
     function stopMouthAnimation() {
         lipSync.stopLipSync();
     }
@@ -34,7 +30,6 @@ export function useSpeech() {
         undefined,
         () => {
             playbackState.value = 'playing';
-            startMouthAnimation();
         },
         () => {
             if (queue.length === 0) {
@@ -46,6 +41,10 @@ export function useSpeech() {
             playbackState.value = 'idle';
             stopMouthAnimation();
         },
+        {
+            startLipSync: lipSync.startLipSync,
+            stopLipSync: lipSync.stopLipSync,
+        }
     );
 
     async function loadVoices() {

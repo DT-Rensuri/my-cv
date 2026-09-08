@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Menu, Moon, Sun, X, Gamepad2, Languages, Palette } from 'lucide-vue-next';
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useCvData } from '@/composables/useCvData';
 import { useThemeStore } from '@/stores/theme';
@@ -27,7 +27,7 @@ const open = ref(false);
 const langOpen = ref(false);
 const scrolled = ref(false);
 
-const projectsLink = [
+const projectsLink = computed(() => [
   {
     href: '/projects/ai-recorder',
     label: t('projectNames.ai_recorder'),
@@ -36,7 +36,7 @@ const projectsLink = [
     href: '/projects/suri-v-tube',
     label: t('projectNames.suri_v_tube'),
   }
-]
+])
 
 const sectionIds = navLinks.value.map((l) => l.href.slice(1));
 

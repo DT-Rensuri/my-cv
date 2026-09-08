@@ -3,6 +3,7 @@ import { useStageSettingStore } from '@/stores/stageSettings';
 
 export function useLipSync() {
     let mouthRafId: number | null = null;
+    let currentMouthOpenSize = 0;
     const settingsStore = useStageSettingStore();
 
     function speech() {
@@ -21,6 +22,26 @@ export function useLipSync() {
         mouthRafId = requestAnimationFrame(animate);
     }
 
+    function startLipSync(mouthOpenSize: number) {
+        currentMouthOpenSize = mouthOpenSize;
+
+        settingsStore.nowSpeaking = true;
+
+        if (mouthRafId !== null) {
+            return;
+        }
+
+        const animate = () => {
+            const value = currentMouthOpenSize;
+            settingsStore.mouthOpenSize = value;
+
+            mouthRafId = requestAnimationFrame(animate);
+        };
+
+        mouthRafId = requestAnimationFrame(animate);
+    }
+
+
     function stopLipSync() {
         if (mouthRafId !== null) {
             cancelAnimationFrame(mouthRafId);
@@ -33,6 +54,7 @@ export function useLipSync() {
 
     return {
         speech,
-        stopLipSync
+        stopLipSync,
+        startLipSync,
     };
 }

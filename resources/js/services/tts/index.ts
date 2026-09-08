@@ -28,6 +28,7 @@ export class TtsQueue {
 
     private audio = new Audio();
 
+    
     private currentObjectUrl: string | null = null;
 
     private generation = 0;
@@ -40,6 +41,10 @@ export class TtsQueue {
         private onJobStart?: (job: TtsJob) => void,
         private onJobEnd?: (job: TtsJob) => void,
         private onError?: (error: unknown, job: TtsJob | undefined) => void,
+        private lipSync?: {
+            startLipSync: (mouthOpenSize: number) => void;
+            stopLipSync: () => void;
+        },
     ) {}
 
     async unlock(): Promise<boolean> {
