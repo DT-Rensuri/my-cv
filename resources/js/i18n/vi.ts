@@ -10,7 +10,7 @@ export default {
         projectsCta: 'DỰ ÁN',
     },
     projectNames: {
-        suri_v_tube: 'Suri AI YouTuber',
+        suri_v_tube: 'Suri AI',
         ai_recorder: 'AI Meeting Recorder',
     },
     hero: {
@@ -277,5 +277,35 @@ export default {
                     'Lỗi khi tạo bản chép. Vui lòng thử lại.',
             },
         },
+        SuriAi: {
+            live2dSettings: {
+                title: 'Live2D Settings',
+                close: 'Đóng settings',
+                demoValues: 'Demo (Live values)',
+                cursorPosition: 'Mouse Position',
+                mouthOpen: 'Mouth Open',
+                nowSpeaking: 'Now Speaking',
+                voiceDemo: 'Voice Demo',
+                runVoiceDemo: 'Start',
+                modelMotionSettings: 'Model Motion Settings',
+                idleMotion: 'IDLE Motion',
+                motionDriver: 'Motion Driver',
+                eyeTracking: 'Eye Tracking',
+                idleAnimation: 'Idle Animation',
+                forceIdleEye: 'Force Idle Eye',
+                autoBlink: 'Auto Blink',
+                forceAutoBlink: 'Force Auto Blink',
+                expression: 'Expression',
+                shadow: 'Shadow',
+                maxFps: 'Max FPS',
+                renderScale: 'Render Scale',
+                modelX: 'Model X',
+                modelY: 'Model Y',
+                modelScale: 'Scale',
+                themeSettings: 'Theme Settings',
+                themeHue: 'Theme Hue',
+                themeHueDynamic: 'Dynamic Hue'
+            }
+        }
     },
 };

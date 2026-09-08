@@ -10,7 +10,7 @@ export default {
         projectsCta: 'プロジェクト',
     },
     projectNames: {
-        suri_v_tube: 'Suri AIバーチャルYouTuber',
+        suri_v_tube: 'Suri AIバーチャル',
         ai_recorder: 'AI会議録音・議事録システム',
     },
     hero: {
@@ -267,11 +267,41 @@ export default {
                 'アクション項目を抽出',
                 '重要なポイントを特定',
             ],
+            error: {
+                erSummary: 'エラーが発生しました。再度お試しください。',
+                erTranscription: 'エラーが発生しました。再度お試しください。',
+            },
         },
-        error: {
-            erSummary: 'エラーが発生しました。再度お試しください。',
-            erTranscription:
-                'エラーが発生しました。再度お試しください。',
+
+        SuriAi: {
+            live2dSettings: {
+                title: 'Live2D 設定',
+                close: '閉じる',
+                demoValues: 'Demo (Live values)',
+                cursorPosition: 'Mouse Position',
+                mouthOpen: 'Mouth Open',
+                nowSpeaking: 'Now Speaking',
+                voiceDemo: 'Voice Demo',
+                runVoiceDemo: 'Start',
+                modelMotionSettings: 'Model Motion Settings',
+                idleMotion: 'IDLE Motion',
+                motionDriver: 'Motion Driver',
+                eyeTracking: 'Eye Tracking',
+                idleAnimation: 'Idle Animation',
+                forceIdleEye: 'Force Idle Eye',
+                autoBlink: 'Auto Blink',
+                forceAutoBlink: 'Force Auto Blink',
+                expression: 'Expression',
+                shadow: 'Shadow',
+                maxFps: 'Max FPS',
+                renderScale: 'Render Scale',
+                modelX: 'Model X',
+                modelY: 'Model Y',
+                modelScale: 'Scale',
+                themeSettings: 'Theme Settings',
+                themeHue: 'Theme Hue',
+                themeHueDynamic: 'Dynamic Hue',
+            },
         },
     },
 };

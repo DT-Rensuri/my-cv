@@ -21,15 +21,23 @@ class OpenRouterController extends Controller
 {
     private string $assistanceModel;
     private string $audioModel;
+    private string $suriModel;
 
     public function __construct()
     {
         $this->assistanceModel = config('services.openrouter.model', 'gpt-4o-mini');
         $this->audioModel = config('services.openrouter.audio_model', 'whisper');
+        $this->suriModel = config('services.openrouter.suri_model', 'liquid/lfm-2.5-2.6b:free');
     }
 
     public function chat(ChatRequest $request, OpenRouterRequest $openRouter)
     {
+
+        $targetModel = match ($request->input('model')) {
+            'suri-vtube' => $this->suriModel,
+            default => $this->assistanceModel,
+        };
+
         $messages = [
             new MessageData(
                 role: RoleType::SYSTEM,
@@ -73,7 +81,7 @@ class OpenRouterController extends Controller
 
         $chatData = new ChatData(
             messages: $messages,
-            model: $this->assistanceModel,
+            model: $targetModel,
             stream: $request->boolean('stream') ? true : null,
             temperature: $request->float('temperature') ?: null,
             max_tokens: $request->integer('max_tokens') ?: null,

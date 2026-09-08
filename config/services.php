@@ -44,6 +44,7 @@ return [
         'api_key' => env('OPENROUTER_API_KEY'),
         'model' => env('OPENROUTER_MODEL', 'gpt-4o-mini'), // Default model if not provided
         'audio_model' => env('OPENROUTER_AUDIO_MODEL', 'whisper'), // Default audio model if not provided
+        'suri_model' => env('OPENROUTER_SURI_MODEL', 'liquid/lfm-2.5-2.6b:free'), // Default Suri model if not provided
     ],
 
     'tts_local' => [
