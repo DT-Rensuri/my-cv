@@ -2,22 +2,21 @@
 
 declare(strict_types=1);
 
-namespace DtRensuri\LaravelOpenrouter;
+namespace DtRensuri\LaravelTtsLocal;
 
+use DtRensuri\LaravelTtsLocal\Facades\LaravelTtsLocal;
 use GuzzleHttp\Client;
 use GuzzleHttp\HandlerStack;
 use GuzzleRetry\GuzzleRetryMiddleware;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
-use DtRensuri\LaravelOpenrouter\Facades\LaravelOpenRouter;
-use DtRensuri\LaravelOpenrouter\Helpers\OpenRouterHelper;
 
-final class OpenRouterServiceProvider extends ServiceProvider
+final class TtsLocalServiceProvider extends ServiceProvider
 {
     /**
      * The default timeout for the Guzzle client.
      */
-    const DEFAULT_TIMEOUT = 20;
+    const DEFAULT_TIMEOUT = 60;
 
     /**
      * Bootstrap any application services.
@@ -34,22 +33,22 @@ final class OpenRouterServiceProvider extends ServiceProvider
     {
         $this->configure();
 
-        $this->app->singleton('laravel-openrouter.http', function () {
+        $this->app->singleton('laravel-tts-local.http', function () {
             return $this->configureClient();
         });
 
-        $this->app->bind('laravel-openrouter', function () {
-            return new OpenRouterRequest(
-                $this->app->make('laravel-openrouter.http')
+        $this->app->bind('laravel-tts-local', function () {
+            return new TtsLocalRequest(
+                $this->app->make('laravel-tts-local.http'),
             );
         });
 
-        $this->app->bind(OpenRouterRequest::class, function () {
-            return $this->app->make('laravel-openrouter');
+        $this->app->bind(TtsLocalRequest::class, function () {
+            return $this->app->make('laravel-tts-local');
         });
 
         // Register the facade alias.
-        AliasLoader::getInstance()->alias('LaravelOpenRouter', LaravelOpenRouter::class);
+        AliasLoader::getInstance()->alias('LaravelTtsLocal', LaravelTtsLocal::class);
     }
 
     /**
@@ -57,7 +56,7 @@ final class OpenRouterServiceProvider extends ServiceProvider
      */
     public function provides(): array
     {
-        return ['laravel-openrouter'];
+        return ['laravel-tts-local'];
     }
 
     /**
@@ -66,7 +65,7 @@ final class OpenRouterServiceProvider extends ServiceProvider
     protected function configure(): void
     {
         $this->mergeConfigFrom(
-            __DIR__ . '/../config/laravel-openrouter.php', 'laravel-openrouter'
+            __DIR__.'/../config/laravel-tts-local.php', 'laravel-tts-local'
         );
     }
 
@@ -77,8 +76,8 @@ final class OpenRouterServiceProvider extends ServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__ . '/../config/laravel-openrouter.php' => config_path('laravel-openrouter.php'),
-            ], 'laravel-openrouter');
+                __DIR__.'/../config/laravel-tts-local.php' => config_path('laravel-tts-local.php'),
+            ], 'laravel-tts-local');
         }
     }
 
@@ -89,7 +88,7 @@ final class OpenRouterServiceProvider extends ServiceProvider
     {
         // Set the default configuration for retrying requests
         $retryOptions = [
-            'max_retry_attempts' => 5,
+            'max_retry_attempts' => 3,
             'retry_on_status' => [429, 500, 502, 503, 504],
             'retry_on_timeout' => true,
         ];
@@ -101,19 +100,12 @@ final class OpenRouterServiceProvider extends ServiceProvider
         $handlerStack->push(GuzzleRetryMiddleware::factory($retryOptions));
 
         /*
-         * Create and return a Guzzle client with the base_uri, timeout, headers and handler stack request options.
-         * For more info: https://openrouter.ai/docs
+         * Create and return a Guzzle client with the base_uri, timeout and handler stack request options.
          */
         return new Client([
-            'base_uri' => config('laravel-openrouter.api_endpoint'),
-            'timeout' => config('laravel-openrouter.api_timeout', self::DEFAULT_TIMEOUT),
+            'base_uri' => config('laravel-tts-local.base_url'),
+            'timeout' => config('laravel-tts-local.timeout', self::DEFAULT_TIMEOUT),
             'handler' => $handlerStack,
-            'headers' => [
-                'Authorization' => 'Bearer ' . config('laravel-openrouter.api_key'),
-                'HTTP-Referer' => config('laravel-openrouter.referer'),
-                'X-Title' => config('laravel-openrouter.title'),
-                'Content-Type' => 'application/json',
-            ],
         ]);
     }
 }

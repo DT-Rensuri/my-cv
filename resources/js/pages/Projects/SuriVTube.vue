@@ -16,24 +16,27 @@
     </button>
 
     <!-- Settings overlay -->
-    <Live2DSettingsOverlay :open="settingsOpen" @close="settingsOpen = false" />
+    <Live2DSettingsOverlay :cursor-position="cursorPosition" :open="settingsOpen" @close="settingsOpen = false" />
   </section>
 </template>
 <script setup lang="ts">
 import { defaultLive2DMotionControlDynamics, Live2DScene, useLive2DMotionControl, useLive2dParams, useSettingsLive2d } from '@dtrensuri/stage-ui-live2d'
 import type { Live2DEyeFocusSource } from '@dtrensuri/stage-ui-live2d'
 import { storeToRefs } from 'pinia'
-import { ref, shallowRef, computed } from 'vue'
-import { Settings } from 'lucide-vue-next'
+import { ref, shallowRef, computed, watch, onBeforeMount, onBeforeUnmount, onMounted } from 'vue'
+import { Settings, AudioLines } from 'lucide-vue-next'
 import { useStageSettingStore } from '@/stores/stageSettings'
 import ProjectLayouts from '@/layouts/ProjectLayouts.vue'
 import Live2DSettingsOverlay from '@/components/live2d/Live2DSettingsOverlay.vue'
 import { useMouse } from '@vueuse/core'
+import { useChatbotAgentStore } from '@/stores/chatbotAgent'
+import { useSpeech } from '@/composables/useSpeech'
 
 defineOptions({
   layout: ProjectLayouts,
 });
 
+const chatbotAgentStore = useChatbotAgentStore()
 const componentState = defineModel<'pending' | 'loading' | 'mounted'>('state', { default: 'pending' })
 const settingsStore = useStageSettingStore()
 const {
@@ -92,5 +95,28 @@ const settingsOpen = ref(false)
 function handleStageRenderError(error: Error) {
   stageRenderError.value = error
 }
+
+const { stopSpeech, queue } = useSpeech()
+
+onMounted(() => {
+  const unlockOnce = () => {
+    queue.unlock()
+    window.removeEventListener('pointerdown', unlockOnce)
+    window.removeEventListener('keydown', unlockOnce)
+  }
+  window.addEventListener('pointerdown', unlockOnce)
+  window.addEventListener('keydown', unlockOnce)
+})
+
+
+
+onBeforeMount(() => {
+  chatbotAgentStore.selectedAgent = 'suriVTubeAgent';
+})
+
+onBeforeUnmount(() => {
+  chatbotAgentStore.selectedAgent = 'default';
+  stopSpeech()
+})
 
 </script>

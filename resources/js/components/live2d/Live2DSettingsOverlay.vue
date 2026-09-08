@@ -3,15 +3,20 @@ import { storeToRefs } from 'pinia'
 import { useSettingsLive2d, useLive2dParams } from '@dtrensuri/stage-ui-live2d'
 import { useStageSettingStore } from '@/stores/stageSettings'
 import { Settings, X } from 'lucide-vue-next'
+import { ref } from 'vue'
+import { useSpeech } from '@/composables/useSpeech'
 
 defineProps<{
-    open: boolean
+    open: boolean,
+    cursorPosition: { x: number, y: number }
 }>()
 
 const emit = defineEmits<{
     (e: 'close'): void
 }>()
 
+const { stopSpeech, speak } = useSpeech()
+const sampleVoiceText = 'Xin chào, tôi là Suri! Tôi có thể giúp gì cho bạn? Hãy thử hỏi tôi về các dự án của tôi, hoặc yêu cầu tôi kể một câu chuyện vui. Bạn cũng có thể yêu cầu tôi hát một bài hát, hoặc đọc một đoạn văn bản.'
 // --- Live2D settings (persisted in localStorage) ---
 const settingsLive2d = useSettingsLive2d()
 const {
@@ -42,9 +47,38 @@ const live2dParams = useLive2dParams()
 const {
     position: live2dModelPosition,
     scale: live2dModelScale,
+    currentMotion: live2dCurrentModelMotion,
+    availableMotions: live2dAvailableModelMotions,
+    motionMap: live2dModelMotionMap,
+    modelParameters: live2dModelParameters,
 } = storeToRefs(live2dParams)
 
 const motionDriverOptions = ['magic', 'universal'] as const
+
+const selectedModelIdleMotion = ref<{
+    motionName: string
+    motionIndex: number
+    fileName: string
+} | undefined>(
+    live2dAvailableModelMotions.value.find(
+        motion =>
+            motion.motionName === live2dCurrentModelMotion.value.group &&
+            motion.motionIndex === live2dCurrentModelMotion.value.index
+    )
+)
+
+function handleIdleMotionChange(selectedMotion: { motionName: string, motionIndex: number, fileName: string } | undefined) {
+    if (!selectedMotion) return
+
+    localStorage.setItem('selected-runtime-motion', selectedMotion.fileName)
+    localStorage.setItem('selected-runtime-motion-group', selectedMotion.motionName)
+    localStorage.setItem('selected-runtime-motion-index', selectedMotion.motionIndex.toString())
+
+    live2dCurrentModelMotion.value.group = selectedMotion.motionName
+    live2dCurrentModelMotion.value.index = selectedMotion.motionIndex
+
+    console.log('Selected motion changed to:', selectedMotion)
+}
 </script>
 
 <template>
@@ -67,7 +101,53 @@ const motionDriverOptions = ['magic', 'universal'] as const
                     </div>
 
                     <!-- Live2D toggles -->
-                    <div class="space-y-3 max-h-[calc(85vh-48px)] overflow-y-auto" style="scrollbar-width: none; -ms-overflow-style: none; -webkit-scrollbar: none;">
+                    <div class="space-y-3 max-h-[calc(85vh-48px)] overflow-y-auto"
+                        style="scrollbar-width: none; -ms-overflow-style: none; -webkit-scrollbar: none;">
+                        <!-- Demo-only live values -->
+                        <div class="space-y-1">
+                            <p class="font-pixel text-px-14 text-ink-dim mb-2">Demo (live values)</p>
+                            <div class="flex items-center justify-between">
+                                <span class="font-pixel text-px-14 text-ink">Mouse Position</span>
+                                <span class="font-pixel text-px-14 text-ink-dim">{{ cursorPosition.x }}, {{ cursorPosition.y }}</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="font-pixel text-px-14 text-ink">Mouth Open</span>
+                                <span class="font-pixel text-px-14 text-ink-dim">{{ mouthOpenSize.toFixed(2) }}</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="font-pixel text-px-14 text-ink">Now Speaking</span>
+                                <span class="font-pixel text-px-14 text-ink-dim">{{ nowSpeaking ? 'YES' : 'NO' }}</span>
+                            </div>
+
+                            <div class="flex items-center justify-between">
+                                <span class="font-pixel text-px-14 text-ink">Voice Demo</span>
+                                <button class="pixel-border-sm pixel-press bg-background text-ink font-pixel text-px-14 px-2 py-1"
+                                    @click="speak(sampleVoiceText)">
+                                    Demo Voice
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 border-t-2 border-line">
+                            <p class="font-pixel text-px-14 text-ink-dim mt-2">Model Motion Settings</p>
+                        </div>
+
+                        <label class="flex items-center justify-between gap3">
+                            <span class="font-pixel text-px-14 text-ink">IDLE Motion</span>
+                            <select v-model="selectedModelIdleMotion"
+                                class="pixel-border-sm bg-background text-ink font-pixel text-px-14 px-2 py-1"
+                                @change="handleIdleMotionChange(selectedModelIdleMotion)">
+                                <option v-for="motion in live2dAvailableModelMotions" :key="motion.motionIndex"
+                                    :value="motion">
+                                    {{ motion.fileName.split('/').pop() || motion.fileName }}
+                                </option>
+                            </select>
+                        </label>
+
+                        <div class="mt-4 border-t-2 border-line">
+                            <p class="font-pixel text-px-14 text-ink-dim mt-2">Live2D Settings</p>
+                        </div>
+
                         <label class="flex items-center justify-between gap-3">
                             <span class="font-pixel text-px-14 text-ink">Motion Driver</span>
                             <select v-model="live2dMotionDriver"
@@ -82,12 +162,6 @@ const motionDriverOptions = ['magic', 'universal'] as const
                             <span class="font-pixel text-px-14 text-ink">Eye Tracking</span>
                             <input v-model="live2dEyeTracking" type="checkbox"
                                 class="h-5 w-5 accent-[var(--color-accent)]" />
-                        </label>
-
-                        <label class="flex items-center justify-between gap-3">
-                            <span class="font-pixel text-px-14 text-ink">Eye Offset</span>
-                            <span class="font-pixel text-px-14 text-ink-dim">X: {{ live2dModelEyeOffset.x }}, Y: {{
-                                live2dModelEyeOffset.y }}</span>
                         </label>
 
                         <label class="flex items-center justify-between gap-3">
@@ -172,6 +246,10 @@ const motionDriverOptions = ['magic', 'universal'] as const
                                 class="w-full accent-[var(--color-accent)]" />
                         </div>
 
+                        <div class="mt-4 border-t-2 border-line">
+                            <p class="font-pixel text-px-14 text-ink-dim mt-2">Theme Settings</p>
+                        </div>
+
                         <!-- Theme -->
                         <div class="space-y-1">
                             <div class="flex items-center justify-between">
@@ -187,19 +265,6 @@ const motionDriverOptions = ['magic', 'universal'] as const
                             <input v-model="themeColorsHueDynamic" type="checkbox"
                                 class="h-5 w-5 accent-[var(--color-accent)]" />
                         </label>
-
-                        <!-- Demo-only live values -->
-                        <div class="mt-4 pt-4 border-t-2 border-line">
-                            <p class="font-pixel text-px-14 text-ink-dim mb-2">Demo (live values)</p>
-                            <div class="flex items-center justify-between">
-                                <span class="font-pixel text-px-14 text-ink">Mouth Open</span>
-                                <span class="font-pixel text-px-14 text-ink-dim">{{ mouthOpenSize.toFixed(2) }}</span>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <span class="font-pixel text-px-14 text-ink">Now Speaking</span>
-                                <span class="font-pixel text-px-14 text-ink-dim">{{ nowSpeaking ? 'YES' : 'NO' }}</span>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>

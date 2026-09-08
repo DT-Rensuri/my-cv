@@ -83,7 +83,7 @@ class OpenRouterController extends Controller
 
         // Stream pass-through: forward the SSE stream back to the client.
         if ($request->boolean('stream')) {
-            $stream = $openRouter->chatStreamRequest($chatData)->wait();
+            $stream = $openRouter->chatStreamRequest($chatData, $request->getThinkingEffort() || 'medium')->wait();
 
             return response()->stream(function () use ($stream) {
                 while (! $stream->eof()) {

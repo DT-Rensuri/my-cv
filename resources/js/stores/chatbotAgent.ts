@@ -1,12 +1,14 @@
 import { ref, watch, computed } from 'vue';
 import { defineStore } from 'pinia';
-import { agent, voiceMeetingAgent } from '@/services/langchain';
+import { agent, voiceMeetingAgent, suriVTubeAgent } from '@/services/langchain';
 import type { LanguageOption } from '@/types/chat';
 import { useAvatarStore } from './avatar';
+import { useSpeech } from '@/composables/useSpeech';
 
 export type AgentMessage = { role: string; content: string };
 
 export const useChatbotAgentStore = defineStore('chatbotAgent', () => {
+    const { speak } = useSpeech();
     const response = ref<string | null>(null);
     const loading = ref(false);
     const enableSuggestions = ref(true);
@@ -29,6 +31,10 @@ export const useChatbotAgentStore = defineStore('chatbotAgent', () => {
         'I am a helpful and friendly assistant.',
     );
     const selectedAgent = ref('default');
+    const isSuriVTube = computed(
+        () => selectedAgent.value === 'suriVTubeAgent',
+    );
+    const stackStreamOutput = ref('');
 
     function resetStream() {
         streamOutput.value = '';
@@ -43,6 +49,8 @@ export const useChatbotAgentStore = defineStore('chatbotAgent', () => {
         switch (selectedAgent.value) {
             case 'voiceMeetingAgent':
                 return voiceMeetingAgent;
+            case 'suriVTubeAgent':
+                return suriVTubeAgent;
             default:
                 return agent;
         }
@@ -111,6 +119,15 @@ export const useChatbotAgentStore = defineStore('chatbotAgent', () => {
                         isThinking.value = false;
                         thinkingOutput.value = '';
                         streamOutput.value += content;
+
+                        if (isSuriVTube.value) {
+                            stackStreamOutput.value += content;
+
+                            if (/[.!?…]\s*$/.test(content)) {
+                                speak(stackStreamOutput.value);
+                                stackStreamOutput.value = '';
+                            }
+                        }
                     }
                 }
 
@@ -130,6 +147,11 @@ export const useChatbotAgentStore = defineStore('chatbotAgent', () => {
             isStreaming.value = false;
             isThinking.value = false;
 
+            if (isSuriVTube.value && stackStreamOutput.value) {
+                speak(stackStreamOutput.value);
+                stackStreamOutput.value = '';
+            }
+
             return streamOutput.value;
         }
     }
@@ -137,10 +159,11 @@ export const useChatbotAgentStore = defineStore('chatbotAgent', () => {
     watch(
         () => streamOutput.value,
         (newLang) => {
-            const avatarStore = useAvatarStore();
-            if (newLang) {
-                avatarStore.say(newLang, 4000);
+            if (!newLang) {
+                return;
             }
+            const avatarStore = useAvatarStore();
+            avatarStore.say(newLang, 4000);
         },
     );
 

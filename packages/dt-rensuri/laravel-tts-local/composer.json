@@ -1,12 +1,13 @@
 {
     "$schema": "https://getcomposer.org/schema.json",
-    "name": "dt-rensuri/laravel-openrouter",
-    "description": "Laravel package for OpenRouter (A unified interface for LLMs)",
+    "name": "dt-rensuri/laravel-tts-local",
+    "description": "Laravel package for a local TTS (text-to-speech) service (Vieneu / FastAPI)",
     "keywords": [
         "laravel",
-        "laravel-openrouter",
-        "OpenRouter",
-        "LLMs",
+        "laravel-tts-local",
+        "tts",
+        "text-to-speech",
+        "vieneu",
         "ai"
     ],
     "type": "package",
@@ -32,21 +33,21 @@
     },
     "autoload": {
         "psr-4": {
-            "DtRensuri\\LaravelOpenrouter\\": "src/"
+            "DtRensuri\\LaravelTtsLocal\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "DtRensuri\\LaravelOpenrouter\\Tests\\": "tests/"
+            "DtRensuri\\LaravelTtsLocal\\Tests\\": "tests/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "DtRensuri\\LaravelOpenrouter\\OpenRouterServiceProvider"
+                "DtRensuri\\LaravelTtsLocal\\TtsLocalServiceProvider"
             ],
             "aliases": {
-                "LaravelOpenrouter": "DtRensuri\\LaravelOpenrouter\\Facades\\LaravelOpenRouter"
+                "LaravelTtsLocal": "DtRensuri\\LaravelTtsLocal\\Facades\\LaravelTtsLocal"
             }
         }
     },
