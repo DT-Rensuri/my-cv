@@ -52,6 +52,9 @@ const i18n = createI18n({
     legacy: false,
     locale: loadSavedLocale(),
     fallbackLocale: DEFAULT_LOCALE,
+    warnHtmlMessage: false,
+    missingWarn: false,
+    fallbackWarn: false,
     messages: {
         vi,
         en,

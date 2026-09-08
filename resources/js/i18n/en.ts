@@ -9,6 +9,10 @@ export default {
         language: 'Select language',
         projectsCta: 'PROJECTS',
     },
+    projectNames: {
+        suri_v_tube: 'Suri AI YouTuber',
+        ai_recorder: 'AI Meeting Recorder',
+    },
     hero: {
         ready: 'READY TO QUEST',
         tagline:

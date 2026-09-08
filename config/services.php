@@ -45,4 +45,11 @@ return [
         'model' => env('OPENROUTER_MODEL', 'gpt-4o-mini'), // Default model if not provided
         'audio_model' => env('OPENROUTER_AUDIO_MODEL', 'whisper'), // Default audio model if not provided
     ],
+
+    'tts_local' => [
+        // Local TTS (Vieneu / FastAPI) service. See services/tts/main.py.
+        'base_url' => env('TTS_LOCAL_BASE_URL', 'http://127.0.0.1:8001'),
+        'timeout' => env('TTS_LOCAL_TIMEOUT', 60),
+        'default_voice' => env('TTS_LOCAL_DEFAULT_VOICE', 'my-custom-voice'),
+    ],
 ];

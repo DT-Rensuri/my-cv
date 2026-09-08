@@ -1,6 +1,6 @@
 import { useThemeStore } from '@/stores/theme';
 import { tool } from '@langchain/core/tools';
-import { ThemeColors } from '@/types/theme';
+import type { ThemeColors } from '@/types/theme';
 import * as z from 'zod';
 
 const ThemeColorsSchema = z.object({

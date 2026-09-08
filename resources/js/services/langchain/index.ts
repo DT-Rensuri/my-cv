@@ -12,6 +12,7 @@ const voiceMeetingCheckpointer = new MemorySaver();
 
 const BASE_URL = `${import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000'}/api/openrouter`;
 const API_KEY = 'laravel-proxy';
+const MAX_RETRIES = 2;
 
 const agent = createAgent({
     model: new ChatOpenAI({
@@ -20,6 +21,7 @@ const agent = createAgent({
         configuration: {
             baseURL: BASE_URL,
         },
+        maxRetries: MAX_RETRIES,
     }),
     tools: [braveSearchTool, customThemeColorTool, ...chatBotTools],
     checkpointer,
@@ -32,9 +34,23 @@ const voiceMeetingAgent = createAgent({
         configuration: {
             baseURL: BASE_URL,
         },
+        maxRetries: MAX_RETRIES,
     }),
     tools: [braveSearchTool, ...meetingNotesTools],
     checkpointer: voiceMeetingCheckpointer,
 });
 
-export { agent, voiceMeetingAgent, provider };
+const suriVTubeAgent = createAgent({
+    model: new ChatOpenAI({
+        model: 'suri-vtube',
+        apiKey: API_KEY,
+        configuration: {
+            baseURL: BASE_URL,
+        },
+        maxRetries: MAX_RETRIES,
+    }),
+    tools: [],
+    checkpointer,
+});
+
+export { agent, voiceMeetingAgent, suriVTubeAgent, provider };

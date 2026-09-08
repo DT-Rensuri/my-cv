@@ -6,24 +6,37 @@ import { useCvData } from '@/composables/useCvData';
 import { useThemeStore } from '@/stores/theme';
 import { useActiveSectionStore } from '@/stores/activeSection';
 import { SUPPORTED_LOCALES, saveLocale, type Locale } from '@/i18n';
-import { Link } from '@inertiajs/vue3';
+import { Link, usePage } from '@inertiajs/vue3';
+
 
 const props = withDefaults(
-    defineProps<{
-        showTagProfile?: boolean;
-    }>(),
-    {
-        showTagProfile: true,
-    }
+  defineProps<{
+    showTagProfile?: boolean;
+  }>(),
+  {
+    showTagProfile: true,
+  }
 );
 
 const { t, locale } = useI18n();
+const page = usePage()
 const { profile, navLinks } = useCvData();
 const themeStore = useThemeStore();
 const activeSectionStore = useActiveSectionStore();
 const open = ref(false);
 const langOpen = ref(false);
 const scrolled = ref(false);
+
+const projectsLink = [
+  {
+    href: '/projects/ai-recorder',
+    label: t('projectNames.ai_recorder'),
+  },
+  {
+    href: '/projects/suri-v-tube',
+    label: t('projectNames.suri_v_tube'),
+  }
+]
 
 const sectionIds = navLinks.value.map((l) => l.href.slice(1));
 
@@ -81,6 +94,16 @@ onUnmounted(() => {
           <span v-if="activeSectionStore.active === link.href.slice(1)">&gt; </span>{{ link.label }}
         </Link>
       </div>
+      <div class="hidden md:flex items-center gap-1" v-else>
+        <Link v-for="link in projectsLink" :key="link.href" :href="link.href" :class="[
+          'px-3 py-2 font-pixel text-px-18 transition-colors',
+          page.url.startsWith(link.href)
+            ? 'text-success glow-green'
+            : 'text-ink-muted hover:text-ink',
+        ]">
+          {{ link.label }}
+        </Link>
+      </div>
 
       <div class="flex items-center gap-2">
         <!-- language switcher -->
@@ -108,9 +131,8 @@ onUnmounted(() => {
           <Palette v-else-if="themeStore.theme === 'dark'" class="h-5 w-5" />
           <Moon v-else class="h-5 w-5" />
         </button>
-        <Link href="/projects"
-          v-if="props.showTagProfile"
-          class="hidden sm:inline-flex items-center px-4 py-2.5 font-pixel text-px-18 bg-success text-background pixel-border-sm pixel-press hover:bg-accent">
+        <Link href="/projects/suri-v-tube" v-if="props.showTagProfile"
+          class="hidden sm:inline-flex items-center p-1 font-pixel text-px-18 bg-success text-background pixel-border-sm pixel-press hover:bg-accent">
           {{ t('nav.projectsCta') }}
         </Link>
         <button @click="open = !open" aria-label="Mở menu"
@@ -121,14 +143,35 @@ onUnmounted(() => {
       </div>
     </nav>
 
-    <div v-if="open" class="md:hidden bg-background border-t-4 border-line">
-      <div class="px-4 py-3 flex flex-col gap-1">
-        <a v-for="link in navLinks" :key="link.href" :href="link.href" @click="open = false"
-          class="px-3 py-3 font-pixel text-px-18 text-ink-muted hover:text-success hover:bg-panel transition-colors">
-          <span v-if="activeSectionStore.active === link.href.slice(1)">&gt; </span>{{ link.label }}
-        </a>
-      </div>
-    </div>
+    <template v-if="props.showTagProfile">
+      <Transition name="slide-down">
+        <div v-if="open" class="md:hidden bg-background border-t-4 border-line">
+          <div class="px-4 py-3 flex flex-col gap-1">
+            <Link v-for="link in navLinks" :key="link.href" :href="link.href" @click="open = false"
+              class="px-3 py-3 font-pixel text-px-18 text-ink-muted hover:text-success hover:bg-panel transition-colors">
+              <span v-if="activeSectionStore.active === link.href.slice(1)">&gt; </span>{{ link.label }}
+            </Link>
+            <Link href="/projects/suri-v-tube" @click="open = false"
+              class="sm:hidden px-3 py-3 font-pixel text-px-18 text-ink-muted hover:text-success hover:bg-panel transition-colors">
+              {{ t('nav.projectsCta') }}
+            </Link>
+          </div>
+        </div>
+      </Transition>
+    </template>
+    <template v-else>
+      <Transition name="slide-down">
+        <div v-if="open" class="md:hidden bg-background border-b-4 border-line">
+          <div class="flex flex-col gap-1 px-4 py-3">
+            <Link v-for="link in projectsLink" :key="link.href" :href="link.href" @click="open = false"
+              class="px-3 py-2 font-pixel text-px-18 text-ink-muted hover:text-success hover:bg-panel transition-colors">
+              <span v-if="page.url.startsWith(link.href)">&gt; </span>
+              {{ link.label }}
+            </Link>
+          </div>
+        </div>
+      </Transition>
+    </template>
   </header>
 </template>
 

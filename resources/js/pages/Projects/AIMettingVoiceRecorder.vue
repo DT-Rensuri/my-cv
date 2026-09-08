@@ -114,13 +114,13 @@
 
       <div class="mt-6 bg-panel pixel-border p-6 sm:p-8 crt-glow">
         <!-- Header -->
-        <div class="flex justify-between mb-4 pb-4 border-b-4 border-line">
+        <div class="flex flex-wrap justify-center sm:justify-between mb-4 pb-4 border-b-4 border-line">
           <div class="flex items-center gap-3">
             <div class="grid place-items-center h-12 w-12 bg-highlight text-background pixel-border-sm">
               <Sparkles class="h-6 w-6" />
             </div>
 
-            <div>
+            <div class="flex items-center flex-col">
               <p class="font-pixel text-px-18 text-highlight">
                 {{ t('projects.aimettingVoiceRecorder.aiSummary') }}
               </p>
@@ -131,7 +131,7 @@
             </div>
           </div>
 
-          <div>
+          <div class="flex items-center gap-2 mt-4 sm:mt-0">
             <button type="button" class="font-pixel text-px-14 px-5 py-3 transition-colors" :class="activeTab === 'original'
               ? 'bg-highlight text-background'
               : 'text-ink-dim hover:text-highlight'
@@ -252,7 +252,7 @@ import ProjectLayouts from '@/layouts/ProjectLayouts.vue';
 import { useI18n } from 'vue-i18n';
 import { marked } from 'marked';
 import { guestApi } from '@/services/api/guest';
-import { STTResponse } from '@/types/openrouter';
+import type { STTResponse } from '@/types/openrouter';
 import { useVoiceMeetingStore } from '@/stores/voiceMeeting';
 import { useChatbotAgentStore } from '@/stores/chatbotAgent';
 import { voiceMeetingAgent } from '@/services/langchain';

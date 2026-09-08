@@ -1,0 +1,59 @@
+{
+    "$schema": "https://getcomposer.org/schema.json",
+    "name": "dt-rensuri/laravel-tts-local",
+    "description": "Laravel package for a local TTS (text-to-speech) service (Vieneu / FastAPI)",
+    "keywords": [
+        "laravel",
+        "laravel-tts-local",
+        "tts",
+        "text-to-speech",
+        "vieneu",
+        "ai"
+    ],
+    "type": "package",
+    "homepage": "https://github.com/DT-Rensuri/my-cv",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "DT Rensuri"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "ext-json": "*",
+        "spatie/laravel-data": "^4.13",
+        "guzzlehttp/guzzle": "^7.9",
+        "caseyamcl/guzzle_retry_middleware": "^2.12"
+    },
+    "require-dev": {
+        "mockery/mockery": "^1.6",
+        "orchestra/testbench": "^9.9",
+        "phpunit/phpunit": "^11.5",
+        "laravel/pint": "^1.29"
+    },
+    "autoload": {
+        "psr-4": {
+            "DtRensuri\\LaravelTtsLocal\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "DtRensuri\\LaravelTtsLocal\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "DtRensuri\\LaravelTtsLocal\\TtsLocalServiceProvider"
+            ],
+            "aliases": {
+                "LaravelTtsLocal": "DtRensuri\\LaravelTtsLocal\\Facades\\LaravelTtsLocal"
+            }
+        }
+    },
+    "scripts": {
+        "test": "phpunit"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

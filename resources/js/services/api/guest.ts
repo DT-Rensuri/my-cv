@@ -64,4 +64,52 @@ export const guestApi = {
             }),
         );
     },
+
+    /**
+     * POSTs the request and receives binary audio (or any binary payload)
+     * back as a Blob instead of the JSON envelope.
+     */
+    async voiceStream(url: string, data?: FormData, config: RequestConfig = {}): Promise<Blob> {
+        try {
+            const response = await http.post<Blob>(url, data, {
+                ...guestConfig,
+                ...config,
+                responseType: 'blob',
+            });
+
+            return response.data;
+        } catch (error) {
+            console.error(`Error streaming from ${url}:`, error);
+            throw error;
+        }
+    },
+
+    /**
+     * POSTs the request and returns the raw ReadableStream of the response
+     * body, so audio can be played chunk-by-chunk as it arrives (true
+     * streaming) instead of waiting for the whole payload.
+     */
+    async voiceStreamRealtime(
+        url: string,
+        data?: FormData,
+        config: RequestConfig = {},
+    ): Promise<ReadableStream<Uint8Array>> {
+        const headers: Record<string, string> = {
+            Accept: 'audio/wav',
+            ...(config.headers as Record<string, string> | undefined),
+        };
+
+        const response = await fetch(url, {
+            method: 'POST',
+            body: data,
+            headers,
+            credentials: 'same-origin',
+        });
+
+        if (!response.ok || !response.body) {
+            throw new Error(`Stream request failed: ${response.status}`);
+        }
+
+        return response.body;
+    }
 };

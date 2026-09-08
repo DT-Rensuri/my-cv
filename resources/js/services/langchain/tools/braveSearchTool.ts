@@ -1,6 +1,6 @@
 import { tool } from '@langchain/core/tools';
 import * as z from 'zod';
-import { BraveSearchRequest } from '@/types/brave';
+import type { BraveSearchRequest } from '@/types/brave';
 import { searchBrave } from '@/services/brave';
 
 export const braveSearchTool = tool(

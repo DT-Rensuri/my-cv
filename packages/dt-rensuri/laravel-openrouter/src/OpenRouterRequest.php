@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace DtRensuri\LaravelOpenrouter;
 
-use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Promise\PromiseInterface;
 use Illuminate\Support\Arr;
@@ -24,12 +24,16 @@ use ReflectionException;
  */
 final class OpenRouterRequest extends OpenRouterAPI
 {
+
+    public function __construct(
+        private readonly Client $client,
+    ) {}
     /**
      * Sends a model request for the given chat conversation.
      *
      * @throws ReflectionException|GuzzleException
      */
-    public function chatRequest(ChatData $chatData): ErrorData|ResponseData
+    public function chatRequest(ChatData $chatData, string $reasoningEffort = 'medium'): ErrorData|ResponseData
     {
         // The path for the chat completion request.
         $chatCompletionPath = 'chat/completions';
@@ -48,9 +52,10 @@ final class OpenRouterRequest extends OpenRouterAPI
         // Options for the Guzzle request
         $options = [
             'json' => $chatData,
+            'reasoning_effort' => $reasoningEffort,
         ];
 
-        $response = app(ClientInterface::class)->request(
+        $response = $this->client->request(
             'POST',
             $chatCompletionPath,
             $options
@@ -94,7 +99,7 @@ final class OpenRouterRequest extends OpenRouterAPI
             'json' => $audioData,
         ];
 
-        $response = app(ClientInterface::class)->request(
+        $response = $this->client->request(
             'POST',
             $transcriptionPath,
             $options
@@ -123,7 +128,7 @@ final class OpenRouterRequest extends OpenRouterAPI
     /**
      * Sends a streaming request for the given chat conversation.
      */
-    public function chatStreamRequest(ChatData $chatData): PromiseInterface
+    public function chatStreamRequest(ChatData $chatData, string $reasoningEffort = 'medium'): PromiseInterface
     {
         // The path for the chat completion request.
         $chatCompletionPath = 'chat/completions';
@@ -142,9 +147,10 @@ final class OpenRouterRequest extends OpenRouterAPI
             'json' => $chatData,
             'headers' => $headers,
             'stream' => true,
+            'reasoning_effort' => $reasoningEffort,
         ];
 
-        $promise = app(ClientInterface::class)->requestAsync(
+        $promise = $this->client->requestAsync(
             'POST',
             $chatCompletionPath,
             $options
@@ -170,7 +176,7 @@ final class OpenRouterRequest extends OpenRouterAPI
         // The path for the cost and stats request. e.g. generation?id=$GENERATION_ID
         $costPath = 'generation?id=' . $generationId;
 
-        $response = app(ClientInterface::class)->request(
+        $response = $this->client->request(
             'GET',
             $costPath
         );
@@ -188,7 +194,7 @@ final class OpenRouterRequest extends OpenRouterAPI
         // The path for the rate limit or credits left request.
         $limitPath = 'auth/key';
 
-        $response = app(ClientInterface::class)->request(
+        $response = $this->client->request(
             'GET',
             $limitPath
         );

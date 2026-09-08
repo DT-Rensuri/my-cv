@@ -1,4 +1,5 @@
 {
+    "$schema": "https://getcomposer.org/schema.json",
     "name": "dt-rensuri/laravel-openrouter",
     "description": "Laravel package for OpenRouter (A unified interface for LLMs)",
     "keywords": [

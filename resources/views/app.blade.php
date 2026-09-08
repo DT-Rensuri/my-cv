@@ -12,6 +12,7 @@
         <x-inertia::head>
             <title>{{ config('app.name', 'Laravel') }}</title>
         </x-inertia::head>
+        <script src="/assets/js/CubismSdkForWeb-5-r.3/Core/live2dcubismcore.min.js"></script>
     </head>
     <body class="font-sans antialiased">
         <x-inertia::app />

@@ -9,6 +9,10 @@ export default {
         language: '言語を選択',
         projectsCta: 'プロジェクト',
     },
+    projectNames: {
+        suri_v_tube: 'Suri AIバーチャルYouTuber',
+        ai_recorder: 'AI会議録音・議事録システム',
+    },
     hero: {
         ready: '冒険の準備完了',
         tagline:

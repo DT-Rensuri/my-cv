@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace DtRensuri\LaravelOpenrouter;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\ClientInterface;
 use GuzzleHttp\HandlerStack;
 use GuzzleRetry\GuzzleRetryMiddleware;
 use Illuminate\Foundation\AliasLoader;
@@ -35,13 +34,13 @@ final class OpenRouterServiceProvider extends ServiceProvider
     {
         $this->configure();
 
-        $this->app->singleton(ClientInterface::class, function () {
+        $this->app->singleton('laravel-openrouter.http', function () {
             return $this->configureClient();
         });
 
         $this->app->bind('laravel-openrouter', function () {
             return new OpenRouterRequest(
-                new OpenRouterHelper,
+                $this->app->make('laravel-openrouter.http')
             );
         });
 

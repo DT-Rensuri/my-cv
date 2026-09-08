@@ -24,7 +24,7 @@ class ChatRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'model' => ['required', 'in:default,voice-meeting-ai'],
+            'model' => ['required', 'in:default,voice-meeting-ai,suri-vtube'],
             'messages' => ['required', 'array', 'min:1'],
             'messages.*.role' => ['required', 'string', 'in:system,user,assistant,tool'],
             'messages.*.content' => ['nullable'],
@@ -58,12 +58,32 @@ class ChatRequest extends FormRequest
             : 'You are ``Suri`` a helpful assistant.';
     }
 
+
+    function getSuriVTubeSystemPrompt(): string
+    {
+        $sysPromptPath = storage_path('app/prompts/SURI_VTUBE.md');
+        return file_exists($sysPromptPath)
+            ? file_get_contents($sysPromptPath)
+            : 'You are ``Suri`` a helpful assistant.';
+    }
+
     public function getSystemPrompt(): string
     {
         $model = $this->input('model', 'default');
         return match ($model) {
             'voice-meeting-ai' => $this->getVoiceMeetingSystemPrompt(),
+            'suri-vtube' => $this->getSuriVTubeSystemPrompt(),
             default => $this->getDefaultSystemPrompt(),
+        };
+    }
+
+    public function getThinkingEffort(): string
+    {
+        $model = $this->input('model', 'default');
+        return match ($model) {
+            'voice-meeting-ai' => 'none',
+            'suri-vtube' => 'none',
+            default => 'medium',
         };
     }
 }
