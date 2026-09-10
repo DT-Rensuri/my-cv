@@ -1,11 +1,20 @@
+import { TtsTextFilter } from './filter';
 const TTS_STREAM_ENDPOINT = '/api/tts/stream';
+
+const filter = new TtsTextFilter();
 
 export function buildStreamUrl(
     text: string,
     voice?: string,
 ): string {
+    text = filter.clean(text);
+    
+    if (!text) {
+        throw new Error('Text is empty after filtering');
+    }
+
     const params = new URLSearchParams({
-        text,
+        text: text,
     });
 
     if (voice) {

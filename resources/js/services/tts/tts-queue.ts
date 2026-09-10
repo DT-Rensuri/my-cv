@@ -9,9 +9,9 @@ import type {
 import { synthesize, buildStreamUrl } from './api';
 import { AudioPlayer } from './audio-player';
 import { isAutoplayBlock, waitForUserGesture } from './autoplay';
-
 export class TtsQueue {
-    private static readonly MAX_CONCURRENT_REQUESTS = 10;
+    private static readonly MAX_CONCURRENT_REQUESTS = 3;
+    private static readonly OPTIMIZE_STREAMING_QUEUE = false;
 
     private queue: TtsJob[] = [];
     private audioBuffer = new Map<number, TtsJob>();
@@ -51,12 +51,12 @@ export class TtsQueue {
     add(text: string, _options: TtsJobOptions = {}): number {
         const job: TtsJob = {
             id: this.nextId++,
-            text,
+            text: text
         };
 
         this.stopped = false;
 
-        if (this.isIdle()) {
+        if (this.isIdle() && TtsQueue.OPTIMIZE_STREAMING_QUEUE) {
             this.startNewCycle(job);
 
             return job.id;
@@ -79,6 +79,8 @@ export class TtsQueue {
 
     stop(): void {
         this.stopped = true;
+
+        this.lipSync?.stopLipSync();
 
         this.generation++;
 
@@ -222,10 +224,6 @@ export class TtsQueue {
         this.onJobStart?.(job);
 
         try {
-            console.log(
-                `Streaming TTS job ${job.id} (text: "${job.text}")`,
-            );
-
             await this.player.playStreamUrl(
                 buildStreamUrl(job.text, this.voice),
             );
@@ -258,6 +256,7 @@ export class TtsQueue {
             this.firstStreamingFinished = true;
         } finally {
             this.playing = false;
+            console.log('onJobEnd called for job', job.id);
 
             this.onJobEnd?.(job);
 
@@ -301,10 +300,6 @@ export class TtsQueue {
         this.onJobStart?.(job);
 
         try {
-            console.log(
-                `Playing TTS job ${job.id} (text: "${job.text}")`,
-            );
-
             await this.player.playBlob(job.audio!);
 
             this.audioBuffer.delete(job.id);

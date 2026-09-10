@@ -19,7 +19,18 @@ const emit = defineEmits<{
 }>()
 
 const { stopSpeech, speak, isSpeaking } = useSpeech()
-const sampleVoiceText = 'Xin chào, tôi là Suri! Tôi có thể giúp gì cho bạn? Hãy thử hỏi tôi về các dự án của tôi, hoặc yêu cầu tôi kể một câu chuyện vui. Bạn cũng có thể yêu cầu tôi hát một bài hát, hoặc đọc một đoạn văn bản.'
+const sampleVoiceTexts = [
+    "Xin chào, tôi là Suri! Tôi có thể giúp gì cho bạn?",
+    "Hãy thử hỏi tôi về các dự án của tôi, hoặc yêu cầu tôi kể một câu chuyện vui.",
+    "Bạn cũng có thể yêu cầu tôi hát một bài hát, hoặc đọc một đoạn văn bản.",
+    "Sau đây là một câu chuyện vui mà tôi muốn chia sẻ với bạn:",
+    "Hai bà vợ đều có chồng vướng vào các tệ nạn ngồi nói chuyện với nhau.",
+    "Bà vợ 1: Ông chồng nhà em trước nghiện thuốc lá bây giờ bỏ được một nửa rồi chị ạ. Chỉ hút bằng một nửa trước kia thôi.",
+    "Bà vợ 2 rầu rĩ: Chồng tôi cũng bỏ được một nửa mấy thứ tệ nạn rồi.",
+    "Bà vợ 1: Sao chị vẫn buồn vậy?",
+    "Bà vợ 2: Thì “rượu chè” ổng bỏ chè; “Trai gái” ổng bỏ trai; “Cờ bạc” ổng bỏ cờ; “Đề đóm” ổng bỏ đóm… Cô thấy có rầu đời không?",
+    "[cười] Hài hước quá nhỉ! Tôi hy vọng bạn thích câu chuyện này. Nếu bạn muốn nghe thêm, hãy yêu cầu tôi kể thêm một câu chuyện khác nhé!"
+]
 // --- Live2D settings (persisted in localStorage) ---
 const settingsLive2d = useSettingsLive2d()
 const {
@@ -79,8 +90,16 @@ function handleIdleMotionChange(selectedMotion: { motionName: string, motionInde
 
     live2dCurrentModelMotion.value.group = selectedMotion.motionName
     live2dCurrentModelMotion.value.index = selectedMotion.motionIndex
+}
 
-    console.log('Selected motion changed to:', selectedMotion)
+function startDemoVoice() {
+    if (isSpeaking.value) {
+        stopSpeech()
+    } else {
+        sampleVoiceTexts.forEach(text => {
+            speak(text);
+        })
+    }
 }
 </script>
 
@@ -126,7 +145,7 @@ function handleIdleMotionChange(selectedMotion: { motionName: string, motionInde
                                 <span class="font-pixel text-px-14 text-ink">{{ t('projects.SuriAi.live2dSettings.voiceDemo') }}</span>
                                 <button class="pixel-border-sm pixel-press bg-background text-ink font-pixel text-px-14 px-2 py-1"
                                     :disabled="isSpeaking"
-                                    @click="speak(sampleVoiceText)">
+                                    @click="startDemoVoice()">
                                     {{ t('projects.SuriAi.live2dSettings.runVoiceDemo') }}
                                 </button>
                             </div>

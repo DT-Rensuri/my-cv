@@ -333,14 +333,12 @@ async function performModelLoad() {
         if (motion && motion._looper) {
           // Force the motion to loop
           motion._looper.loopDuration = 0 // 0 means infinite loop
-          console.info('Configured motion to loop infinitely:', selectedMotionGroup, motionIndex)
         }
       }
     }
 
     if (selectedMotionGroup !== null && selectedMotionIndex && live2dIdleAnimationEnabled.value) {
       setTimeout(() => {
-        console.info('Playing selected runtime motion:', selectedMotionGroup, selectedMotionIndex)
         currentMotion.value = {
           group: selectedMotionGroup,
           index: Number.parseInt(selectedMotionIndex),
@@ -405,7 +403,6 @@ async function performModelLoad() {
 
       if (selectedMotionGroup !== null && selectedMotionIndex && live2dIdleAnimationEnabled.value) {
         // Restart the selected runtime motion immediately for seamless looping
-        console.info('Motion finished, restarting runtime motion:', selectedMotionGroup, selectedMotionIndex)
         // Use requestAnimationFrame to restart on the next frame for smooth transition
         requestAnimationFrame(() => {
           currentMotion.value = {
@@ -519,10 +516,8 @@ async function setMotion(motionName: string, index?: number) {
     return
   }
 
-  console.info('Setting motion:', motionName, 'index:', index)
   try {
     await model.value.motion(motionName, index, MotionPriority.FORCE)
-    console.info('Motion started successfully:', motionName)
   }
   catch (error) {
     console.error('Failed to start motion:', motionName, error)

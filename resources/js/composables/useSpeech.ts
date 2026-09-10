@@ -2,6 +2,7 @@ import { computed, onBeforeUnmount, ref } from 'vue';
 import { TtsQueue } from '@/services/tts';
 import { guestApi } from '@/services/api/guest';
 import { useLipSync } from './live2d/lipSync';
+import { useMotionSync } from './live2d/motionSync';
 
 export interface TtsVoice {
     id: string;
@@ -16,15 +17,13 @@ async function getTtsVoices(): Promise<TtsVoice[]> {
 }
 
 export function useSpeech() {
+    const motionSync = useMotionSync();
     const lipSync = useLipSync();
     const playbackState = ref<TtsPlaybackState>('idle');
     const voices = ref<TtsVoice[]>([]);
     const selectedVoice = ref<string | undefined>(undefined);
     const isSpeaking = computed(() => playbackState.value !== 'idle');
 
-    function stopMouthAnimation() {
-        lipSync.stopLipSync();
-    }
 
     const queue = new TtsQueue(
         undefined,
@@ -34,12 +33,10 @@ export function useSpeech() {
         () => {
             if (queue.length === 0) {
                 playbackState.value = 'idle';
-                stopMouthAnimation();
             }
         },
         () => {
             playbackState.value = 'idle';
-            stopMouthAnimation();
         },
         {
             startLipSync: lipSync.startLipSync,
@@ -60,7 +57,7 @@ export function useSpeech() {
 
     function stopSpeech() {
         queue.stop();
-        stopMouthAnimation();
+        lipSync.stopLipSync();
         playbackState.value = 'idle';
     }
 

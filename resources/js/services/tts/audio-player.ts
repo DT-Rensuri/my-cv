@@ -129,7 +129,10 @@ export class AudioPlayer {
      */
     private play(url: string, revokeOnEnd: boolean): Promise<void> {
         return new Promise((resolve, reject) => {
+            console.log('[AudioPlayer] SET SRC', performance.now(), url);
+
             this.audio.src = url;
+            this.audio.load();
 
             const cleanup = () => {
                 this.audio.onended = null;
@@ -149,6 +152,7 @@ export class AudioPlayer {
             };
 
             this.audio.onerror = () => {
+                console.error('[AudioPlayer] ERROR', performance.now());
                 cleanup();
 
                 this.stopLipSync();
@@ -156,16 +160,17 @@ export class AudioPlayer {
 
                 reject(new Error('Audio playback failed'));
             };
-
             this.audio
                 .play()
                 .then(() => {
+                    console.log('[AudioPlayer] PLAYED', performance.now());
                     // Only initialize audio analysis when lip-sync exists.
                     if (this.lipSync) {
                         this.startLipSync();
                     }
                 })
                 .catch((error) => {
+                    console.error('[AudioPlayer] PLAY ERROR', performance.now(), error);
                     cleanup();
                     this.stopLipSync();
 
@@ -253,7 +258,7 @@ export class AudioPlayer {
 
             return true;
         } catch (error) {
-            console.warn('[AudioPlayer] Failed to initialize lip-sync:', error);
+            console.error('[AudioPlayer] Failed to initialize lip-sync:', error);
 
             this.audioContext = null;
             this.sourceNode = null;

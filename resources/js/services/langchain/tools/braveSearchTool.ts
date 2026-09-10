@@ -25,12 +25,6 @@ export const braveSearchTool = tool(
             spellcheck,
             freshness,
         };
-
-        // Implement the Brave Search API call here using the provided parameters
-        // For demonstration purposes, we'll return a mock response
-        console.log(
-            `Searching for "${q}" with parameters: country=${country}, search_lang=${search_lang}, count=${count}, offset=${offset}, safesearch=${safesearch}, spellcheck=${spellcheck}, freshness=${freshness}`,
-        );
         return await searchBrave(params);
     },
     {
