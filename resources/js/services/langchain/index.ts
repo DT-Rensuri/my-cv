@@ -5,6 +5,7 @@ import { customThemeColorTool } from './tools/customThemeColorTool';
 import { chatBotTools } from './tools/chatBotToolsIndex';
 import { meetingNotesTools } from './tools/meeting';
 import { MemorySaver } from '@langchain/langgraph';
+import { getCvDataTool } from './tools/guides/cvKnowledgeTools';
 
 const provider = (import.meta.env.VITE_LLM_PROVIDER ?? 'ollama').toLowerCase();
 const checkpointer = new MemorySaver();
@@ -49,7 +50,7 @@ const suriVTubeAgent = createAgent({
         },
         maxRetries: MAX_RETRIES,
     }),
-    tools: [braveSearchTool, ...chatBotTools],
+    tools: [braveSearchTool, getCvDataTool],
     checkpointer,
 });
 
