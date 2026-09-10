@@ -1,7 +1,7 @@
 import { ref } from 'vue';
 import { defineStore } from 'pinia';
 
-export const useActiveSectionStore = defineStore('activeSection', () => {
+export const useActiveSectionStore = defineStore('active-section', () => {
     const active = ref('');
     const ids = ref<string[]>([]);
 

@@ -15,6 +15,7 @@ use DtRensuri\LaravelOpenrouter\DTO\LimitResponseData;
 use DtRensuri\LaravelOpenrouter\DTO\ResponseData;
 use DtRensuri\LaravelOpenrouter\DTO\AudioContentData;
 use DtRensuri\LaravelOpenrouter\DTO\AudioResponseData;
+use DtRensuri\LaravelOpenrouter\Helpers\OpenRouterHelper;
 use Psr\Http\Message\ResponseInterface;
 use ReflectionException;
 
@@ -24,10 +25,12 @@ use ReflectionException;
  */
 final class OpenRouterRequest extends OpenRouterAPI
 {
-
     public function __construct(
         private readonly Client $client,
-    ) {}
+        OpenRouterHelper $openRouterHelper,
+    ) {
+        parent::__construct($openRouterHelper);
+    }
     /**
      * Sends a model request for the given chat conversation.
      *

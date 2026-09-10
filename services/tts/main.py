@@ -122,8 +122,7 @@ async def stream_post(req: StreamReq):
 
 
 def main():
-    print("🌍 Mở http://localhost:8001 để test VieNeu v3 Turbo (int8) streaming (CPU)")
-    uvicorn.run(app, host="127.0.0.1", port=8001)
+    uvicorn.run(app, host="0.0.0.0", port=8189)
 
 
 if __name__ == "__main__":

@@ -40,7 +40,8 @@ final class OpenRouterServiceProvider extends ServiceProvider
 
         $this->app->bind('laravel-openrouter', function () {
             return new OpenRouterRequest(
-                $this->app->make('laravel-openrouter.http')
+                $this->app->make('laravel-openrouter.http'),
+                $this->app->make(OpenRouterHelper::class)
             );
         });
 

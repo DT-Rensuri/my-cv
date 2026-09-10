@@ -7,7 +7,7 @@ import { useSpeech } from '@/composables/useSpeech';
 
 export type AgentMessage = { role: string; content: string };
 
-export const useChatbotAgentStore = defineStore('chatbotAgent', () => {
+export const useChatbotAgentStore = defineStore('chatbot-agent', () => {
     const { speak } = useSpeech();
     const response = ref<string | null>(null);
     const loading = ref(false);

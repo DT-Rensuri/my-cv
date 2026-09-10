@@ -15,14 +15,14 @@ trap cleanup SIGINT SIGTERM EXIT
 echo "Installing dependencies..."
 pnpm install --force
 
-echo "Loading development environment..."
-cp .env.dev .env
+echo "Loading production environment..."
+cp .env.prod .env
 
 echo "Clearing Laravel cache..."
 php artisan optimize:clear
 
 echo "Building Vite..."
-pnpm dev --force &
+pnpm build
 
 echo "Caching Laravel configuration..."
 php artisan config:cache

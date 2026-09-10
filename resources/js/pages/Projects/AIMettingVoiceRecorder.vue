@@ -81,7 +81,7 @@
               class="px-6 py-3 bg-accent text-background pixel-border-sm font-retro text-base hover:opacity-90 active:translate-y-0.5">
               {{ t('projects.aimettingVoiceRecorder.aiTranscriptionBtn') }}
             </button>
-            <button v-if="audioUrl" @click="clear"
+            <button v-if="audioUrl || voiceMeetingStore.versions.length > 0" @click="clear"
               class="px-6 py-3 bg-panel text-ink pixel-border-sm font-retro text-base hover:border-danger hover:text-danger active:translate-y-0.5">
               {{ t('projects.aimettingVoiceRecorder.clear') }}
             </button>
@@ -163,8 +163,8 @@
                 </path>
               </svg>
             </div>
-            <div v-else-if="originalText" class="whitespace-pre-wrap">
-              {{ originalText }}
+            <div v-else-if="voiceMeetingStore.originalText" class="whitespace-pre-wrap">
+              {{ voiceMeetingStore.originalText }}
             </div>
             <div v-else class="text-ink-dim">
               {{ t('projects.aimettingVoiceRecorder.aiSummaryText') }}
@@ -175,46 +175,18 @@
 
             <div class="flex items-center justify-end mb-3">
               <div class="flex items-center gap-2">
-                <select v-model="selectedVersionId"
-                  class="bg-background text-ink px-2 py-1.5 pixel-border-sm font-pixel text-px-12"
-                  @change="onVersionSelect">
-                  <option :value="null">
+                <select v-model="voiceMeetingStore.activeVersionId"
+                  class="bg-background text-ink px-2 py-1.5 pixel-border-sm font-pixel text-px-12">
+                  <option :value="null" v-if="versions.length === 0">
                     {{ t('projects.aimettingVoiceRecorder.latest') }}
                   </option>
-                  <option v-for="version in versions" :key="version.id" :value="version.id">
-                    {{ version.title }} · {{ formatVersionTime(version.createdAt) }}
+                  <option v-for="( version, idx ) in versions.toReversed()" :key="version.id" :value="version.id">
+                    {{ version.title }} · {{ formatVersionTime(version.createdAt) }} {{idx === 0 ? `(${t('projects.aimettingVoiceRecorder.latest')})` : ''}}
                   </option>
                 </select>
-                <button type="button" class="font-pixel text-px-12 px-3 py-2 transition-colors"
-                  :class="showVersionPopup ? 'bg-highlight text-background' : 'text-ink-dim hover:text-highlight'"
-                  @click="showVersionPopup = !showVersionPopup">
-                  {{ t('projects.aimettingVoiceRecorder.manageVersions') }}
-                </button>
               </div>
             </div>
 
-            <!-- Version popup -->
-            <div v-if="showVersionPopup" class="mb-3 bg-background pixel-border-sm p-4">
-              <p class="font-pixel text-px-14 text-highlight mb-2">
-                {{ t('projects.aimettingVoiceRecorder.versionHistory') }}
-              </p>
-              <div v-if="versions.length === 0" class="text-ink-dim text-px-14">
-                {{ t('projects.aimettingVoiceRecorder.noVersions') }}
-              </div>
-              <ul v-else class="space-y-2">
-                <li v-for="version in versions" :key="version.id" class="flex items-center justify-between gap-2">
-                  <button type="button" class="font-pixel text-px-12 text-left"
-                    :class="activeVersionId === version.id ? 'text-highlight' : 'text-ink-dim hover:text-highlight'"
-                    @click="selectVersion(version.id)">
-                    {{ version.title }} · {{ formatVersionTime(version.createdAt) }}
-                  </button>
-                  <button type="button" class="font-pixel text-px-12 text-danger hover:text-danger"
-                    @click="removeVersion(version.id)">
-                    ✕
-                  </button>
-                </li>
-              </ul>
-            </div>
             <div v-if="isSummarizing" class="flex items-center justify-center gap-2 mb-3">
               <span class="font-pixel text-px-16 text-ink-dim">
                 {{ t('projects.aimettingVoiceRecorder.aiSummaryLoading') }}
@@ -227,10 +199,8 @@
                 </path>
               </svg>
             </div>
-            <div v-else-if="activeVersion" class="whitespace-pre-wrap">
-              {{ activeVersion.content }}
-            </div>
-            <div v-else-if="renderAiSummary" v-html="renderAiSummary" />
+            <div v-else-if="activeVersion" class="whitespace-pre-wrap" v-html="marked.parse(activeVersion.content)"></div>
+            <div v-else-if="renderAiSummary" v-html="renderAiSummary"></div>
             <div v-else class="text-ink-dim">
               {{ t('projects.aimettingVoiceRecorder.aiSummaryText') }}
             </div>
@@ -266,7 +236,6 @@ defineOptions({
 const voiceMeetingStore = useVoiceMeetingStore();
 const chatbotAgentStore = useChatbotAgentStore();
 const versions = voiceMeetingStore.versions;
-const activeVersionId = voiceMeetingStore.activeVersionId;
 
 const source = ref<'mic' | 'tab'>('mic');
 const isRecording = ref(false);
@@ -276,10 +245,7 @@ const audioUrl = ref<string | null>(null);
 const audioBlob = ref<Blob | null>(null);
 const elapsed = ref(0);
 const isAiTranscriptionLoading = ref(false);
-const originalText = ref<string | null>(null);
-const aiSummary = ref<string | null>(null);
-const activeTab = ref<'summary' | 'original'>('summary');
-const selectedVersionId = ref<string | null>(null);
+const activeTab = ref<'summary' | 'original'>('original');
 const showVersionPopup = ref(false);
 
 let recorder: MediaRecorder | null = null;
@@ -294,8 +260,9 @@ const formattedTime = computed(() => {
 });
 
 const renderAiSummary = computed(() => {
-  if (!aiSummary.value) return null;
-  return marked.parse(aiSummary.value);
+  let versions = voiceMeetingStore.versions.reverse();
+  if (!versions[0]) return null;
+  return marked.parse(versions[0].content, { gfm: true, breaks: true });
 });
 
 const activeVersion = computed(() => {
@@ -306,22 +273,6 @@ const activeVersion = computed(() => {
     ) ?? null
   );
 });
-
-const selectVersion = (id: string | null) => {
-  voiceMeetingStore.setActiveVersion(id);
-  selectedVersionId.value = id;
-};
-
-const onVersionSelect = () => {
-  selectVersion(selectedVersionId.value);
-};
-
-const removeVersion = (id: string) => {
-  voiceMeetingStore.removeVersion(id);
-  if (selectedVersionId.value === id) {
-    selectedVersionId.value = voiceMeetingStore.activeVersionId;
-  }
-};
 
 const formatVersionTime = (ts: number): string => {
   const d = new Date(ts);
@@ -401,12 +352,10 @@ const startTabRecording = async () => {
       throw new Error('Không nhận được audio. Hãy bật "Share tab audio".');
     }
 
-    // Không cần video
     stream.getVideoTracks().forEach((track) => track.stop());
 
     const audioStream = new MediaStream(audioTracks);
 
-    // User bấm "Stop sharing" => tự dừng ghi
     audioTracks.forEach((track) => {
       track.onended = () => stopRecording();
     });
@@ -460,20 +409,18 @@ const clear = () => {
   }
   audioUrl.value = null;
   audioBlob.value = null;
-  aiSummary.value = null;
-  originalText.value = null;
   chunks = [];
   elapsed.value = 0;
 
   voiceMeetingStore.setOriginalText(null);
   voiceMeetingStore.setSummary(null);
   voiceMeetingStore.clearVersions();
-  selectedVersionId.value = null;
   showVersionPopup.value = false;
 };
 
 const aiTranscriptionBtn = async () => {
   if (!audioBlob.value) return;
+  activeTab.value = 'original';
   isTranscribing.value = true;
   isAiTranscriptionLoading.value = true;
   const formData = new FormData();
@@ -488,12 +435,11 @@ const aiTranscriptionBtn = async () => {
     });
 
     const data = response.data;
-    originalText.value = data.text;
-    voiceMeetingStore.setOriginalText(originalText.value);
+    voiceMeetingStore.setOriginalText(data.text);
 
     aiSummaryHandler();
   } catch (error) {
-    originalText.value = t('projects.aimettingVoiceRecorder.error.erTranscription');
+    voiceMeetingStore.setOriginalText(t('projects.aimettingVoiceRecorder.error.erTranscription'));
   } finally {
     isAiTranscriptionLoading.value = false;
     isTranscribing.value = false;
@@ -501,7 +447,7 @@ const aiTranscriptionBtn = async () => {
 };
 
 const aiSummaryHandler = async () => {
-  if (!originalText.value) return;
+  if (!voiceMeetingStore.originalText) return;
   isSummarizing.value = true;
   try {
     const result = await voiceMeetingAgent.invoke(
@@ -509,7 +455,7 @@ const aiSummaryHandler = async () => {
         messages: [
           {
             role: 'system',
-            content: `Summarize data:\n\n${originalText.value}`,
+            content: `Summarize data:\n\n${voiceMeetingStore.originalText}`,
           },
         ],
       },
@@ -529,11 +475,11 @@ const aiSummaryHandler = async () => {
               )
               .join('')
             : '';
-      aiSummary.value = text;
-      voiceMeetingStore.setSummary(aiSummary.value);
+      voiceMeetingStore.setSummary(text);
+      voiceMeetingStore.addVersion('first', text);
     }
   } catch (error) {
-    aiSummary.value = t('projects.aimettingVoiceRecorder.error.erSummary');
+    voiceMeetingStore.setSummary(t('projects.aimettingVoiceRecorder.error.erSummary'));
   } finally {
     isSummarizing.value = false;
   }
@@ -550,7 +496,6 @@ onUnmounted(() => {
   chatbotAgentStore.suggestions = [];
   chatbotAgentStore.enableSuggestions = false;
   stopRecording();
-  clear();
 });
 
 watch(

@@ -13,7 +13,7 @@ export type MeetingChatMessage = {
     content: string;
 };
 
-export const useVoiceMeetingStore = defineStore('voiceMeeting', () => {
+export const useVoiceMeetingStore = defineStore('voice-meeting', () => {
     const originalText = ref<string | null>(null);
     const summary = ref<string | null>(null);
     const versions = ref<MeetingVersion[]>([]);
