@@ -49,7 +49,7 @@ const suriVTubeAgent = createAgent({
         },
         maxRetries: MAX_RETRIES,
     }),
-    tools: [],
+    tools: [braveSearchTool, ...chatBotTools],
     checkpointer,
 });
 
