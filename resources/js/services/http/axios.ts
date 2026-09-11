@@ -24,6 +24,11 @@ export const http: AxiosInstance = axios.create({
         'X-Requested-With': 'XMLHttpRequest',
     },
 
+    auth: {
+        username: import.meta.env.VITE_BASIC_AUTH_USERNAME || '',
+        password: import.meta.env.VITE_BASIC_AUTH_PASSWORD || '',
+    },
+
     withCredentials: true,
 });
 
