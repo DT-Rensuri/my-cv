@@ -12,19 +12,22 @@ const checkpointer = new MemorySaver();
 const voiceMeetingCheckpointer = new MemorySaver();
 
 const BASE_URL = `${import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000'}/api/openrouter`;
-// const API_KEY = 'laravel-proxy';
+const API_KEY = 'laravel-proxy';
 const MAX_RETRIES = 2;
-const API_USERNAME = import.meta.env.VITE_API_BASIC_USERNAME;
-const API_PASSWORD = import.meta.env.VITE_API_BASIC_PASSWORD;
+const API_USERNAME = import.meta.env.VITE_BASIC_AUTH_USERNAME;
+const API_PASSWORD = import.meta.env.VITE_BASIC_AUTH_PASSWORD;
 
 const BASIC_AUTH = btoa(`${API_USERNAME}:${API_PASSWORD}`);
 
 const agent = createAgent({
     model: new ChatOpenAI({
         model: 'default',
-        apiKey: BASIC_AUTH,
+        apiKey: API_KEY,
         configuration: {
             baseURL: BASE_URL,
+            defaultHeaders: {
+                Authorization: `Basic ${BASIC_AUTH}`,
+            }
         },
         maxRetries: MAX_RETRIES,
     }),
@@ -35,9 +38,12 @@ const agent = createAgent({
 const voiceMeetingAgent = createAgent({
     model: new ChatOpenAI({
         model: 'voice-meeting-ai',
-        apiKey: BASIC_AUTH,
+        apiKey: API_KEY,
         configuration: {
             baseURL: BASE_URL,
+            defaultHeaders: {
+                Authorization: `Basic ${BASIC_AUTH}`,
+            }
         },
         maxRetries: MAX_RETRIES,
     }),
@@ -48,9 +54,12 @@ const voiceMeetingAgent = createAgent({
 const suriVTubeAgent = createAgent({
     model: new ChatOpenAI({
         model: 'suri-vtube',
-        apiKey: BASIC_AUTH,
+        apiKey: API_KEY,
         configuration: {
             baseURL: BASE_URL,
+            defaultHeaders: {
+                Authorization: `Basic ${BASIC_AUTH}`,
+            }
         },
         maxRetries: MAX_RETRIES,
     }),

@@ -1,7 +1,6 @@
 export { TtsQueue } from './tts-queue';
 export { AudioPlayer } from './audio-player';
 export { isAutoplayBlock, waitForUserGesture } from './autoplay';
-export { buildStreamUrl } from './api';
 export { TtsWorkerClient } from './tts-worker-client';
 export type {
     TtsWorkerRequest,

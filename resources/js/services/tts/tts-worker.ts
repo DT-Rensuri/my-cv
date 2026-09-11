@@ -56,6 +56,7 @@ async function synthesize(
         method: 'GET',
         headers: {
             Accept: 'audio/wav',
+            Authorization: `Basic ${btoa(`${import.meta.env.VITE_BASIC_AUTH_USERNAME}:${import.meta.env.VITE_BASIC_AUTH_PASSWORD}`)}`,
         },
         credentials: 'same-origin',
     });
