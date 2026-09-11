@@ -42,6 +42,7 @@ export class TtsTextFilter {
             /\b(?:do|đỗ)\s+thanh\s+cao\b|\bcao\s+(?:do|đỗ)\s+thanh\b|\bcao\s+thanh\s+(?:do|đỗ)\b/giu,
             'Đỗ Thanh Cao',
         );
+        text = this.normalizeText(text);
 
         // --------------------------------------------------
         // 2. Preserve TTS emotion tags
@@ -298,6 +299,23 @@ export class TtsTextFilter {
 
                 return result || '0 phút';
             },
+        );
+    }
+
+    private normalizeText(text: string): string {
+        return (
+            text
+                .replace(/\b([a-z0-9_-]+)\.([a-z0-9_-]+)\b/gi, '$1 chấm $2')
+
+                // Domain
+                .replace(
+                    /\b([a-z0-9_-]+)\.(com|vn|io|dev|net|org)\b/gi,
+                    '$1 chấm $2',
+                )
+
+                // Symbols
+                .replace(/@/g, ' a còng ')
+                .replace(/#/g, ' hashtag ')
         );
     }
 }
