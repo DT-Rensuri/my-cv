@@ -129,8 +129,6 @@ export class AudioPlayer {
      */
     private play(url: string, revokeOnEnd: boolean): Promise<void> {
         return new Promise((resolve, reject) => {
-            console.log('[AudioPlayer] SET SRC', performance.now(), url);
-
             this.audio.src = url;
             this.audio.load();
 
@@ -152,7 +150,6 @@ export class AudioPlayer {
             };
 
             this.audio.onerror = () => {
-                console.error('[AudioPlayer] ERROR', performance.now());
                 cleanup();
 
                 this.stopLipSync();
@@ -163,14 +160,12 @@ export class AudioPlayer {
             this.audio
                 .play()
                 .then(() => {
-                    console.log('[AudioPlayer] PLAYED', performance.now());
                     // Only initialize audio analysis when lip-sync exists.
                     if (this.lipSync) {
                         this.startLipSync();
                     }
                 })
                 .catch((error) => {
-                    console.error('[AudioPlayer] PLAY ERROR', performance.now(), error);
                     cleanup();
                     this.stopLipSync();
 

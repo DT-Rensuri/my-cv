@@ -29,11 +29,6 @@ php artisan config:cache
 php artisan route:cache
 php artisan view:cache
 
-echo "Starting Laravel..."
-php artisan serve \
-    --host=0.0.0.0 \
-    --port=8188 &
-
 echo "Starting TTS..."
 (
     cd "$ROOT_DIR/services/tts"

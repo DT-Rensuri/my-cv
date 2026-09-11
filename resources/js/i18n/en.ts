@@ -77,8 +77,8 @@ export default {
         thinking: 'Thinking',
         fallback: {
             experience:
-                '> {name} is a Fullstack Developer at ZOTEK 8 (10/2023 — present). Completed 5 projects: Survey System, Data Collection Tool, Multi-Platform CMS, Enterprise Invoice CMS, and E-Learning Platform.',
-            skills: '> Backend: Laravel, Express.js, Next.js | Frontend: Vue.js, React.js, Blade, TailwindCSS, Bootstrap | AI: AI assistant & Automation Tools, Vibe coding | Other: Embedded Systems, API & Automation.',
+                '> {name} is a Fullstack Developer at Zotek 8 (10/2023 — present). Completed 5 projects: Survey System, Data Collection Tool, Multi-Platform CMS, Enterprise Invoice CMS, and E-Learning Platform.',
+            skills: '> Backend: Laravel, ExpressJs, NextJs | Frontend: VueJs, ReactJs, Blade, TailwindCSS, Bootstrap | AI: AI assistant & Automation Tools, Vibe coding | Other: Embedded Systems, API & Automation.',
             contact:
                 '> Phone: {phone} | Email: {email} | GitHub: {github} | Address: {address}',
             education:
@@ -111,7 +111,7 @@ export default {
         experiences: [
             {
                 role: 'Fullstack Developer',
-                company: 'ZOTEK 8 Technology and Trading Joint Stock Company',
+                company: 'Zotek 8 Technology and Trading Joint Stock Company',
                 time: '10/2023 — Present',
                 current: true,
                 summary:
@@ -176,14 +176,14 @@ export default {
             {
                 label: 'Backend Development',
                 icon: 'server',
-                skills: ['Laravel', 'Express.js', 'Next.js'],
+                skills: ['Laravel', 'ExpressJs', 'NextJs'],
             },
             {
                 label: 'Frontend Development',
                 icon: 'layout',
                 skills: [
-                    'Vue.js',
-                    'React.js',
+                    'VueJs',
+                    'ReactJs',
                     'Blade Template',
                     'TailwindCSS',
                     'Bootstrap',

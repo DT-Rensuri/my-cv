@@ -81,8 +81,8 @@ class ChatRequest extends FormRequest
     {
         $model = $this->input('model', 'default');
         return match ($model) {
-            'voice-meeting-ai' => 'none',
-            'suri-vtube' => 'none',
+            'voice-meeting-ai' => 'medium',
+            'suri-vtube' => 'medium',
             default => 'medium',
         };
     }

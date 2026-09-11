@@ -77,8 +77,8 @@ export default {
         thinking: '考え中',
         fallback: {
             experience:
-                '> {name}はZOTEK 8でフルスタックデベロッパーとして勤務中（2023年10月〜現在）。5つのプロジェクトを完了：Survey System、Data Collection Tool、Multi-Platform CMS、Enterprise Invoice CMS、E-Learning Platform。',
-            skills: '> バックエンド: Laravel, Express.js, Next.js | フロントエンド: Vue.js, React.js, Blade, TailwindCSS, Bootstrap | AI: AIアシスタント & 自動化ツール, Vibe coding | その他: 組み込みシステム, API & 自動化。',
+                '> {name}はZotek 8でフルスタックデベロッパーとして勤務中（2023年10月〜現在）。5つのプロジェクトを完了：Survey System、Data Collection Tool、Multi-Platform CMS、Enterprise Invoice CMS、E-Learning Platform。',
+            skills: '> バックエンド: Laravel, ExpressJs, NextJs | フロントエンド: VueJs, ReactJs, Blade, TailwindCSS, Bootstrap | AI: AIアシスタント & 自動化ツール, Vibe coding | その他: 組み込みシステム, API & 自動化。',
             contact:
                 '> 電話: {phone} | メール: {email} | GitHub: {github} | 住所: {address}',
             education:
@@ -111,7 +111,7 @@ export default {
         experiences: [
             {
                 role: 'フルスタックデベロッパー',
-                company: 'ZOTEK 8 テクノロジー・トレーディング株式会社',
+                company: 'Zotek 8 テクノロジー・トレーディング株式会社',
                 time: '10/2023 — 現在',
                 current: true,
                 summary:
@@ -170,14 +170,14 @@ export default {
             {
                 label: 'バックエンド開発',
                 icon: 'server',
-                skills: ['Laravel', 'Express.js', 'Next.js'],
+                skills: ['Laravel', 'ExpressJs', 'NextJs'],
             },
             {
                 label: 'フロントエンド開発',
                 icon: 'layout',
                 skills: [
-                    'Vue.js',
-                    'React.js',
+                    'VueJs',
+                    'ReactJs',
                     'Blade Template',
                     'TailwindCSS',
                     'Bootstrap',

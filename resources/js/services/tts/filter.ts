@@ -37,6 +37,11 @@ export class TtsTextFilter {
         // 1. Normalize Unicode
         // --------------------------------------------------
         text = text.normalize('NFKC');
+        text = text.replace(/([^\n.!?。！？])\r?\n/g, '$1.\n');
+        text = text.replace(
+            /\b(?:do|đỗ)\s+thanh\s+cao\b|\bcao\s+(?:do|đỗ)\s+thanh\b|\bcao\s+thanh\s+(?:do|đỗ)\b/giu,
+            'Đỗ Thanh Cao',
+        );
 
         // --------------------------------------------------
         // 2. Preserve TTS emotion tags
@@ -236,9 +241,13 @@ export class TtsTextFilter {
         });
 
         // --------------------------------------------------
-        // 16. Final whitespace cleanup
+        // 16. Whitespace cleanup
         // --------------------------------------------------
         text = text.replace(/\s+/g, ' ').trim();
+
+        // --------------------------------------------------
+        // 18. Return cleaned text
+        // --------------------------------------------------
 
         return text;
     }

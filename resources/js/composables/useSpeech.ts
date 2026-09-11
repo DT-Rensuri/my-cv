@@ -3,7 +3,9 @@ import { TtsQueue } from '@/services/tts';
 import { guestApi } from '@/services/api/guest';
 import { useLipSync } from './live2d/lipSync';
 import { useMotionSync } from './live2d/motionSync';
+import { TtsTextFilter } from '@/services/tts/filter';
 
+const filter = new TtsTextFilter();
 export interface TtsVoice {
     id: string;
     name: string;
@@ -49,10 +51,11 @@ export function useSpeech() {
     }
 
     function speak(text: string, voice = selectedVoice.value) {
-        if (!text.trim()) return;
+        const filteredText = filter.clean(text);
+        if (!filteredText.trim()) return;
 
         playbackState.value = 'fetching';
-        queue.add(text, voice ? { voice } : {});
+        queue.add(filteredText, voice ? { voice } : {});
     }
 
     function stopSpeech() {

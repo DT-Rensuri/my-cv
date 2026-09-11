@@ -77,8 +77,8 @@ export default {
         thinking: 'Đang suy nghĩ',
         fallback: {
             experience:
-                '> {name} đang là Fullstack Developer tại ZOTEK 8 (10/2023 — nay). Đã hoàn thành 5 project: Survey System, Data Collection Tool, Multi-Platform CMS, Enterprise Invoice CMS, và E-Learning Platform.',
-            skills: '> Backend: Laravel, Express.js, Next.js | Frontend: Vue.js, React.js, Blade, TailwindCSS, Bootstrap | AI: AI assistant & Automation Tools, Vibe coding | Khác: Embedded Systems, API & Automation.',
+                '> {name} đang là Fullstack Developer tại Zotek 8 (10/2023 — nay). Đã hoàn thành 5 project: Survey System, Data Collection Tool, Multi-Platform CMS, Enterprise Invoice CMS, và E-Learning Platform.',
+            skills: '> Backend: Laravel, ExpressJs, NextJs | Frontend: VueJs, ReactJs, Blade, TailwindCSS, Bootstrap | AI: AI assistant & Automation Tools, Vibe coding | Khác: Embedded Systems, API & Automation.',
             contact:
                 '> Phone: {phone} | Email: {email} | GitHub: {github} | Địa chỉ: {address}',
             education:
@@ -111,7 +111,7 @@ export default {
         experiences: [
             {
                 role: 'Fullstack Developer',
-                company: 'Công ty Cổ phần Công nghệ và Thương mại ZOTEK 8',
+                company: 'Công ty Cổ phần Công nghệ và Thương mại Zotek 8',
                 time: '10/2023 — Hiện tại',
                 current: true,
                 summary:
@@ -174,14 +174,14 @@ export default {
             {
                 label: 'Backend Development',
                 icon: 'server',
-                skills: ['Laravel', 'Express.js', 'Next.js'],
+                skills: ['Laravel', 'ExpressJs', 'NextJs'],
             },
             {
                 label: 'Frontend Development',
                 icon: 'layout',
                 skills: [
-                    'Vue.js',
-                    'React.js',
+                    'VueJs',
+                    'ReactJs',
                     'Blade Template',
                     'TailwindCSS',
                     'Bootstrap',

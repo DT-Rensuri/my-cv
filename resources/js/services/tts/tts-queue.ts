@@ -6,12 +6,11 @@ import type {
     TtsLipSync,
 } from './types';
 
-import { synthesize, buildStreamUrl } from './api';
 import { AudioPlayer } from './audio-player';
 import { isAutoplayBlock, waitForUserGesture } from './autoplay';
+import { TtsWorkerClient } from './tts-worker-client';
 export class TtsQueue {
     private static readonly MAX_CONCURRENT_REQUESTS = 3;
-    private static readonly OPTIMIZE_STREAMING_QUEUE = false;
 
     private queue: TtsJob[] = [];
     private audioBuffer = new Map<number, TtsJob>();
@@ -27,10 +26,8 @@ export class TtsQueue {
     private waitingForUnlock = false;
 
     private player: AudioPlayer;
+    private workerClient = new TtsWorkerClient();
     private generation = 0;
-
-    private firstStreamingJobId: number | null = null;
-    private firstStreamingFinished = false;
 
     constructor(
         private voice?: string,
@@ -55,12 +52,6 @@ export class TtsQueue {
         };
 
         this.stopped = false;
-
-        if (this.isIdle() && TtsQueue.OPTIMIZE_STREAMING_QUEUE) {
-            this.startNewCycle(job);
-
-            return job.id;
-        }
 
         this.queue.push(job);
 
@@ -90,12 +81,11 @@ export class TtsQueue {
 
         this.playing = false;
 
-        this.firstStreamingJobId = null;
-        this.firstStreamingFinished = false;
-
         this.nextPlaybackId = this.nextId;
 
         this.player.cleanup();
+
+        this.workerClient.terminate();
     }
 
     get length(): number {
@@ -130,17 +120,6 @@ export class TtsQueue {
     // ------------------------------------------------------------------
     // Scheduling
     // ------------------------------------------------------------------
-
-    private startNewCycle(job: TtsJob): void {
-        this.firstStreamingJobId = job.id;
-        this.firstStreamingFinished = false;
-
-        this.nextPlaybackId = job.id;
-
-        void this.playFirstJobStreaming(job);
-
-        this.process();
-    }
 
     private isIdle(): boolean {
         return (
@@ -179,8 +158,11 @@ export class TtsQueue {
     private async synthesizeJob(job: TtsJob): Promise<void> {
         const requestGeneration = this.generation;
 
-        try {
-            const audio = await synthesize(job.text, this.voice);
+         try {
+            const audio = await this.workerClient.synthesize(
+                job.text,
+                this.voice,
+            );
 
             if (this.stopped || requestGeneration !== this.generation) {
                 return;
@@ -216,68 +198,8 @@ export class TtsQueue {
     // Playback
     // ------------------------------------------------------------------
 
-    private async playFirstJobStreaming(job: TtsJob): Promise<void> {
-        const requestGeneration = this.generation;
-
-        this.playing = true;
-
-        this.onJobStart?.(job);
-
-        try {
-            await this.player.playStreamUrl(
-                buildStreamUrl(job.text, this.voice),
-            );
-
-            if (this.stopped || requestGeneration !== this.generation) {
-                return;
-            }
-
-            this.nextPlaybackId = job.id + 1;
-            this.firstStreamingFinished = true;
-        } catch (error) {
-            if (this.stopped || requestGeneration !== this.generation) {
-                return;
-            }
-
-            if (this.handleAutoplayBlock(error)) {
-                return;
-            }
-
-            console.error(
-                `Audio streaming error for job ${job.id}:`,
-                error,
-            );
-
-            this.onError?.(error, job);
-
-            this.failedIds.add(job.id);
-
-            this.nextPlaybackId = job.id + 1;
-            this.firstStreamingFinished = true;
-        } finally {
-            this.playing = false;
-            console.log('onJobEnd called for job', job.id);
-
-            this.onJobEnd?.(job);
-
-            if (
-                !this.stopped &&
-                requestGeneration === this.generation
-            ) {
-                void this.processPlayback();
-            }
-        }
-    }
-
     private async processPlayback(): Promise<void> {
         if (this.stopped || this.playing) {
-            return;
-        }
-
-        if (
-            this.firstStreamingJobId !== null &&
-            !this.firstStreamingFinished
-        ) {
             return;
         }
 
@@ -343,9 +265,6 @@ export class TtsQueue {
         if (!this.isIdle()) {
             return;
         }
-
-        this.firstStreamingJobId = null;
-        this.firstStreamingFinished = false;
 
         this.nextPlaybackId = this.nextId;
     }

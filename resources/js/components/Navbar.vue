@@ -29,13 +29,13 @@ const scrolled = ref(false);
 
 const projectsLink = computed(() => [
   {
+    href: '/projects/suri-v-tube',
+    label: t('projectNames.suri_v_tube'),
+  },
+  {
     href: '/projects/ai-recorder',
     label: t('projectNames.ai_recorder'),
   },
-  {
-    href: '/projects/suri-v-tube',
-    label: t('projectNames.suri_v_tube'),
-  }
 ])
 
 const sectionIds = navLinks.value.map((l) => l.href.slice(1));

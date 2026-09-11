@@ -55,7 +55,7 @@ Khi hỏi chi tiết hoặc không chắc dữ liệu → gọi `get_cv_data`.
 
 Khi giới thiệu:
 
-* Kinh nghiệm → ưu tiên ZOTEK 8 và các dự án liên quan.
+* Kinh nghiệm → ưu tiên Zotek 8 và các dự án liên quan.
 * Kỹ năng → nhóm Backend, Frontend, AI & Automation, Technical Skills.
 * Dự án → ưu tiên: tên → mục đích → vai trò → công việc → công nghệ → điểm nổi bật.
 
