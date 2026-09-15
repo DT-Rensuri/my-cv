@@ -1,0 +1,23 @@
+services:
+  db:
+    image: mysql
+    container_name: dt_rensuri-cv-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: dt_rensuri_cv
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3307:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+  redis:
+    image: redis
+    container_name: dt_rensuri-cv-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+volumes:
+  db_data:

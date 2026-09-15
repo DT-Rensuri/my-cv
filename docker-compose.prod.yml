@@ -1,0 +1,126 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    container_name: dt_rensuri-cv-app
+
+    restart: unless-stopped
+
+    env_file:
+      - .env.prod
+    
+    environment:
+      APP_NAME: ${APP_NAME:-Su-Ri}
+
+    volumes:
+      - laravel-storage:/var/www/html/storage
+
+    expose:
+      - "9000"
+
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+
+    networks:
+      - app
+
+  nginx:
+    image: nginx:1.28-alpine
+
+    container_name: dt_rensuri-cv-nginx
+
+    restart: unless-stopped
+
+    ports:
+      - "127.0.0.1:8188:80"
+
+    volumes:
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./docker/.htpasswd:/etc/nginx/.htpasswd:ro
+
+    depends_on:
+      - app
+
+    networks:
+      - app
+
+  tts:
+    build:
+      context: ./services/tts
+      dockerfile: Dockerfile
+
+    container_name: dt_rensuri-cv-tts
+
+    restart: unless-stopped
+
+    env_file:
+      - .env.prod
+
+    expose:
+      - "8000"
+
+    networks:
+      - app
+
+  db:
+    image: mysql:8.4
+
+    container_name: dt_rensuri-cv-db
+
+    restart: unless-stopped
+
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+
+    volumes:
+      - db_data:/var/lib/mysql
+
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "mysqladmin",
+          "ping",
+          "-h",
+          "localhost",
+          "-u",
+          "root",
+          "-p${MYSQL_ROOT_PASSWORD}",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+    networks:
+      - app
+
+  redis:
+    image: redis:7-alpine
+
+    container_name: dt_rensuri-cv-redis
+
+    restart: unless-stopped
+
+    command: redis-server --appendonly yes
+
+    volumes:
+      - redis_data:/data
+
+    networks:
+      - app
+
+volumes:
+  db_data:
+  redis_data:
+  laravel-storage:
+
+networks:
+  app:

@@ -1,0 +1,290 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+
+/* ===== Local fonts ===== */
+@font-face {
+  font-family: 'dearpix-2-01';
+  src:
+    url('../fonts/dearpix-2-01.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --font-pixel: 'dearpix-2-01', monospace;
+  --font-retro: 'dearpix-2-01', monospace;
+  --font-sans: 'dearpix-2-01', ui-sans-serif, system-ui, sans-serif;
+
+  /* Semantic color tokens (light theme defaults) */
+  --color-background: #f5e9c8;
+  --color-background-alt: #ead9a8;
+  --color-panel: #fdf6e3;
+  --color-line: #8a6d3b;
+  --color-line-light: #a8895a;
+  --color-ink: #4a3728;
+  --color-ink-muted: #7a5c3a;
+  --color-ink-dim: #a8895a;
+  --color-success: #3f6f45;
+  --color-accent: #36747a;
+  --color-highlight: #8a4f5d;
+  --color-warning: #a88632;
+  --color-orange: #9a5a32;
+  --color-danger: #8a4141;
+  --color-primary: #66527d;
+}
+
+@layer base {
+
+  * {
+    image-rendering: pixelated;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-ink);
+    font-family: var(--font-retro);
+    font-size: 20px;
+    line-height: 1.4;
+    -webkit-font-smoothing: none;
+    font-smooth: never;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background-color: var(--color-accent);
+    color: var(--color-background);
+  }
+}
+
+@layer utilities {
+  .font-pixel {
+    font-family: var(--font-pixel);
+    font-size: 20px;
+    line-height: 1.4;
+    word-spacing: 0.06em;
+  }
+
+  .font-retro {
+    font-family: var(--font-retro);
+    font-size: 24px;
+    line-height: 1.6;
+    word-spacing: 0.08em;
+  }
+
+  /* Pixel font sizes — crisp whole-pixel steps */
+  .text-px-16 { font-size: 8px; line-height: 1.4; }
+  .text-px-10 { font-size: 10px; line-height: 1.4; }
+  .text-px-16 { font-size: 12px; line-height: 1.4; }
+  .text-px-14 { font-size: 14px; line-height: 1.4; }
+  .text-px-16 { font-size: 16px; line-height: 1.4; }
+  .text-px-16 { font-size: 18px; line-height: 1.4; }
+  .text-px-20 { font-size: 20px; line-height: 1.4; }
+  .text-px-24 { font-size: 24px; line-height: 1.3; }
+  .text-px-28 { font-size: 28px; line-height: 1.3; }
+  .text-px-32 { font-size: 32px; line-height: 1.2; }
+  .text-px-40 { font-size: 40px; line-height: 1.2; }
+  .text-px-48 { font-size: 48px; line-height: 1.1; }
+  .text-px-56 { font-size: 56px; line-height: 1.1; }
+  .text-px-64 { font-size: 64px; line-height: 1.1; }
+
+  /* Pixel border — chunky 4px block border using box-shadow */
+  .pixel-border {
+    border: 4px solid var(--color-line);
+    box-shadow:
+      0 0 0 4px var(--color-background),
+      0 0 0 8px var(--color-line-light),
+      8px 8px 0 8px rgba(0, 0, 0, 0.4);
+  }
+
+  .pixel-border-sm {
+    border: 3px solid var(--color-line);
+    box-shadow: 4px 4px 0 0 rgba(0, 0, 0, 0.4);
+  }
+
+  /* Inset pixel border (for panels/screens) */
+  .pixel-inset {
+    border: 4px solid var(--color-line);
+    box-shadow: inset 0 0 0 2px var(--color-background), inset 0 0 0 6px var(--color-line-light);
+  }
+
+  /* CRT scanlines overlay */
+  .crt-scanlines {
+    position: relative;
+  }
+
+  .crt-scanlines::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(0deg,
+        rgba(0, 0, 0, 0.15),
+        rgba(0, 0, 0, 0.15) 1px,
+        transparent 1px,
+        transparent 3px);
+    z-index: 50;
+  }
+
+  /* CRT screen glow */
+  .crt-glow {
+    box-shadow:
+      inset 0 0 60px rgba(34, 211, 238, 0.08),
+      inset 0 0 120px rgba(74, 222, 128, 0.04),
+      0 0 30px rgba(34, 211, 238, 0.1);
+  }
+
+  /* Pixel starfield background */
+  .pixel-stars {
+    background-color: var(--color-background);
+    background-image:
+      radial-gradient(1px 1px at 20px 30px, var(--color-accent), transparent),
+      radial-gradient(1px 1px at 60px 70px, var(--color-primary), transparent),
+      radial-gradient(1px 1px at 110px 40px, var(--color-highlight), transparent),
+      radial-gradient(1px 1px at 180px 90px, var(--color-success), transparent),
+      radial-gradient(1px 1px at 250px 50px, var(--color-warning), transparent),
+      radial-gradient(1px 1px at 320px 110px, var(--color-accent), transparent),
+      radial-gradient(1px 1px at 90px 150px, var(--color-primary), transparent),
+      radial-gradient(1px 1px at 200px 180px, var(--color-highlight), transparent);
+    background-size: 360px 200px;
+    background-repeat: repeat;
+  }
+
+  /* Press button effect */
+  .pixel-press {
+    transition: transform 0.05s, box-shadow 0.05s;
+  }
+
+  .pixel-press:active {
+    transform: translate(4px, 4px);
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.4) !important;
+  }
+
+  /* Floating animation */
+  .float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes float {
+
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-8px);
+    }
+  }
+
+  /* Slide-in blink arrow */
+  .arrow-bounce {
+    animation: arrowBounce 0.8s steps(2) infinite;
+  }
+
+  @keyframes arrowBounce {
+
+    0%,
+    50% {
+      transform: translateY(0);
+    }
+
+    51%,
+    100% {
+      transform: translateY(6px);
+    }
+  }
+
+  /* Glow text */
+  .glow-cyan {
+    text-shadow: 0 0 8px rgba(34, 211, 238, 0.6);
+  }
+
+  .glow-green {
+    text-shadow: 0 0 8px rgba(74, 222, 128, 0.6);
+  }
+
+  .glow-pink {
+    text-shadow: 0 0 8px rgba(244, 114, 182, 0.6);
+  }
+
+  .glow-yellow {
+    text-shadow: 0 0 8px rgba(250, 204, 21, 0.6);
+  }
+}
+
+/* Blinking cursor */
+.blink {
+  animation: blink 1s steps(2) infinite;
+}
+
+@keyframes blink {
+
+  0%,
+  50% {
+    opacity: 1;
+  }
+
+  51%,
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Reveal-on-scroll */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s steps(8), transform 0.6s steps(8);
+  will-change: opacity, transform;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .float,
+  .blink,
+  .arrow-bounce {
+    animation: none;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Pixel scrollbar */
+::-webkit-scrollbar {
+  width: 16px;
+  height: 16px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-background-alt);
+  border-left: 2px solid var(--color-line);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-line-light);
+  border: 2px solid var(--color-background-alt);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accent);
+}
