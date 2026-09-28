@@ -45,7 +45,7 @@ function buildStreamUrl(text: string, voice?: string): string {
         params.set('voice', voice);
     }
 
-    return `${TTS_STREAM_ENDPOINT}?${params.toString()}`;
+    return new URL(`${TTS_STREAM_ENDPOINT}?${params.toString()}`, self.location.origin).toString();
 }
 
 async function synthesize(
