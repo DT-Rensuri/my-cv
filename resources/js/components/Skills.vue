@@ -21,6 +21,7 @@ const icons: Record<string, LucideIcon> = {
   layout: Layout,
   sparkles: Sparkles,
   cpu: Cpu,
+  shield: Shield,
 };
 </script>
 
