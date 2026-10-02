@@ -78,7 +78,7 @@ export default {
         fallback: {
             experience:
                 '> {name}はZotek 8でフルスタックデベロッパーとして勤務中（2023年10月〜現在）。5つのプロジェクトを完了：Survey System、Data Collection Tool、Multi-Platform CMS、Enterprise Invoice CMS、E-Learning Platform。',
-            skills: '> バックエンド: Laravel, ExpressJs, NextJs | フロントエンド: VueJs, ReactJs, Blade, TailwindCSS, Bootstrap | AI: AIアシスタント & 自動化ツール, Vibe coding | その他: 組み込みシステム, API & 自動化。',
+            skills: '> バックエンド: Laravel, ExpressJs, NextJs | フロントエンド: VueJs, ReactJs, Blade, TailwindCSS, Bootstrap | AI: AIアシスタント & 自動化ツール, AI Integration | その他: 組み込みシステム, API & 自動化。',
             contact:
                 '> 電話: {phone} | メール: {email} | GitHub: {github} | 住所: {address}',
             education:
@@ -186,7 +186,7 @@ export default {
             {
                 label: 'AI & 自動化',
                 icon: 'sparkles',
-                skills: ['AIアシスタント & 自動化ツール', 'Vibe coding'],
+                skills: ['AIアシスタント & 自動化ツール', 'AI Integration'],
             },
             {
                 label: 'その他の技術スキル',

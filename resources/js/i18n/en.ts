@@ -78,7 +78,7 @@ export default {
         fallback: {
             experience:
                 '> {name} is a Fullstack Developer at Zotek 8 (10/2023 — present). Completed 5 projects: Survey System, Data Collection Tool, Multi-Platform CMS, Enterprise Invoice CMS, and E-Learning Platform.',
-            skills: '> Backend: Laravel, ExpressJs, NextJs | Frontend: VueJs, ReactJs, Blade, TailwindCSS, Bootstrap | AI: AI assistant & Automation Tools, Vibe coding | Other: Embedded Systems, API & Automation.',
+            skills: '> Backend: Laravel, ExpressJs, NextJs | Frontend: VueJs, ReactJs, Blade, TailwindCSS, Bootstrap | AI: AI assistant & Automation Tools, AI Integration | Other: Embedded Systems, API & Automation.',
             contact:
                 '> Phone: {phone} | Email: {email} | GitHub: {github} | Address: {address}',
             education:
@@ -192,7 +192,7 @@ export default {
             {
                 label: 'AI & Automation',
                 icon: 'sparkles',
-                skills: ['AI assistant & Automation Tools', 'Vibe coding'],
+                skills: ['AI assistant & Automation Tools', 'AI Integration'],
             },
             {
                 label: 'Other Technical Skills',
