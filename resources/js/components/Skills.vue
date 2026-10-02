@@ -52,7 +52,7 @@ const icons: Record<string, LucideIcon> = {
               :key="skill"
               class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-background-alt pixel-border-sm font-retro text-base text-ink hover:text-success hover:border-success transition-colors"
             >
-              <span class="h-[6px] w-[6px] bg-success" />
+              <span class="h-2 w-2 bg-success shrink-0" />
               {{ skill }}
             </span>
           </div>
