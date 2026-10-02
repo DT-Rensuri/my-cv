@@ -162,6 +162,13 @@ export default {
                             'Optimized UI, performance and learning progress reporting.',
                         ],
                     },
+                    {
+                        name: 'AI Meeting Recorder & Notes System',
+                        points: [
+                            'Developed a voice-based meeting recording and tracking platform, automatically converting speech-to-text, summarizing content and generating meeting notes/action items.',
+                            'Integrated AI to analyze meeting content, extract action items and key points.',
+                        ],
+                    }
                 ],
             },
             {
@@ -193,6 +200,13 @@ export default {
                 label: 'AI & Automation',
                 icon: 'sparkles',
                 skills: ['AI assistant & Automation Tools', 'AI Integration'],
+            },
+            {
+                label: 'Security',
+                icon: 'shield',
+                skills: [
+                    'Currently developing practical cybersecurity skills through TryHackMe (SEC1 level), with a primary focus on network security, networking fundamentals, reconnaissance, and basic security practices.',
+                ],
             },
             {
                 label: 'Other Technical Skills',

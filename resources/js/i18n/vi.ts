@@ -160,6 +160,13 @@ export default {
                             'Tối ưu giao diện, hiệu suất, và báo cáo tiến độ học tập.',
                         ],
                     },
+                    {
+                        name: 'Hệ thống ghi âm và ghi chú cuộc họp bằng AI',
+                        points: [
+                            'Phát triển nền tảng ghi âm và theo dõi cuộc họp bằng giọng nói, tự động chuyển đổi speech-to-text, tóm tắt nội dung và tạo meeting notes/action items.',
+                            'Tích hợp AI để phân tích nội dung cuộc họp, trích xuất các mục hành động và điểm quan trọng.',
+                        ]
+                    }
                 ],
             },
             {
@@ -190,14 +197,21 @@ export default {
             {
                 label: 'AI & Automation',
                 icon: 'sparkles',
-                skills: ['AI assistant & Automation Tools', 'AI Integration'],
+                skills: ['Trợ lý AI & Công cụ Tự động hóa', 'Tích hợp AI'],
+            },
+            {
+                label: 'Security',
+                icon: 'shield',
+                skills: [
+                    'Hiện đang phát triển kỹ năng an ninh mạng thực tế thông qua TryHackMe (cấp độ SEC1), chủ yếu tập trung vào an ninh mạng, cơ bản về mạng, reconnaissance, và các thực hành an ninh cơ bản.',
+                ],
             },
             {
                 label: 'Other Technical Skills',
                 icon: 'cpu',
                 skills: [
-                    'Embedded Systems (Arduino, ESP32, sensor communication, IoT integration)',
-                    'API & Automation Tools',
+                    'Hệ thống nhúng (Arduino, ESP32, truyền thông cảm biến, tích hợp IoT)',
+                    'API & Công cụ Tự động hóa',
                 ],
             },
         ],
