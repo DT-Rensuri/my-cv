@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Cpu, Layout, Server, Sparkles  } from 'lucide-vue-next';
+import { Cpu, Layout, Server, Sparkles, Shield } from 'lucide-vue-next';
 import type {LucideIcon} from 'lucide-vue-next';
 import { onMounted, onUnmounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
