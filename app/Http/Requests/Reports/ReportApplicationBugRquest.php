@@ -27,7 +27,8 @@ class ReportApplicationBugRquest extends FormRequest
             'error' => ['required', 'string'],
             'stackTrace' => ['required', 'string'],
             'timestamp' => ['required', 'date'],
-            'platform' => ['required', 'string', 'in:android,ios,fuchsia,linux,macos,windows,web']
+            'platform' => ['required', 'string', 'in:android,ios,fuchsia,linux,macos,windows,web'],
+            'metadata' => ['nullable', 'string'],
         ];
     }
 }
