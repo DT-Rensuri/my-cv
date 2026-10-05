@@ -3,6 +3,7 @@
 use App\Http\Controllers\BraveSearchController;
 use App\Http\Controllers\OpenRouterController;
 use App\Http\Controllers\TtsLocalController;
+use App\Http\Controllers\Reports\ReportApplicationBugController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('brave')->group(function () {
@@ -18,4 +19,8 @@ Route::prefix('tts')->group(function () {
     Route::get('/voices', [TtsLocalController::class, 'voices']);
     Route::get('/stream', [TtsLocalController::class, 'stream']);
     Route::post('/stream', [TtsLocalController::class, 'stream']);
+});
+
+Route::prefix('reports')->group(function () {
+    Route::post('/application-bug', [ReportApplicationBugController::class, 'store']);
 });
