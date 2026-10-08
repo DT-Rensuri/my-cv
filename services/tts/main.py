@@ -40,11 +40,15 @@ def load_model():
     global vieneu
     import os
     print(f"⏳ Loading VieNeu-TTS v3 Turbo ({os.environ.get('VIENEU_PRECISION', 'fp32')}, CPU)...")
-    vieneu = Vieneu(
-        # backend="onnx",                                  # == mode="v3turbo", force CPU/ONNX
-        precision=os.environ.get("VIENEU_PRECISION", "fp32"),
-        onnx_dir=os.environ.get("VIENEU_ONNX_DIR") or None,
-    )
+    vieneu_kwargs = {
+        "precision": os.environ.get("VIENEU_PRECISION", "fp32"),
+        "onnx_dir": os.environ.get("VIENEU_ONNX_DIR") or None,
+    }
+
+    if os.environ.get("TTS_BACKEND_GPU", "true").lower() == "false":
+        vieneu_kwargs["backend"] = "onnx"
+
+    vieneu = Vieneu(**vieneu_kwargs)
 
     vieneu.add_voice(
         "my-custom-voice",

@@ -25,7 +25,7 @@ FROM node:22 AS frontend
 
 WORKDIR /app
 
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml turbo.json tsconfig.json ./
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml turbo.json tsconfig.json vite.config.ts ./
 
 COPY resources/js/packages ./resources/js/packages
 
@@ -46,8 +46,10 @@ WORKDIR /var/www/html
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         libicu-dev \
+        libonig-dev \
         libzip-dev \
         libpq-dev \
+        pkg-config \
         unzip \
     && docker-php-ext-install -j"$(nproc)" \
         bcmath \
