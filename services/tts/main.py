@@ -45,7 +45,8 @@ def load_model():
         "onnx_dir": os.environ.get("VIENEU_ONNX_DIR") or None,
     }
 
-    if os.environ.get("TTS_BACKEND_GPU", "true").lower() == "false":
+    if os.environ.get("TTS_BACKEND_GPU", "false").lower() == "false":
+        print("⚡ Using CPU backend (ONNX Runtime).")
         vieneu_kwargs["backend"] = "onnx"
 
     vieneu = Vieneu(**vieneu_kwargs)

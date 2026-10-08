@@ -40,6 +40,7 @@
         "@proj-airi/unplugin-live2d-sdk": "catalog:",
         "tailwindcss": "catalog:",
         "tsdown": "catalog:",
+        "unrun": "catalog:",
         "@intlify/unplugin-vue-i18n": "catalog:",
         "@vueuse/motion": "catalog:"
     },
