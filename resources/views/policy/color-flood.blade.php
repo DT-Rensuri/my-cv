@@ -5,12 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="description"
-          content="Terms of Service and Privacy Policy for Loang Màu, a mobile game developed by Đỗ Thanh Cao (dtrensuri).">
+        <meta name="description"
+            content="Privacy Policy and Terms of Service for Loang Màu (com.dtrensuri.color_flood_game), published by dtrensuri and developed by Đỗ Thanh Cao.">
 
     <meta name="robots" content="index, follow">
 
-    <title>Terms &amp; Privacy Policy - Loang Màu</title>
+    <title>Terms &amp; Privacy Policy - Loang Màu (com.dtrensuri.color_flood_game)</title>
 
     <style>
         * {
@@ -201,6 +201,12 @@
             Loang Màu — Mobile Game
         </p>
         <p>
+            App package name: com.dtrensuri.color_flood_game
+        </p>
+        <p>
+            Published by dtrensuri · Developer: Đỗ Thanh Cao
+        </p>
+        <p>
             Please read these terms and policies carefully before
             using the game.
         </p>
@@ -333,16 +339,23 @@
         </p>
 
         <p>
-            The Game is developed by Đỗ Thanh Cao (dtrensuri),
-            referred to as "we", "us", or "our".
-            This policy applies specifically to Loang Màu.
+            This policy applies specifically to the Android app
+            <strong>Loang Màu</strong>, package name
+            <strong>com.dtrensuri.color_flood_game</strong>.
+            The app is published on Google Play by
+            <strong>dtrensuri</strong> and developed and operated by
+            <strong>Đỗ Thanh Cao</strong>. In this policy, “we”, “us”,
+            and “our” refer to Đỗ Thanh Cao, the developer operating
+            under the dtrensuri name.
         </p>
 
         <div class="contact-card">
-            <p><strong>Game:</strong> Loang Màu</p>
+            <p><strong>App name:</strong> Loang Màu</p>
+            <p><strong>Package name:</strong> com.dtrensuri.color_flood_game</p>
+            <p><strong>Google Play developer name:</strong> dtrensuri</p>
             <p>
-                <strong>Developer:</strong>
-                Đỗ Thanh Cao (dtrensuri)
+                <strong>Developer / operator:</strong>
+                Đỗ Thanh Cao
             </p>
             <p>
                 <strong>Privacy contact:</strong>
@@ -667,10 +680,12 @@
         </p>
 
         <div class="contact-card">
-            <p><strong>Game:</strong> Loang Màu</p>
+            <p><strong>App name:</strong> Loang Màu</p>
+            <p><strong>Package name:</strong> com.dtrensuri.color_flood_game</p>
+            <p><strong>Google Play developer name:</strong> dtrensuri</p>
             <p>
-                <strong>Developer:</strong>
-                Đỗ Thanh Cao (dtrensuri)
+                <strong>Developer / operator:</strong>
+                Đỗ Thanh Cao
             </p>
             <p>
                 <strong>Email:</strong>
